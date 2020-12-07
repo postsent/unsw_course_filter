@@ -105,23 +105,23 @@ class Class_scrapter:
         course_dict = {
             C.COURSE_CODE:["name=\"", "\"></a>"],
             C.COURSE_NAME:["<td class=\"cucourse\" colspan=\"6\" valign=\"center\">", "</td>"],
-            C.ENROL_PRECENT:[],
-            C.ENROL_NUM:["Open</td><td>", "</td> <td class="]
+            C.ENROL_PRECENT:[self.perc_condition, "</td>"],
+            C.ENROL_NUM:["Open</td><td>", "</td> <td class="] # C.ENROL_NUM:[["Full</td><td>", "Open</td><td>"], "</td> <td class"]
         }
+        sub1 = course_dict[which][0]
+        sub2 = course_dict[which][1]
         
         if which == C.ENROL_PRECENT:
-            sub2 = "</td>"
             
-            for i in self.perc_condition:
+            for i in sub1:
                 try:
-                    sub1 = i
-                    result = re.search(f"{sub1}(.*){sub2}", s)
+                    result = re.search(f"{i}(.*){sub2}", s)
                     result = result.group(1)
                     return result
                 except:
                     pass
-        sub1 = course_dict[which][0]
-        sub2 = course_dict[which][1]
+        
+        
         result = re.search(f"{sub1}(.*){sub2}", s)
         result = result.group(1)
         if "&amp" in result:
