@@ -1,0 +1,1 @@
+print(len("<\"a name=\"COMP1010T1\"></a>"))
