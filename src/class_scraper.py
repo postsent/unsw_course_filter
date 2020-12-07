@@ -30,22 +30,23 @@ def main():
 
 class Class_scrapter:
 
-    def __init__(self, url_search=None):
+    def __init__(self, url_search=None, is_undergrad=True):
         
         #url_search = "http://classutil.unsw.edu.au/COMP_T1.html"
-        url_search = "http://classutil.unsw.edu.au/COMP_T2.html"
+        #url_search = "http://classutil.unsw.edu.au/COMP_T2.html"
 
         response = requests.get(url_search, timeout=5)
         self.content = BeautifulSoup(response.content, "html.parser")
         self.output_list = []
         self.perc_condition = ["class=\"cufull\">", "class=\"cu80\">", "class=\"cu50\">", "class=\"cu00\">"] # see explain above
-        #self.course_filter_condition = "(Course Enrolment, UGRD)"
+        self.level = "(Course Enrolment, UGRD)" if is_undergrad else "(Course Enrolment, PGRD)"
         self.tweet = self.content.findAll(["a", "tr"])
+
 
         self.collect_data()
         self.sort_based_percent(C.ENROL_NUM)
-        self.print_output()
-        #self.output_to_gui()
+        #self.print_output()
+        self.output_to_gui()
 
     def collect_data(self):
 
@@ -60,7 +61,7 @@ class Class_scrapter:
             if not is_first:
                 t = t[26:] #  get rid of duplicate of previous #TODO: be improved
             if check_online:
-                print(t)
+                #print(t)
                 self.get_online_course(t, info_bag)
                 check_online = False
                 info_bag = self.get_empty_bag()
@@ -77,7 +78,7 @@ class Class_scrapter:
                 except Exception as e:
                     pass
                     #print(e)
-                if any(i in t for i in self.perc_condition) and is_one_record and "(Course Enrolment, UGRD)" in t:
+                if any(i in t for i in self.perc_condition) and is_one_record and self.level in t:
                     
                     info_bag[C.ENROL_PRECENT] = self.get_str_between(t, C.ENROL_PRECENT)
                     info_bag[C.ENROL_NUM] = self.get_str_between(t, C.ENROL_NUM)

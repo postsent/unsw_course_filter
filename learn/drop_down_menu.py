@@ -1,3 +1,7 @@
+"""
+https://stackoverflow.com/questions/56525395/save-tkinter-dropdown-menu-choice-in-a-variable-to-compare
+"""
+
 from tkinter import *
 
 root = Tk()
