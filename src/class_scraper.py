@@ -59,6 +59,7 @@ class Class_scrapter:
                 if any(i in t for i in self.perc_condition) and is_one_record:
                     
                     info_bag[C.ENROL_PRECENT] = self.get_str_between(t, C.ENROL_PRECENT)
+                    info_bag[C.ENROL_NUM] = self.get_str_between(t, C.ENROL_NUM)
                     is_one_record = False
                     
                     self.output_list.append(info_bag)
@@ -66,7 +67,7 @@ class Class_scrapter:
 
         self.print_output()
     
-    def sort_based_percent(self):
+    def sort_based_percent(self, which=C.ENROL_PRECENT):
         """
         sort in ascending order
         """
@@ -77,6 +78,9 @@ class Class_scrapter:
             p = None
             for i in self.output_list:
                 perc = int(i[C.ENROL_PRECENT].replace("%", ""))
+                if which == C.ENROL_NUM:
+                    perc = int(i[C.ENROL_NUM][:i[C.ENROL_NUM].index("/")])
+
                 if perc > maxv:
                     maxv = perc
                     p = i
@@ -88,10 +92,10 @@ class Class_scrapter:
         pass
 
     def print_output(self):
-        self.sort_based_percent()
+        self.sort_based_percent(C.ENROL_NUM)
         print("\nBelow is the list in descending order of popularity in courses enrolled:\n")
         for i in self.output_list:
-            print(i[C.COURSE_CODE], i[C.ENROL_PRECENT], i[C.COURSE_NAME])
+            print(i[C.COURSE_CODE], i[C.ENROL_PRECENT], i[C.ENROL_NUM], i[C.COURSE_NAME])
 
     def get_empty_bag(self):
         return {
@@ -106,12 +110,12 @@ class Class_scrapter:
             C.COURSE_CODE:["name=\"", "\"></a>"],
             C.COURSE_NAME:["<td class=\"cucourse\" colspan=\"6\" valign=\"center\">", "</td>"],
             C.ENROL_PRECENT:[self.perc_condition, "</td>"],
-            C.ENROL_NUM:["Open</td><td>", "</td> <td class="] # C.ENROL_NUM:[["Full</td><td>", "Open</td><td>"], "</td> <td class"]
+            C.ENROL_NUM:[["Open\*</td><td>", "Full</td><td>", "Open</td><td>"], "</td> <td class="] 
         }
         sub1 = course_dict[which][0]
         sub2 = course_dict[which][1]
         
-        if which == C.ENROL_PRECENT:
+        if which == C.ENROL_PRECENT or which == C.ENROL_NUM:
             
             for i in sub1:
                 try:
