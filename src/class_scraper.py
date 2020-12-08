@@ -11,6 +11,10 @@ cu80 - over 80
 cufull - full
 
 """
+
+"""
+status of "cancel" and "closed" not included 
+"""
 from bs4 import BeautifulSoup
 import requests
 import re
@@ -30,7 +34,7 @@ def main():
 
 class Class_scrapter:
 
-    def __init__(self, url_search=None, is_undergrad=True):
+    def __init__(self, url_search=None, is_undergrad=True, is_perc=False):
         
         #url_search = "http://classutil.unsw.edu.au/COMP_T1.html"
         #url_search = "http://classutil.unsw.edu.au/COMP_T2.html"
@@ -40,11 +44,12 @@ class Class_scrapter:
         self.output_list = []
         self.perc_condition = ["class=\"cufull\">", "class=\"cu80\">", "class=\"cu50\">", "class=\"cu00\">"] # see explain above
         self.level = "(Course Enrolment, UGRD)" if is_undergrad else "(Course Enrolment, PGRD)"
+        self.term = url_search[-7:-5]
+        
         self.tweet = self.content.findAll(["a", "tr"])
 
-
         self.collect_data()
-        self.sort_based_percent(C.ENROL_NUM)
+        self.sort_based_percent(C.ENROL_PRECENT) if is_perc else self.sort_based_percent(C.ENROL_NUM)
         #self.print_output()
         self.output_to_gui()
 
@@ -98,7 +103,7 @@ class Class_scrapter:
         #print(info_bag[C.ENROL_PRECENT], info_bag[C.ENROL_NUM])
         info_bag[C.COURSE_CODE] = self.output_list[-1][C.COURSE_CODE]
         info_bag[C.COURSE_NAME] = self.output_list[-1][C.COURSE_NAME]
-        self.output_list[-1][C.COURSE_NAME] += " online"
+        self.output_list[-1][C.COURSE_NAME] += " -ONLINE"
         self.output_list.append(info_bag)
 
     def sort_based_percent(self, which=C.ENROL_PRECENT):
@@ -113,7 +118,7 @@ class Class_scrapter:
             for i in self.output_list:
                 perc = int(i[C.ENROL_PRECENT].replace("%", ""))
                 if which == C.ENROL_NUM:
-                    perc = int(i[C.ENROL_NUM][:i[C.ENROL_NUM].index("/")])
+                    perc = int(i[C.ENROL_NUM][:i[C.ENROL_NUM].index("/")]) #TODO
 
                 if perc > maxv:
                     maxv = perc
@@ -131,9 +136,17 @@ class Class_scrapter:
     
     def output_to_gui(self):
         res = []
-        res.append(("course code", "enrol_precentage", "enrol_number", "course_name"))
-        for i in self.output_list:
-            res.append((i[C.COURSE_CODE], i[C.ENROL_PRECENT], i[C.ENROL_NUM], i[C.COURSE_NAME]))
+        res.append(("count", f"course code ({self.term})", "enrol_precentage", "enrol_number", "course_name"))
+        total_enrol = 0
+        total_enrol_size = 0
+        total_courses = 0
+        for n, i in enumerate(self.output_list):
+            enrolled_num = int(i[C.ENROL_NUM][:i[C.ENROL_NUM].index("/")])
+            total_enrol_size += int(i[C.ENROL_NUM][i[C.ENROL_NUM].index("/") + 1:])
+            total_enrol += enrolled_num
+            total_courses += 1
+            res.append((n + 1, i[C.COURSE_CODE], i[C.ENROL_PRECENT], i[C.ENROL_NUM], i[C.COURSE_NAME]))
+        res.append(("total", "", f"{total_enrol} / {total_enrol_size}"))
         root = Tk() 
         t = Table(root, res) 
         root.mainloop() 

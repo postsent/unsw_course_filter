@@ -15,8 +15,10 @@ class Table:
             for j in range(total_columns): 
                 
                 self.e = Entry(root, width=40, fg='black', 
-                            font=('Arial',7,'normal')) 
-                
+                            font=('Arial',6,'normal')) 
+                if i == 0 or i == total_rows - 1:
+                    self.e = Entry(root, width=40, fg='blue', 
+                            font=('Arial',6,'bold')) 
                 self.e.grid(row=i, column=j) 
                 self.e.insert(END, lst[i][j]) 
 
