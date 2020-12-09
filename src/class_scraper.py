@@ -10,6 +10,10 @@ cu50 - over half
 cu80 - over 80
 cufull - full
 
+new found:
+cuwarn: (/stop)
+<td>CRS</td><td>CR02</td><td> 2453</td><td></td><td class="cuwarn">Stop</td><td>173/173</td> <td class="cufull">100%&nbsp;&nbsp;</td>
+<td>(Course Enrolment, UGRD)</td> </tr>
 """
 
 """
@@ -118,7 +122,13 @@ class Class_scrapter:
             for i in self.output_list:
                 perc = int(i[C.ENROL_PRECENT].replace("%", ""))
                 if which == C.ENROL_NUM:
-                    perc = int(i[C.ENROL_NUM][:i[C.ENROL_NUM].index("/")]) #TODO
+                    try:
+                        perc = int(i[C.ENROL_NUM][:i[C.ENROL_NUM].index("/")]) #TODO
+                    except Exception as e:
+                        print(i)
+                        print(e)
+                        print(i[C.ENROL_NUM])
+                        print(i[C.ENROL_NUM][:i[C.ENROL_NUM].index("/")])
 
                 if perc > maxv:
                     maxv = perc
@@ -164,7 +174,7 @@ class Class_scrapter:
             C.COURSE_CODE:["name=\"", "\"></a>"],
             C.COURSE_NAME:["<td class=\"cucourse\" colspan=\"6\" valign=\"center\">", "</td>"],
             C.ENROL_PRECENT:[self.perc_condition, "</td>"],
-            C.ENROL_NUM:[["Open\*</td><td>", "Full</td><td>", "Open</td><td>"], "</td> <td class="] 
+            C.ENROL_NUM:[["Open\*</td><td>", "Stop</td><td>", "Full</td><td>", "Open</td><td>"], "</td> <td class="] 
         }
         sub1 = course_dict[which][0]
         sub2 = course_dict[which][1]

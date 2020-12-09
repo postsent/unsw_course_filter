@@ -9,10 +9,11 @@ from enum import IntEnum
 
 class Opt(IntEnum):
     SEARCH = 0
-    UGRD_or_PGRD = 1
-    PERC_or_NUM = 2
-    COURSE_DONE = 3
-    RESULT = 4
+    RESULT = 1
+    UGRD_or_PGRD = 2
+    PERC_or_NUM = 3
+    COURSE_DONE = 4
+    
 
 
 class Searchbox:
@@ -24,7 +25,8 @@ class Searchbox:
         self.master=Tk()
         self.master.title("The Course Search Engine")
         self.master.geometry('500x200')
-        
+        self.body = None
+        self.entry_content = None
         
     def return_entry(self, event):
         
@@ -37,7 +39,8 @@ class Searchbox:
             self.resultox.insert(0,"FOUND")
             c = Class_scrapter(content, under_or_post, perc_or_num)
 
-        except:
+        except ArithmeticError as e:
+            print(e)
             self.resultox.delete(0,END)
             self.resultox.insert(0,"404 NOT FOUND")
     
@@ -75,31 +78,34 @@ class Searchbox:
         
         OptionMenu(self.master, var, *OPTIONS).grid(row=which, sticky=W)
 
-        self.entry=Entry(self.master)
-        self.entry.grid(row=which, column=1)
+        # self.entry=Entry(self.master)
+        # self.entry.grid(row=which, column=1)
         var.trace('w', self.cb_drop_down_menu)
         self.vars[which] = var
 
-    # def cb_courses_done(self):
-    #     content = body.get(1.0, "end-1c")
-    #     entry_content.set(content)
-
+    def cb_courses_done(self):
+        content = self.body.get("0.0", END)
+        print(content)
+        self.entry_content.set(content)
+        
+        
     def create_search_box(self):
 
         self.create_dropdown()
         self.create_dropdown(Opt.PERC_or_NUM)
         s = int(Opt.SEARCH)
         r = int(Opt.RESULT)
-        cd = int(Opt.COURSE_DONE)
+        cd = int(Opt.COURSE_DONE) 
         #
 
-        # body = Text(self.master)
+        # self.body = Text(self.master)
+        # self.entry_content = StringVar()
+        # t = Entry(self.master, textvariable=self.entry_content)
+        # t.grid(row=6, column=1)
 
-        # entry_content = StringVar()
-        # entry = Entry(self.master, textvariable=entry_content)
+        # bb = Button(self.master, text="Get Text content", command=self.cb_courses_done)
+        # bb.grid(row=6, column=0)
 
-        # button = Button(self.master, text="Get Text content", command=cb_courses_done)
-        
         #
 
         l_s = Label(self.master, text="Search box:")#.grid(row=s, sticky=W)
