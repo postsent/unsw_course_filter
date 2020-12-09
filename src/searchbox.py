@@ -28,24 +28,10 @@ class Searchbox:
 
         self.body = None
         self.entry_content = None
-        self.courses_done = None
         self.bb = None
         
     def return_entry(self, event):
-        
-        content = self.entry.get()
-        under_or_post = bool("under" in self.vars[int(Opt.UGRD_or_PGRD)].get())
-        perc_or_num = bool("percentage" in self.vars[int(Opt.PERC_or_NUM)].get())
-        
-        try:
-            self.resultox.delete(0,END)
-            self.resultox.insert(0,"FOUND")
-            c = Class_scrapter(content, under_or_post, perc_or_num)
-
-        except ArithmeticError as e:
-            print(e)
-            self.resultox.delete(0,END)
-            self.resultox.insert(0,"404 NOT FOUND")
+        pass
     
     def cb_drop_down_menu(self, *args):
         # https://stackoverflow.com/questions/56525395/save-tkinter-dropdown-menu-choice-in-a-variable-to-compare
@@ -79,7 +65,7 @@ class Searchbox:
         var = StringVar(self.master)
         var.set(OPTIONS[1]) # default value
         
-        OptionMenu(self.master, var, *OPTIONS).grid(row=which, sticky=W)
+        OptionMenu(self.master, var, *OPTIONS).grid(row=which, column=0, sticky=W)
 
         # self.entry=Entry(self.master)
         # self.entry.grid(row=which, column=1)
@@ -89,12 +75,28 @@ class Searchbox:
     def cb_courses_done(self, event):
         print(self.courses_done.get())
         
-    def create_label(self, _text:str, r:int, cb, _var):
+    def create_label(self, _text:str, r:int, cb):
         Label(self.master, text=_text).grid(row=r, sticky=W)
-        self.courses_done=Entry(self.master)
-        self.courses_done.grid(row=r, column=1)    
-        self.courses_done.bind('<Return>', cb)
-        self.courses_done.config(width=40) # expand the width of search box
+        _var=Entry(self.master)
+        _var.grid(row=r, column=1)    
+        _var.bind('<Return>', cb)
+        _var.config(width=40) # expand the width of search box
+        return _var
+        
+    def cb__run_button(self):
+        content = self.entry.get()
+        under_or_post = bool("under" in self.vars[int(Opt.UGRD_or_PGRD)].get())
+        perc_or_num = bool("percentage" in self.vars[int(Opt.PERC_or_NUM)].get())
+        
+        try:
+            self.resultox.delete(0,END)
+            self.resultox.insert(0,"FOUND")
+            c = Class_scrapter(content, under_or_post, perc_or_num)
+
+        except (ValueError, IndexError) as e:
+            #print(e)
+            self.resultox.delete(0,END)
+            self.resultox.insert(0,"404 NOT FOUND")
 
     def create_search_box(self):
 
@@ -103,27 +105,17 @@ class Searchbox:
         s = int(Opt.SEARCH)
         r = int(Opt.RESULT)
         cd = int(Opt.COURSE_DONE) 
-        #
-
-        Label(self.master, text="cds:").grid(row=cd, sticky=W)
-        self.courses_done=Entry(self.master)
-        self.courses_done.grid(row=cd, column=1)    
-        self.courses_done.bind('<Return>', self.cb_courses_done)
-        self.courses_done.config(width=40) # expand the width of search box
-        #
-
-        l_s = Label(self.master, text="Search box:")#.grid(row=s, sticky=W)
-        l_s.grid(row=s, sticky=W)
         
-        self.entry=Entry(self.master)
-        self.entry.grid(row=s, column=1)    
-        self.entry.bind('<Return>', self.return_entry)
-        self.entry.config(width=40) # expand the width of search box
+        self.courses_done = self.create_label("cds:", cd, self.cb_courses_done)
+
+        self.entry = self.create_label("Search box:", s, self.return_entry)
 
         Label(self.master, text="Result:").grid(row=r,column=0)
         self.resultox=Entry(self.master)
         self.resultox.grid(row=r,column=1)
         
+        #
+        Button(self.master, text="run", command=self.cb__run_button).grid(row=7, column=1)    
         mainloop()
 
 if __name__ == "__main__":
