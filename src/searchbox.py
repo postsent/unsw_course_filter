@@ -25,8 +25,11 @@ class Searchbox:
         self.master=Tk()
         self.master.title("The Course Search Engine")
         self.master.geometry('500x200')
+
         self.body = None
         self.entry_content = None
+        self.courses_done = None
+        self.bb = None
         
     def return_entry(self, event):
         
@@ -83,12 +86,16 @@ class Searchbox:
         var.trace('w', self.cb_drop_down_menu)
         self.vars[which] = var
 
-    def cb_courses_done(self):
-        content = self.body.get("0.0", END)
-        print(content)
-        self.entry_content.set(content)
+    def cb_courses_done(self, event):
+        print(self.courses_done.get())
         
-        
+    def create_label(self, _text:str, r:int, cb, _var):
+        Label(self.master, text=_text).grid(row=r, sticky=W)
+        self.courses_done=Entry(self.master)
+        self.courses_done.grid(row=r, column=1)    
+        self.courses_done.bind('<Return>', cb)
+        self.courses_done.config(width=40) # expand the width of search box
+
     def create_search_box(self):
 
         self.create_dropdown()
@@ -98,14 +105,11 @@ class Searchbox:
         cd = int(Opt.COURSE_DONE) 
         #
 
-        # self.body = Text(self.master)
-        # self.entry_content = StringVar()
-        # t = Entry(self.master, textvariable=self.entry_content)
-        # t.grid(row=6, column=1)
-
-        # bb = Button(self.master, text="Get Text content", command=self.cb_courses_done)
-        # bb.grid(row=6, column=0)
-
+        Label(self.master, text="cds:").grid(row=cd, sticky=W)
+        self.courses_done=Entry(self.master)
+        self.courses_done.grid(row=cd, column=1)    
+        self.courses_done.bind('<Return>', self.cb_courses_done)
+        self.courses_done.config(width=40) # expand the width of search box
         #
 
         l_s = Label(self.master, text="Search box:")#.grid(row=s, sticky=W)
