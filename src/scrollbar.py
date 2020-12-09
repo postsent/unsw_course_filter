@@ -1,11 +1,15 @@
+"""
+https://stackoverflow.com/questions/3085696/adding-a-scrollbar-to-a-group-of-widgets-in-tkinter
+"""
 import tkinter as tk
 
-class Example(tk.Frame):
-    def __init__(self, parent):
+class Scrollbar(tk.Frame):
+    def __init__(self, parent, res:list):
 
+        self.result = res
         tk.Frame.__init__(self, parent)
-        self.canvas = tk.Canvas(self, borderwidth=0, background="#ffffff")
-        self.frame = tk.Frame(self.canvas, background="#ffffff")
+        self.canvas = tk.Canvas(self, borderwidth=0, background="#ffffff", width=800, height=600)
+        self.frame = tk.Frame(self.canvas, background="#ffffff", width=100, height=100)
         self.vsb = tk.Scrollbar(self, orient="vertical", command=self.canvas.yview)
         self.canvas.configure(yscrollcommand=self.vsb.set)
 
@@ -19,12 +23,14 @@ class Example(tk.Frame):
         self.populate()
 
     def populate(self):
+
         '''Put in some fake data'''
-        for row in range(100):
-            tk.Label(self.frame, text="%s" % row, width=3, borderwidth="1",
-                     relief="solid").grid(row=row, column=0)
-            t="this is the second column for row %s" %row
-            tk.Label(self.frame, text=t).grid(row=row, column=1)
+        for row, i in enumerate(self.result):
+            
+            a,b,c,d,e = i
+            tk.Label(self.frame, text=a, width=10).grid(row=row+1, column=0)
+            for n, t in enumerate(i[1:]):
+                tk.Label(self.frame, text=t).grid(row=row+1, column=n+1)
 
     def onFrameConfigure(self, event):
         '''Reset the scroll region to encompass the inner frame'''
@@ -32,6 +38,6 @@ class Example(tk.Frame):
 
 if __name__ == "__main__":
     root=tk.Tk()
-    example = Example(root)
+    example = Scrollbar(root)
     example.pack(side="top", fill="both", expand=True)
     root.mainloop()

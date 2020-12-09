@@ -26,6 +26,7 @@ from enum import Enum
 from tkinter import Tk
 
 from gui_table import Table
+from scrollbar import Scrollbar
 
 class C(str, Enum):
     COURSE_NAME = "name"
@@ -38,20 +39,17 @@ def main():
 
 class Class_scrapter:
 
-    def __init__(self, url_search=None, is_undergrad=True, is_perc=False):
-        
-        #url_search = "http://classutil.unsw.edu.au/COMP_T1.html"
-        #url_search = "http://classutil.unsw.edu.au/COMP_T2.html"
+    def __init__(self, url_search=None, is_undergrad=True, is_perc=False, is_table=True, courses_done=None):
 
         response = requests.get(url_search, timeout=5)
         self.content = BeautifulSoup(response.content, "html.parser")
         self.output_list = []
         self.perc_condition = ["class=\"cufull\">", "class=\"cu80\">", "class=\"cu50\">", "class=\"cu00\">"] # see explain above
         self.level = "(Course Enrolment, UGRD)" if is_undergrad else "(Course Enrolment, PGRD)"
-        self.term = url_search[-7:-5]
-        
+        self.term = url_search[-7:-5] # term from url e.g.http://classutil.unsw.edu.au/COMP_T2.html
+        self.courses_done = courses_done.split(",")
         self.tweet = self.content.findAll(["a", "tr"])
-
+        self.is_table = is_table
         self.collect_data()
         self.sort_based_percent(C.ENROL_PRECENT) if is_perc else self.sort_based_percent(C.ENROL_NUM)
         #self.print_output()
@@ -155,10 +153,19 @@ class Class_scrapter:
             total_enrol_size += int(i[C.ENROL_NUM][i[C.ENROL_NUM].index("/") + 1:])
             total_enrol += enrolled_num
             total_courses += 1
-            res.append((n + 1, i[C.COURSE_CODE], i[C.ENROL_PRECENT], i[C.ENROL_NUM], i[C.COURSE_NAME]))
-        res.append(("total", "", f"{total_enrol} / {total_enrol_size}"))
+
+            if any(c in i[C.COURSE_CODE] for c in self.courses_done) and self.courses_done != [""]: # ignore course done
+                res.append((n + 1, "", "", "", ""))
+            else:
+                res.append((n + 1, i[C.COURSE_CODE], i[C.ENROL_PRECENT], i[C.ENROL_NUM], i[C.COURSE_NAME]))
+        res.append(("total", "", "", f"{total_enrol} / {total_enrol_size}", ""))
+        
         root = Tk() 
-        t = Table(root, res) 
+        if self.is_table:
+            t = Table(root, res) 
+        else:
+            example = Scrollbar(root, res)
+            example.pack(side="top", fill="both", expand=True)
         root.mainloop() 
 
     def get_empty_bag(self):
@@ -196,37 +203,5 @@ class Class_scrapter:
             result = result.replace("&amp;", "&") # normalise
         return result
 
-    
 if __name__=="__main__":
     main()
-
-
-"""
-below not used
-"""
-
-
-"""
-https://stackoverflow.com/questions/32898916/find-all-tags-of-certain-class-only-after-tag-with-certain-text
-"""
-def get_precentage_after_course(self, course_code:str):
-    # if "COMP" in t.text:
-        #     print(t)
-        #     if prev and int(t.text[4:8]) < int(prev[4:8]): # get only course number e.g comp1511 -> 1511, if wrong order, then assume noisy data
-        #         break
-        #     print(i, t.text)
-        #     self.get_precentage_after_course(t.text)
-        #     prev = t.text
-    start = self.content.find("a", text=course_code).parent
-    #print(start)
-    for tr in start.find_next_siblings("tr"):
-        # exit if reached C
-        print(tr)
-        break
-        # if tr.find("td", text="C"):
-        #     break
-
-        # # get all tds with a desired class
-        # tds = tr.find_all("td", class_="y")
-        # for td in tds:
-        #     print(td.get_text())

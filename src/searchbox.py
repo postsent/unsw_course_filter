@@ -12,16 +12,15 @@ class Opt(IntEnum):
     RESULT = 1
     UGRD_or_PGRD = 2
     PERC_or_NUM = 3
-    COURSE_DONE = 4
-    
-
+    TABLE_or_SCROLL = 4
+    COURSE_DONE = 5
 
 class Searchbox:
     def __init__(self):
         self.entry = None
         self.resultox = None
         self.courses_done = None
-        self.vars = {int(Opt.UGRD_or_PGRD):None, int(Opt.PERC_or_NUM):None}
+        self.vars = {int(Opt.UGRD_or_PGRD):None, int(Opt.PERC_or_NUM):None, int(Opt.TABLE_or_SCROLL):None}
         self.master=Tk()
         self.master.title("The Course Search Engine")
         self.master.geometry('500x200')
@@ -56,9 +55,14 @@ class Searchbox:
             "percentage",
             "total_number"
         ]
+        table_options = [
+            "scroll",
+            "table"
+        ]
         options_dict = {
             Opt.UGRD_or_PGRD:grad_options,
-            Opt.PERC_or_NUM:perc_options
+            Opt.PERC_or_NUM:perc_options,
+            Opt.TABLE_or_SCROLL:table_options
         }
         OPTIONS = options_dict[which]
         #
@@ -73,7 +77,8 @@ class Searchbox:
         self.vars[which] = var
 
     def cb_courses_done(self, event):
-        print(self.courses_done.get())
+        pass
+        #print(self.courses_done.get())
         
     def create_label(self, _text:str, r:int, cb):
         Label(self.master, text=_text).grid(row=r, sticky=W)
@@ -87,28 +92,33 @@ class Searchbox:
         content = self.entry.get()
         under_or_post = bool("under" in self.vars[int(Opt.UGRD_or_PGRD)].get())
         perc_or_num = bool("percentage" in self.vars[int(Opt.PERC_or_NUM)].get())
-        
+        table_or_scroll = bool("table" in self.vars[int(Opt.TABLE_or_SCROLL)].get())
         try:
             self.resultox.delete(0,END)
             self.resultox.insert(0,"FOUND")
-            c = Class_scrapter(content, under_or_post, perc_or_num)
+            # _tmp = 1 if self.courses_done.get() else self.courses_done.insert(END, '1521,1531,2511')
+            c = Class_scrapter(content, under_or_post, perc_or_num, table_or_scroll, self.courses_done.get())
 
-        except (ValueError, IndexError) as e:
-            #print(e)
+        except ArithmeticError as e: # (ValueError, IndexError)
+            print(e)
             self.resultox.delete(0,END)
             self.resultox.insert(0,"404 NOT FOUND")
 
     def create_search_box(self):
-
+        """
+        main function 
+        """
         self.create_dropdown()
         self.create_dropdown(Opt.PERC_or_NUM)
+        self.create_dropdown(Opt.TABLE_or_SCROLL)
         s = int(Opt.SEARCH)
         r = int(Opt.RESULT)
         cd = int(Opt.COURSE_DONE) 
         
-        self.courses_done = self.create_label("cds:", cd, self.cb_courses_done)
-
+        self.courses_done = self.create_label("courses done:", cd, self.cb_courses_done)
+        self.courses_done.insert(END, '1521,1521,1531,2511,2521,3431') # default
         self.entry = self.create_label("Search box:", s, self.return_entry)
+        self.entry.insert(END, 'http://classutil.unsw.edu.au/COMP_T2.html') # default
 
         Label(self.master, text="Result:").grid(row=r,column=0)
         self.resultox=Entry(self.master)
@@ -121,4 +131,4 @@ class Searchbox:
 if __name__ == "__main__":
     
     t = Searchbox()
-    t.create_search_box()
+    t.create_search_box() # main function
