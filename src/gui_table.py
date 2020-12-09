@@ -19,6 +19,11 @@ class Table:
                 if i == 0 or i == total_rows - 1:
                     self.e = Entry(root, width=40, fg='blue', 
                             font=('Arial',6,'bold')) 
+                if j == 1 and "True" in lst[i][total_columns - 1]:
+                    # self.e = Entry(root, width=40, fg='green', 
+                    #         font=('Arial',6,'bold')) 
+                    pass
+                
                 self.e.grid(row=i, column=j) 
                 self.e.insert(END, lst[i][j]) 
 

@@ -27,7 +27,7 @@ class Scrollbar(tk.Frame):
         '''Put in some fake data'''
         for row, i in enumerate(self.result):
             
-            a,b,c,d,e = i
+            a,b,c,d,e,f = i
             tk.Label(self.frame, text=a, width=10).grid(row=row+1, column=0)
             for n, t in enumerate(i[1:]):
                 tk.Label(self.frame, text=t).grid(row=row+1, column=n+1)
