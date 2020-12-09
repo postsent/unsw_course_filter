@@ -118,7 +118,7 @@ class Searchbox:
         self.courses_done = self.create_label("courses done:", cd, self.cb_courses_done)
         self.courses_done.insert(END, '1521,1521,1531,2511,2521,3431') # default
         self.entry = self.create_label("Search box:", s, self.return_entry)
-        self.entry.insert(END, 'http://classutil.unsw.edu.au/COMP_T2.html') # default
+        self.entry.insert(END, 'http://classutil.unsw.edu.au/COMP_T1.html') # default
 
         Label(self.master, text="Result:").grid(row=r,column=0)
         self.resultox=Entry(self.master)

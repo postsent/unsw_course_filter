@@ -47,9 +47,14 @@ class Class_scrapter:
         self.perc_condition = ["class=\"cufull\">", "class=\"cu80\">", "class=\"cu50\">", "class=\"cu00\">"] # see explain above
         self.level = "(Course Enrolment, UGRD)" if is_undergrad else "(Course Enrolment, PGRD)"
         self.term = url_search[-7:-5] # term from url e.g.http://classutil.unsw.edu.au/COMP_T2.html
+        self.degree = url_search[-12:-8]
+        print(self.degree)
         self.courses_done = courses_done.split(",")
-        self.tweet = self.content.findAll(["a", "tr"])
+        self.tweet = self.content.findAll(["a" ,"tr"])
         self.is_table = is_table
+        self.course_on_campus = []
+
+
         self.collect_data()
         self.sort_based_percent(C.ENROL_PRECENT) if is_perc else self.sort_based_percent(C.ENROL_NUM)
         #self.print_output()
@@ -61,12 +66,15 @@ class Class_scrapter:
         is_one_record = True # get only the first percent record which is about enrolment, others are class %
         info_bag = self.get_empty_bag()
         check_online = False
-        
+        course_id = 0 # differentiate different course
+        prev_course_id = None
         for i, t in enumerate(self.tweet):
             
             t = str(t)
+            
             if not is_first:
                 t = t[26:] #  get rid of duplicate of previous #TODO: be improved
+
             if check_online:
                 #print(t)
                 self.get_online_course(t, info_bag)
@@ -74,7 +82,7 @@ class Class_scrapter:
                 info_bag = self.get_empty_bag()
                 continue
 
-            if (("href=\"#COMP" not in t and "name=\"COMP" in t) or any(i in t for i in self.perc_condition)) :
+            if ((f"href=\"#{self.degree}" not in t and f"name=\"{self.degree}" in t) or any(i in t for i in self.perc_condition)) :
                 
                 try:
                     #print(t)
@@ -82,6 +90,8 @@ class Class_scrapter:
                     info_bag[C.COURSE_NAME] = self.get_str_between(t, C.COURSE_NAME)
                     is_first = False
                     is_one_record = True
+                    course_id += 1
+
                 except Exception as e:
                     pass
                     #print(e)
@@ -95,6 +105,22 @@ class Class_scrapter:
 
                     self.output_list.append(info_bag)
                     info_bag = self.get_empty_bag()
+            
+            self.get_on_campus_course(t)
+
+            prev_course_id = course_id
+        print(self.course_on_campus)
+
+    def get_on_campus_course(self, t):
+        """check if contains on campus tut / lec, if so, it is a on-campus course
+
+        Args:
+            t (str): source page with tag
+        """
+        if any(l in t for l in ["TLB", "LAB"]) and not "Online" in t: 
+            c = self.output_list[-1][C.COURSE_CODE]
+            if not c in self.course_on_campus and c:
+                self.course_on_campus.append(c)
 
     def get_online_course(self, t:str, info_bag:list)->None:
         """
@@ -198,7 +224,9 @@ class Class_scrapter:
         
         
         result = re.search(f"{sub1}(.*){sub2}", s)
+        
         result = result.group(1)
+        
         if "&amp" in result:
             result = result.replace("&amp;", "&") # normalise
         return result
