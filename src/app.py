@@ -7,22 +7,32 @@ from class_scraper import Class_scrapter
 
 app = Flask(__name__)
 
-c = Class_scrapter()
-data_list = c.get_list()
-headings= data_list[0]
-data = data_list[1:]
+headings = []
+data = []
+
 @app.route("/")
 def table():
-    p = os.path.abspath("table.html")
-    return render_template("table.html", headings=headings, data=data)
+    global headings
+    global data
 
+    return render_template("table.html", headings=headings, data=data)
+    
 @app.route('/', methods=['POST'])
 def my_form_post():
-    text = request.form['text']
-    processed_text = text.upper()
-    print(processed_text)
-    return processed_text
+    global headings
+    global data
 
+    url = request.form['text']
+    try:
+        c = Class_scrapter(url)
+        data_list = c.get_list()
+        headings= data_list[0]
+        data = data_list[1:]
+    except:
+        pass
+    
+    return render_template("table.html", headings=headings, data=data)
+    
 # p = os.path.abspath("table.html")
 # print(p)
 if __name__=="__main__":
