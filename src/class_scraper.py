@@ -39,7 +39,7 @@ def main():
 
 class Class_scrapter:
 
-    def __init__(self, url_search=None, is_undergrad=True, is_perc=False, is_table=True, courses_done=None):
+    def __init__(self, url_search="http://classutil.unsw.edu.au/COMP_T1.html", is_undergrad=True, is_perc=False, is_table=True, courses_done=None):
 
         response = requests.get(url_search, timeout=5)
         self.content = BeautifulSoup(response.content, "html.parser")
@@ -112,7 +112,8 @@ class Class_scrapter:
 
             prev_course_id = course_id
         print(self.course_on_campus)
-
+    def get_list(self):
+        return 
     def get_on_campus_course(self, t):
         """check if contains on campus tut / lec, if so, it is a on-campus course
 
@@ -124,8 +125,8 @@ class Class_scrapter:
 
             c = self.output_list[-1][C.COURSE_CODE]
             if not c in self.course_on_campus and c:
-                self.course_on_campus.append(c)
-                if "6451" in c:
+                self.course_on_campus.append(c) 
+                if "6451" in c: # TODO
                     print(t)
 
     def get_online_course(self, t:str, info_bag:list)->None:
@@ -176,8 +177,8 @@ class Class_scrapter:
         print("\nBelow is the list in descending order of popularity in courses enrolled:\n")
         for i in self.output_list:
             print(i[C.COURSE_CODE], i[C.ENROL_PRECENT], i[C.ENROL_NUM], i[C.COURSE_NAME])
-    
-    def output_to_gui(self):
+
+    def convert_format(self):
         res = []
         res.append(("count", f"course code ({self.term})", "enrol_precentage", "enrol_number", "course_name", "has_on_campus"))
         total_enrol = 0
@@ -194,12 +195,15 @@ class Class_scrapter:
             else:
                 res.append((str(n + 1), i[C.COURSE_CODE], i[C.ENROL_PRECENT], i[C.ENROL_NUM], i[C.COURSE_NAME], is_on_campus))
         res.append(("total", "", "", f"{total_enrol} / {total_enrol_size}", "", str(len(self.course_on_campus)) + "  (in total)"))
-        
+        self.output_list = res
+
+    def output_to_gui(self):
+        self.convert_format()
         root = Tk() 
         if self.is_table:
-            t = Table(root, res) 
+            t = Table(root, self.output_list) 
         else:
-            example = Scrollbar(root, res)
+            example = Scrollbar(root, self.output_list)
             example.pack(side="top", fill="both", expand=True)
         root.mainloop() 
 
