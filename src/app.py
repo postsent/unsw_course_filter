@@ -21,7 +21,7 @@ def table():
 def my_form_post():
     global headings
     global data
-    
+
     try:
         url = request.form['text']
         c = Class_scrapter(url)
@@ -33,11 +33,20 @@ def my_form_post():
     
     return render_template("table.html", headings=headings, data=data)
 
-@app.route("/submitted", methods=['POST'])
-def hello():
-   myvariable = request.form.get("teamDropdown")
-   print(myvariable)
-   return myvariable
+@app.route('/level/', methods = ['GET', 'POST'])
+def level():
+    try:
+        myvariable = request.form.get("teamDropdown")
+        print(myvariable)
+        #return myvariable
+    except:
+        pass
+    return render_template('table.html', value2=myvariable)
+
+@app.route('/result/', methods = ['GET', 'POST'])
+def result():
+    value1 = request.form.get('Value1')
+    return render_template('table.html', value1=value1)
 
 # p = os.path.abspath("table.html")
 # print(p)
