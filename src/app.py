@@ -36,12 +36,10 @@ def my_form_post():
 @app.route('/level/', methods = ['GET', 'POST'])
 def level():
     try:
-        myvariable = request.form.get("teamDropdown")
-        print(myvariable)
-        #return myvariable
+        is_undergrad = request.form.get("levelDropdown")
     except:
         pass
-    return render_template('table.html', value2=myvariable)
+    return render_template('table.html', level=is_undergrad)
 
 @app.route('/result/', methods = ['GET', 'POST'])
 def result():

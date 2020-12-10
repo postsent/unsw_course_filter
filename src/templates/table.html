@@ -13,13 +13,14 @@
             <input type="submit">
         </form>
         <hr>
-        Value2 is {{value2 or 'not set'}} <!-- https://stackoverflow.com/questions/50286820/printing-value-next-to-text-box-from-a-function-in-flask-html -->
+        level is {{level or 'not set'}} <!-- https://stackoverflow.com/questions/50286820/printing-value-next-to-text-box-from-a-function-in-flask-html -->
         <p></p>
         <form class="teamSelection" method="POST" action="{{ url_for('level') }}">  
             <label for="name">undergrad/postgrad  </label>
-            <select class="teamForm" id="teamDropdownSelector" type="text" name="teamDropdown" placeholder="Select A Team">
+            <select class="teamForm" id="teamDropdownSelector" type="text" name="levelDropdown" placeholder="Select A Team">
                  <option disabled selected>Select a level</option>
-                 <option id="WatfordVSManchester Utd" value="Watford VS Manchester Utd">Watford VS Manchester Utd</option>
+                 <option id="undergrad" value="undergrad">undergrad</option>
+                 <option id="postgrad" value="postgrad">postgrad</option>
             </select>
             <input class="btn" type="submit" value="submit">
         </form>
@@ -28,8 +29,6 @@
         <p></p>
         <form action = "{{ url_for('result') }}" method = "POST">
             <p>Value1 <input type = "text" name = "Value1" /></p>
-            <p>Value2<input type ="text" name = "Value2" /></p>
-            <!-- <p>Charging Duration <input type ="text" name = "Charging_Duration" /></p> -->
             <p><input type = "submit" value = "submit" name = "submit" /></p>
         </form>
 
