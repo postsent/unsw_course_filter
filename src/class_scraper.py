@@ -127,7 +127,8 @@ class Class_scrapter:
             if not c in self.course_on_campus and c:
                 self.course_on_campus.append(c) 
                 if "6451" in c: # TODO
-                    print(t)
+                    pass
+                    #print(t)
 
     def get_online_course(self, t:str, info_bag:list)->None:
         """

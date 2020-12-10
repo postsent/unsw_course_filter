@@ -12,6 +12,15 @@
             <input name="text" size="50"> <!--change the length of input fied-->
             <input type="submit">
         </form>
+        <form class="teamSelection" method="POST" action="/submitted">  
+            <label for="name">undergrad/postgrad  </label>
+            <select class="teamForm" id="teamDropdownSelector" type="text" name="teamDropdown" placeholder="Select A Team">
+                 <option disabled selected>Select a level</option>
+                 <option id="WatfordVSManchester Utd" value="Watford VS Manchester Utd">Watford VS Manchester Utd</option>
+            </select>
+            <input class="btn" type="submit" value="submit">
+        </form>
+         
         <table> 
             <tr class="table_header">
                 {% for header in headings %}
