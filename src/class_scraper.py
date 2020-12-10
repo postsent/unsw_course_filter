@@ -39,7 +39,7 @@ def main():
 
 class Class_scrapter:
 
-    def __init__(self, url_search="http://classutil.unsw.edu.au/COMP_T1.html", is_undergrad=True, is_perc=False, is_table=True, courses_done=None):
+    def __init__(self, url_search="http://classutil.unsw.edu.au/COMP_T1.html", is_frontend=True, is_undergrad=True, is_perc=False, is_table=True, courses_done=""):
 
         response = requests.get(url_search, timeout=5)
         self.content = BeautifulSoup(response.content, "html.parser")
@@ -56,8 +56,10 @@ class Class_scrapter:
 
         self.collect_data()
         self.sort_based_percent(C.ENROL_PRECENT) if is_perc else self.sort_based_percent(C.ENROL_NUM)
+        self.convert_format()
         #self.print_output()
-        self.output_to_gui()
+        if not is_frontend:
+            self.output_to_gui()
 
     def collect_data(self):
 
@@ -107,13 +109,11 @@ class Class_scrapter:
                     if "CR02" in t: # if two courses available, then first ususally is online version
                         check_online = True
 
-            
-            
-
             prev_course_id = course_id
         print(self.course_on_campus)
     def get_list(self):
-        return 
+        return self.output_list
+
     def get_on_campus_course(self, t):
         """check if contains on campus tut / lec, if so, it is a on-campus course
 
@@ -198,7 +198,7 @@ class Class_scrapter:
         self.output_list = res
 
     def output_to_gui(self):
-        self.convert_format()
+        
         root = Tk() 
         if self.is_table:
             t = Table(root, self.output_list) 

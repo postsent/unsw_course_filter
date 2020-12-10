@@ -1,11 +1,13 @@
 .table {
     border: spacing 0;
+    
     margin: 1rem;
     background-color: #f5f5f5;
 }
 
-.table__row:nth-child() { /*even*/
+.table__row:nth-child(odd) {
     background-color: #e5e5e5;
+    border: spacing 0;
 }
 
 .table__headers {
@@ -14,4 +16,5 @@
 
 .table_cell {
     padding: 8px;
+    border: spacing 0;
 }

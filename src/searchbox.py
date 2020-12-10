@@ -97,7 +97,7 @@ class Searchbox:
             self.resultox.delete(0,END)
             self.resultox.insert(0,"FOUND")
             # _tmp = 1 if self.courses_done.get() else self.courses_done.insert(END, '1521,1531,2511')
-            c = Class_scrapter(content, under_or_post, perc_or_num, table_or_scroll, self.courses_done.get())
+            c = Class_scrapter(content, False, under_or_post, perc_or_num, table_or_scroll, self.courses_done.get())
 
         except ArithmeticError as e: # (ValueError, IndexError)
             print(e)

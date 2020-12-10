@@ -7,7 +7,12 @@
         <link rel="stylesheet" href="/static/styles.css" />
     </head>
     <body>
-        <table>
+        <form method="POST" width="50">
+            <label for="name">Write down your url</label>
+            <input name="text" size="50"> <!--change the length of input fied-->
+            <input type="submit">
+        </form>
+        <table> 
             <tr class="table_header">
                 {% for header in headings %}
                 <th class="table_cell"> {{ header }}</th>
