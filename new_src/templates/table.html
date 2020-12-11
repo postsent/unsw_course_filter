@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="/static/styles.css" />
+    </head>
+    <body>
+        <form id="url" method="POST" width="50">
+            <label for="name">Write down your url</label>
+            <input name="text" size="50" value="{{url}}"> <!--change the length of input fied-->
+            <p></p>
+            <label for="name">percentage/number  </label>
+            <select class="percForm" id="percDropdownSelector" type="text" name="percDropdown" placeholder="Select A perc">
+                 <option disabled selected>{{perc_num}}</option>
+                 <option id="perc" value="perc">percentage</option>
+                 <option id="num" value="num">number</option>
+            </select>
+            <p></p>
+            <label for="name">undergrad/postgrad  </label>
+            <select class="levelForm" id="levelDropdownSelector" type="text" name="levelDropdown" placeholder="Select A level">
+                 <option disabled selected>{{under_post}}</option>
+                 <option id="undergrad" value="undergrad">undergrad</option>
+                 <option id="postgrad" value="postgrad">postgrad</option>
+            </select>
+            <p></p>
+            courses_done <input type = "text" name = "courses_done" value="{{courses_done}}"/>
+            <p></p>
+            <input type="submit">
+        </form>
+        <hr>
+        <!-- is_undergrad is {{level}} https://stackoverflow.com/questions/50286820/printing-value-next-to-text-box-from-a-function-in-flask-html -->
+
+        <table> 
+            <tr class="table_header">
+                {% for header in headings %}
+                <th class="table_cell"> {{ header }}</th>
+                {% endfor %}
+            </tr>
+            {% for row in data %}
+            <tr class="table__row">
+                {% for cell in row %}
+                <td class="table__cell">{{ cell }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>

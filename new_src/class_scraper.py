@@ -23,10 +23,11 @@ from bs4 import BeautifulSoup
 import requests
 import re
 from enum import Enum
-from tkinter import Tk
 
-from gui_table import Table
-from scrollbar import Scrollbar
+#from tkinter import Tk
+
+# from gui_table import Table
+# from scrollbar import Scrollbar
 
 class C(str, Enum):
     COURSE_NAME = "name"
@@ -40,19 +41,26 @@ def main():
 class Class_scrapter:
 
     def __init__(self, url_search="http://classutil.unsw.edu.au/COMP_T1.html", is_frontend=True, is_undergrad=True, is_perc=False, is_table=True, courses_done=""):
-
-        response = requests.get(url_search, timeout=5)
+        
+        try: # handle invalid url
+            response = requests.get(url_search, timeout=5)
+        except:
+            self.output_list = []
+            self.output_list.append(("count", f"course code", "enrol_precentage", "enrol_number", "course_name", "has_on_campus"))
+            return
         self.content = BeautifulSoup(response.content, "html.parser")
         self.output_list = []
         self.perc_condition = ["class=\"cufull\">", "class=\"cu80\">", "class=\"cu50\">", "class=\"cu00\">"] # see explain above
         self.level = "(Course Enrolment, UGRD)" if is_undergrad else "(Course Enrolment, PGRD)"
         self.term = url_search[-7:-5] # term from url e.g.http://classutil.unsw.edu.au/COMP_T2.html
         self.degree = url_search[-12:-8]
-        self.courses_done = courses_done.split(",")
         self.tweet = self.content.findAll(["a" ,"tr"])
         self.is_table = is_table
         self.course_on_campus = []
-
+        self.courses_done = []
+        if courses_done:
+            self.courses_done = courses_done.split(",")
+            self.courses_done = [i.strip() for i in self.courses_done]
 
         self.collect_data()
         self.sort_based_percent(C.ENROL_PRECENT) if is_perc else self.sort_based_percent(C.ENROL_NUM)
@@ -122,8 +130,10 @@ class Class_scrapter:
         """
         if any(l in t for l in ["TLB", "LAB", "LEC", "SEM"]) and not "Online" in t \
         and any(d in t for d in ["Mon", "Tue", "Wed", "Thu", "Fri"]): 
-
-            c = self.output_list[-1][C.COURSE_CODE]
+            try:
+                c = self.output_list[-1][C.COURSE_CODE]
+            except:
+                return
             if not c in self.course_on_campus and c:
                 self.course_on_campus.append(c) 
                 if "6451" in c: # TODO
