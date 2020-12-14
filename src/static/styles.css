@@ -18,3 +18,20 @@
     padding: 8px;
     border: spacing 0;
 }
+/* needs to F5 to fresh for css update */
+.text_field_course_done {
+    
+    width: 500px;
+    height: 20px;
+}
+/* https://stackoverflow.com/questions/4309950/how-to-align-input-forms-in-html */
+form  { display: table;      }
+p     { display: table-row;  }
+label { display: table-cell; }
+input { display: table-cell; }
+
+/* add spacing after label */
+label 
+{
+    padding-right: 20px;
+}

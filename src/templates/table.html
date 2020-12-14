@@ -4,31 +4,52 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
-        <link rel="stylesheet" href="/static/styles.css" />
+        <link rel="stylesheet"  href="/static/styles.css" />
     </head>
     <body>
-        <form id="url" method="POST" width="50">
-            <label for="name">Write down your url</label>
-            <input name="text" size="50" value="{{url}}"> <!--change the length of input fied-->
-            <p></p>
-            <label for="name">percentage/number  </label>
-            <select class="percForm" id="percDropdownSelector" type="text" name="percDropdown" placeholder="Select A perc">
-                 <option disabled selected>{{perc_num}}</option>
-                 <option id="perc" value="perc">percentage</option>
-                 <option id="num" value="num">number</option>
-            </select>
-            <p></p>
-            <label for="name">undergrad/postgrad  </label>
-            <select class="levelForm" id="levelDropdownSelector" type="text" name="levelDropdown" placeholder="Select A level">
-                 <option disabled selected>{{under_post}}</option>
-                 <option id="undergrad" value="undergrad">undergrad</option>
-                 <option id="postgrad" value="postgrad">postgrad</option>
-            </select>
-            <p></p>
-            courses_done <input type = "text" name = "courses_done" value="{{courses_done}}"/>
-            <p></p>
-            <input type="submit">
+
+        <form id="url" method="POST" width="30">
+            <p>
+                <label for="name">course code prefix</label>
+                <input name="text" class="text_field_course" size="10" value="{{degree}}"> <!--change the length of input fied-->
+            </p>
+            <p>
+                <label for="name">Term  </label>
+                <select class="termForm" id="termDropdownSelector" type="text" name="termDropdown" placeholder="Select A term">
+                     <option disabled selected>{{term}}</option>
+                     <option id="U1" value="U1">summer</option>
+                     <option id="T1" value="T1">T1</option>
+                     <option id="T2" value="T2">T2</option>
+                     <option id="T3" value="T3">T3</option>
+                </select>
+            </p>
+            <p>
+                <label for="name">Enrol filter  </label>
+                <select class="percForm" id="percDropdownSelector" type="text" name="percDropdown" placeholder="Select A perc">
+                     <option disabled selected>{{perc_num}}</option>
+                     <option id="perc" value="perc">percentage</option>
+                     <option id="num" value="num">number</option>
+                     <option id="lec" value="lec">Lec</option>
+                     <option id="campus" value="campus">on_campus</option>
+                </select>
+            </p>
+            <p>
+                <label for="name">undergrad/postgrad  </label>
+                <select class="levelForm" id="levelDropdownSelector" type="text" name="levelDropdown" placeholder="Select A level">
+                     <option disabled selected>{{under_post}}</option>
+                     <option id="undergrad" value="undergrad">undergrad</option>
+                     <option id="postgrad" value="postgrad">postgrad</option>
+                </select>
+            </p>
+            <p>
+                <label for="name">courses done </label>
+                <input type = "text" class="text_field_course_done" name = "courses_done" size="30" placeholder="1511, 1521" />
+                <p></p>
+                <input type="submit">
+            </p>
+            
         </form>
+
         <hr>
         <!-- is_undergrad is {{level}} https://stackoverflow.com/questions/50286820/printing-value-next-to-text-box-from-a-function-in-flask-html -->
 

@@ -17,7 +17,9 @@ cuwarn: (/stop)
 """
 
 """
-status of "cancel" and "closed" not included 
+not included 
+status of "cancel" and "closed" , "cuwarn"
+(Course Enrolment, RSCH)
 """
 from bs4 import BeautifulSoup
 import requests
@@ -32,28 +34,36 @@ from enum import Enum
 class C(str, Enum):
     COURSE_NAME = "name"
     COURSE_CODE = "code"
-    ENROL_PRECENT = "prec"
+    ENROL_PRECENT = "perc"
     ENROL_NUM = "num"
+    LEC_NUM = "lec"
+    ON_CAMPUS = "campus"
 
 def main():
     Class_scrapter()
 
 class Class_scrapter:
 
-    def __init__(self, url_search="http://classutil.unsw.edu.au/COMP_T1.html", is_frontend=True, is_undergrad=True, is_perc=False, is_table=True, courses_done=""):
+    def __init__(self, degree="COMP", term="T1", is_frontend=True, is_undergrad=True, sort_algo=C.ENROL_NUM, is_table=True, courses_done="", url_rank=""):
         
         try: # handle invalid url
-            response = requests.get(url_search, timeout=5)
+            self.degree = degree.upper()
+            response = requests.get(self.generate_class_url(self.degree, term), timeout=5)
+            if url_rank:
+                response = requests.get(url_rank, timeout=5)
         except:
             self.output_list = []
             self.output_list.append(("count", f"course code", "enrol_precentage", "enrol_number", "course_name", "has_on_campus"))
+            self.output_list.append(("invalid url or error occur during search", "", "", "", "", ""))
             return
+
         self.content = BeautifulSoup(response.content, "html.parser")
         self.output_list = []
-        self.perc_condition = ["class=\"cufull\">", "class=\"cu80\">", "class=\"cu50\">", "class=\"cu00\">"] # see explain above
+        self.perc_condition = ["class=\""+ i + "\">" for i in ["cufull", "cu80", "cu50", "cu00"]]# see explain above
         self.level = "(Course Enrolment, UGRD)" if is_undergrad else "(Course Enrolment, PGRD)"
-        self.term = url_search[-7:-5] # term from url e.g.http://classutil.unsw.edu.au/COMP_T2.html
-        self.degree = url_search[-12:-8]
+        self.opposite_level = "UGRD" if not is_undergrad else "PGRD"
+        self.term = term
+        self.postpone = ["Canc", "Stop", "Tent"]
         self.tweet = self.content.findAll(["a" ,"tr"])
         self.is_table = is_table
         self.course_on_campus = []
@@ -63,7 +73,7 @@ class Class_scrapter:
             self.courses_done = [i.strip() for i in self.courses_done]
 
         self.collect_data()
-        self.sort_based_percent(C.ENROL_PRECENT) if is_perc else self.sort_based_percent(C.ENROL_NUM)
+        self.sort_based_percent(sort_algo)
         self.convert_format()
         #self.print_output()
         if not is_frontend:
@@ -75,8 +85,10 @@ class Class_scrapter:
         is_one_record = True # get only the first percent record which is about enrolment, others are class %
         info_bag = self.get_empty_bag()
         check_online = False
-        course_id = 0 # differentiate different course
-        prev_course_id = None
+        
+        stop_count = False # stop count on campus course when meet opposite level, e.g. CRS	CR01	1092		Open	16/88	18%  	(Course Enrolment, PGRD)
+        lec_record = "0/0"
+
         for i, t in enumerate(self.tweet):
             
             t = str(t)
@@ -86,22 +98,25 @@ class Class_scrapter:
 
             if check_online:
                 #print(t)
-                self.get_online_course(t, info_bag)
+                self.generate_online_course(t, info_bag)
                 check_online = False
                 info_bag = self.get_empty_bag()
                 continue
-            self.get_on_campus_course(t)
-
-            if ((f"href=\"#{self.degree}" not in t and f"name=\"{self.degree}" in t) or any(i in t for i in self.perc_condition)) :
+            lec_record = self.generate_lec_record(t, lec_record) if self.generate_lec_record(t, lec_record) else lec_record
+            
+            if f"href=\"#{self.degree}" not in t and f"name=\"{self.degree}" in t:
                 
                 try:
                     #print(t)
-                    if info_bag[C.ENROL_NUM] and info_bag[C.ENROL_PRECENT]:
+                    if info_bag[C.ENROL_NUM] and info_bag[C.ENROL_PRECENT]: # before shift to new course code, append bag
+                        
+                        info_bag[C.LEC_NUM] = lec_record
                         self.output_list.append(info_bag)
+                        stop_count = False # since the bag is updated before the new course introduced so stop count for the old one with on_campus course  here
                         info_bag = self.get_empty_bag()
-
+                        lec_record = "0/0"
+                        
                     info_bag[C.COURSE_CODE] = self.get_str_between(t, C.COURSE_CODE)[:-2]
-                    course_id += 1
                     info_bag[C.COURSE_NAME] = self.get_str_between(t, C.COURSE_NAME)
                     is_first = False
                     is_one_record = True
@@ -109,20 +124,45 @@ class Class_scrapter:
                 except Exception as e:
                     pass
                     #print(e)
-                if any(i in t for i in self.perc_condition) and is_one_record and self.level in t:
-                    
-                    info_bag[C.ENROL_PRECENT] = self.get_str_between(t, C.ENROL_PRECENT)
-                    info_bag[C.ENROL_NUM] = self.get_str_between(t, C.ENROL_NUM)
-                    is_one_record = False
-                    if "CR02" in t: # if two courses available, then first ususally is online version
-                        check_online = True
+            if any(i in t for i in self.perc_condition) and is_one_record and self.level in t:
+                
+                info_bag[C.ENROL_PRECENT] = self.get_str_between(t, C.ENROL_PRECENT)
+                info_bag[C.ENROL_NUM] = self.get_str_between(t, C.ENROL_NUM)
+                is_one_record = False
+                
+                if "CR02" in t: # if two courses available, then first ususally is online version
+                    check_online = True
 
-            prev_course_id = course_id
-        print(self.course_on_campus)
+            if not self.opposite_level in t and f"href=\"#{self.degree}" not in t and not f"name=\"{self.degree}" in t and not "CRS" in t:  # refresh when meets new course code regardless within the right leve
+                self.generate_on_campus_course(t, info_bag[C.COURSE_CODE])
+            
+        print("courses on campus are: ", self.course_on_campus)
+        
+    def generate_lec_record(self, t, lec_record):
+        """
+        assume below list is disjoint condition, sum up all lec number regradless under or post grad
+        """
+        if any(i in t for i in ["LEC", "WEB", "THE", "PRJ", "OTH"]) and all(i not in t for i in self.postpone):
+                
+            try:
+                prev_enrol = int(lec_record[:lec_record.index("/")]) 
+                prev_total = int(lec_record[lec_record.index("/") + 1:]) 
+
+                cur = self.get_str_between(t, C.LEC_NUM)
+                cur_enrol = int(cur[:cur.index("/")]) 
+                cur_total = int(cur[cur.index("/") + 1:]) 
+                return str(prev_enrol + cur_enrol) + "/" + str(cur_total + prev_total)
+            except:
+                return 
+
+    def generate_class_url(self, course_code:str, term:str):
+       
+        return "http://classutil.unsw.edu.au/" + course_code + "_" + term + ".html"
+
     def get_list(self):
         return self.output_list
 
-    def get_on_campus_course(self, t):
+    def generate_on_campus_course(self, t, c): # add prj and the - project and thesis
         """check if contains on campus tut / lec, if so, it is a on-campus course
 
         Args:
@@ -130,17 +170,12 @@ class Class_scrapter:
         """
         if any(l in t for l in ["TLB", "LAB", "LEC", "SEM"]) and not "Online" in t \
         and any(d in t for d in ["Mon", "Tue", "Wed", "Thu", "Fri"]): 
-            try:
-                c = self.output_list[-1][C.COURSE_CODE]
-            except:
-                return
+
             if not c in self.course_on_campus and c:
                 self.course_on_campus.append(c) 
-                if "6451" in c: # TODO
-                    pass
-                    #print(t)
+                    
 
-    def get_online_course(self, t:str, info_bag:list)->None:
+    def generate_online_course(self, t:str, info_bag:list)->None:
         """
         a few courses in 2021 term2 has offering both online nad offline
         """
@@ -149,40 +184,59 @@ class Class_scrapter:
         #print(info_bag[C.ENROL_PRECENT], info_bag[C.ENROL_NUM])
         info_bag[C.COURSE_CODE] = self.output_list[-1][C.COURSE_CODE]
         info_bag[C.COURSE_NAME] = self.output_list[-1][C.COURSE_NAME]
-        self.output_list[-1][C.COURSE_NAME] += " -ONLINE"
+        self.output_list[-1][C.COURSE_NAME] += " - ONLINE"
         self.output_list.append(info_bag)
 
     def sort_based_percent(self, which=C.ENROL_PRECENT):
         """
-        sort in ascending order based on percent / num
+        sort in ascending order based on percent / num / lec num
         """
+        
+        if which == C.ON_CAMPUS:
+            self.sort_based_on_campus()
+            return
+
         res = []
         is_end = True
         while len(self.output_list) != 0:
             maxv = -1
             p = None
+            
             for i in self.output_list:
-                perc = int(i[C.ENROL_PRECENT].replace("%", ""))
-                if which == C.ENROL_NUM:
-                    try:
-                        perc = int(i[C.ENROL_NUM][:i[C.ENROL_NUM].index("/")]) #TODO
-                    except Exception as e:
-                        print(i)
-                        print(e)
-                        print(i[C.ENROL_NUM])
-                        print(i[C.ENROL_NUM][:i[C.ENROL_NUM].index("/")])
+                perc = None   
+                
+                if "&gt;" in i[C.ENROL_PRECENT]: # e.g. > 100% , TODO add for others tag
+                    i[C.ENROL_PRECENT] = i[C.ENROL_PRECENT].replace("&gt;", "")[1:]
+                
+                if which == C.ENROL_PRECENT:
+                    perc = int(i[C.ENROL_PRECENT].replace("%", ""))
 
-                if perc > maxv:
+                elif which == C.ENROL_NUM:
+                    perc = int(i[C.ENROL_NUM][:i[C.ENROL_NUM].index("/")]) #TODO
+                
+                elif which == C.LEC_NUM:
+                 
+                    perc = int(i[C.LEC_NUM][:i[C.LEC_NUM].index("/")]) 
+                
+                if perc != None and perc > maxv:
                     maxv = perc
                     p = i
+            if not p:
+                break
             res.append(p)
             self.output_list.remove(p)
+            
         self.output_list = res
 
     def sort_based_on_campus(self):
         res = []
-        # for c in self.output_list:
-        #     if c[]
+        for c in self.output_list:
+            if any(i in c[C.COURSE_CODE] for i in self.course_on_campus):
+                res.append(c)
+        tmp = [i for i in self.output_list if i not in res]
+        res += tmp
+        self.output_list = res
+        
     def print_output(self):
         
         print("\nBelow is the list in descending order of popularity in courses enrolled:\n")
@@ -190,53 +244,68 @@ class Class_scrapter:
             print(i[C.COURSE_CODE], i[C.ENROL_PRECENT], i[C.ENROL_NUM], i[C.COURSE_NAME])
 
     def convert_format(self):
+        """
+        return  table like format in tuple
+        """
         res = []
-        res.append(("count", f"course code ({self.term})", "enrol_precentage", "enrol_number", "course_name", "has_on_campus"))
+        res.append(("Count", f"Course code ({self.term})", "Enrol precentage", "Enrol number", "Lec/Web/Prj/Thesis", "Course name", "On campus"))
         total_enrol = 0
         total_enrol_size = 0
+        total_lec = 0
+        totla_lec_size = 0
         total_courses = 0
+        
         for n, i in enumerate(self.output_list):
-            enrolled_num = int(i[C.ENROL_NUM][:i[C.ENROL_NUM].index("/")])
+            
             total_enrol_size += int(i[C.ENROL_NUM][i[C.ENROL_NUM].index("/") + 1:])
-            total_enrol += enrolled_num
+            total_enrol += int(i[C.ENROL_NUM][:i[C.ENROL_NUM].index("/")])
+            totla_lec_size += int(i[C.LEC_NUM][i[C.LEC_NUM].index("/") + 1:])
+            total_lec += int(i[C.LEC_NUM][:i[C.LEC_NUM].index("/")])
+
             total_courses += 1
             is_on_campus = "True" if i[C.COURSE_CODE] in self.course_on_campus else ""
             if any(c in i[C.COURSE_CODE] for c in self.courses_done) and self.courses_done != [""]: # ignore course done
-                res.append((str(n + 1), "", "", "", "", ""))
+                res.append((str(n + 1), "", "", "", "", "", "")) # TODO clean up
             else:
-                res.append((str(n + 1), i[C.COURSE_CODE], i[C.ENROL_PRECENT], i[C.ENROL_NUM], i[C.COURSE_NAME], is_on_campus))
-        res.append(("total", "", "", f"{total_enrol} / {total_enrol_size}", "", str(len(self.course_on_campus)) + "  (in total)"))
+                res.append((str(n + 1), i[C.COURSE_CODE], i[C.ENROL_PRECENT], i[C.ENROL_NUM], i[C.LEC_NUM], i[C.COURSE_NAME], is_on_campus))
+
+        res.append(("Total", "", "", f"{total_enrol} / {total_enrol_size}", f"{total_lec} / {totla_lec_size}", "", str(len(self.course_on_campus)) + "  (in total)"))
         self.output_list = res
 
     def output_to_gui(self):
         
-        root = Tk() 
-        if self.is_table:
-            t = Table(root, self.output_list) 
-        else:
-            example = Scrollbar(root, self.output_list)
-            example.pack(side="top", fill="both", expand=True)
-        root.mainloop() 
+        # root = Tk() 
+        # if self.is_table:
+        #     t = Table(root, self.output_list) 
+        # else:
+        #     example = Scrollbar(root, self.output_list)
+        #     example.pack(side="top", fill="both", expand=True)
+        # root.mainloop() 
+        pass
 
     def get_empty_bag(self):
         return {
             C.COURSE_CODE: None,
             C.COURSE_NAME: None,
             C.ENROL_PRECENT: None,
-            C.ENROL_NUM: None
+            C.ENROL_NUM: None,
+            C.LEC_NUM:None
         }
+        
     def get_str_between(self, s, which):
         
+        prefix = [i + "</td><td>" for i in ["Open", "Open\*", "Stop", "Full"]]
         course_dict = {
             C.COURSE_CODE:["name=\"", "\"></a>"],
             C.COURSE_NAME:["<td class=\"cucourse\" colspan=\"6\" valign=\"center\">", "</td>"],
             C.ENROL_PRECENT:[self.perc_condition, "</td>"],
-            C.ENROL_NUM:[["Open\*</td><td>", "Stop</td><td>", "Full</td><td>", "Open</td><td>"], "</td> <td class="] 
+            C.ENROL_NUM:[prefix, "</td> <td class="] , # since it find the largest suitable range so need to be more specify
+            C.LEC_NUM:[prefix, "</td> <td class="] 
         }
         sub1 = course_dict[which][0]
         sub2 = course_dict[which][1]
         
-        if which == C.ENROL_PRECENT or which == C.ENROL_NUM:
+        if which in [C.ENROL_PRECENT, C.ENROL_NUM, C.LEC_NUM]:
             
             for i in sub1:
                 try:
@@ -245,7 +314,6 @@ class Class_scrapter:
                     return result
                 except:
                     pass
-        
         
         result = re.search(f"{sub1}(.*){sub2}", s)
         
