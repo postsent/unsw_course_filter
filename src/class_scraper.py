@@ -256,12 +256,13 @@ class Class_scrapter:
         total_courses = 0
         
         for n, i in enumerate(self.output_list):
-            
-            total_enrol_size += int(i[C.ENROL_NUM][i[C.ENROL_NUM].index("/") + 1:])
-            total_enrol += int(i[C.ENROL_NUM][:i[C.ENROL_NUM].index("/")])
-            totla_lec_size += int(i[C.LEC_NUM][i[C.LEC_NUM].index("/") + 1:])
-            total_lec += int(i[C.LEC_NUM][:i[C.LEC_NUM].index("/")])
-
+            try:
+                total_enrol_size += int(i[C.ENROL_NUM][i[C.ENROL_NUM].index("/") + 1:])
+                total_enrol += int(i[C.ENROL_NUM][:i[C.ENROL_NUM].index("/")])
+                totla_lec_size += int(i[C.LEC_NUM][i[C.LEC_NUM].index("/") + 1:])
+                total_lec += int(i[C.LEC_NUM][:i[C.LEC_NUM].index("/")])
+            except Exception as e:
+                print(e)
             total_courses += 1
             is_on_campus = "True" if i[C.COURSE_CODE] in self.course_on_campus else ""
             if any(c in i[C.COURSE_CODE] for c in self.courses_done) and self.courses_done != [""]: # ignore course done
@@ -312,7 +313,7 @@ class Class_scrapter:
                     result = re.search(f"{i}(.*){sub2}", s)
                     result = result.group(1)
                     return result
-                except:
+                except Exception:
                     pass
         
         result = re.search(f"{sub1}(.*){sub2}", s)
