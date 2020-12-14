@@ -1,5 +1,7 @@
 # class_rank
 
+REMAINDER: result is for reference only.
+
 This is a class ranking filter on [classu](http://classutil.unsw.edu.au/COMP_T1.html)  
 Method used is inefficient and the UI is ...
 
