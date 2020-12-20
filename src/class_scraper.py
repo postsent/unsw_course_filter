@@ -164,11 +164,14 @@ class Class_scrapter:
 
     def generate_on_campus_course(self, t, c): # add prj and the - project and thesis
         """check if contains on campus tut / lec, if so, it is a on-campus course
-
+        
+        found 
+            TUT from ARTS degree
+            TLB from COMP 
         Args:
             t (str): source page with tag
         """
-        if any(l in t for l in ["TLB", "LAB", "LEC", "SEM"]) and not "Online" in t \
+        if any(l in t for l in ["TLB", "LAB", "LEC", "SEM", "TUT"]) and not "Online" in t \
         and any(d in t for d in ["Mon", "Tue", "Wed", "Thu", "Fri"]): 
 
             if not c in self.course_on_campus and c:

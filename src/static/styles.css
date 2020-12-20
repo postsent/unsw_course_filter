@@ -35,3 +35,7 @@ label
 {
     padding-right: 20px;
 }
+.bottom {
+    position: fixed;
+    bottom: 0;
+}
