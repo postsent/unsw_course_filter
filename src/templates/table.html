@@ -13,17 +13,17 @@
             <input name="text" class="text_field_course" size="10" value="{{degree}}"> <!--change the length of input fied
         </p> -->
 
-        <form id="url" method="POST" width="30">
+        <form id="url" method="POST" width="30" autocomplete="off">
             
             <p>
                 <!--Make sure the form has the autocomplete function switched off:-->
-                <form autocomplete="off" action="/action_page.php">
-                    <!-- <label for="name">course code prefix</label> -->
-                    <div class="autocomplete">
-                        <input id="myInput" class="text_field_course" type="text" name="myCountry" placeholder="Course code e.g. ARTS">
-                    </div>
+                <!-- <form autocomplete="off"> -->
+                <!-- <label for="name">course code prefix</label> -->
+                <div class="autocomplete">
                     
-                </form>
+                    <input name="degree" id="myInput" type="text" placeholder="Course code e.g. ARTS" value="{{degree}}">
+                </div>
+                <!-- </form> -->
             </p>
 
             <!-- autocomplete using js - https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_autocomplete -->
@@ -49,6 +49,16 @@
                                         "YCAN", "ZBUS", "ZBUS", "ZEIT", "ZEIT", "ZGEN", "ZHSS", "ZHSS", "ZINT", "ZINT", "ZPEM", "ZPEM"];
                 autocomplete(document.getElementById("myInput"), auto_course_code);
             </script>
+            <p>
+                <label for="name">Year  </label>
+                <select class="dropdown" id="yearDropdownSelector" type="text" name="yearDropdown" placeholder="Select A year">
+                     <option disabled selected>{{year}}</option>
+                     <option id="y2021" value="2021">2021</option>
+                     <option id="y2020" value="2020">2020</option>
+                     <option id="y2019" value="2019">2019</option>
+                     <option id="y2018" value="2018">2018</option>
+                </select>
+            </p>
             
             <p>
                 <label for="name">Term  </label>
@@ -58,6 +68,8 @@
                      <option id="T1" value="T1">T1</option>
                      <option id="T2" value="T2">T2</option>
                      <option id="T3" value="T3">T3</option>
+                     <option id="S1" value="S1">S1</option>
+                     <option id="S2" value="S2">S2</option>
                 </select>
             </p>
             <p>
@@ -80,7 +92,7 @@
             </p>
             <p>
                 <label for="name">courses done </label>
-                <input type = "text" class="text_field_course_done" name = "courses_done" size="30" value="{{courses_done}}" placeholder="1511, 1521" />
+                <input type = "text" class="text_field_course_done" name = "courses_done" size="30" value="{{courses_done}}" placeholder="e.g 1511, 1521" />
                 <p></p>
                 <input type="submit">
             </p>

@@ -1,33 +1,7 @@
-.table {
-    border: spacing 0;
-    
-    margin: 1rem;
-    background-color: #f5f5f5;
-}
-
-.table__row:nth-child(odd) {
-    background-color: #e5e5e5;
-    border: spacing 0;
-}
-
-.table__headers {
-    text-align:left;
-}
-
-.table_cell {
-    padding: 10px;
-    border: spacing 0;
-}
-/* needs to F5 to fresh for css update */
-.text_field_course_done {
-    
-    width: 500px;
-    height: 20px;
-}
-
 
 /* autocomplete */
-* { box-sizing: border-box; }
+* 
+{ box-sizing: border-box; }
 body {
   font: 18px Arial;
 }
@@ -76,6 +50,34 @@ input[type=submit] {
   background-color: DodgerBlue !important;
   color: #ffffff;
 }
+
+.table {
+    border: spacing 0;
+    
+    margin: 1rem;
+    background-color: #f5f5f5;
+}
+
+.table__row:nth-child(odd) {
+    background-color: #e5e5e5;
+    border: spacing 0;
+}
+
+.table__headers {
+    text-align:left;
+}
+
+.table_cell {
+    padding: 10px;
+    border: spacing 0;
+}
+/* needs to F5 to fresh for css update */
+.text_field_course_done {
+    
+    width: 500px;
+    height: 20px;
+}
+
 
 /* https://stackoverflow.com/questions/4309950/how-to-align-input-forms-in-html */
 form  { display: table;      }

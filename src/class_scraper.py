@@ -44,19 +44,21 @@ def main():
 
 class Class_scrapter:
 
-    def __init__(self, degree="COMP", term="T1", is_frontend=True, is_undergrad=True, sort_algo=C.ENROL_NUM, is_table=True, courses_done="", url_rank=""):
+    def __init__(self, degree="COMP", term="T1", is_frontend=True, is_undergrad=True, sort_algo=C.ENROL_NUM, is_table=True, courses_done="", url_rank="", year="2021"):
         
         try: # handle invalid url
             self.degree = degree.upper()
-            response = requests.get(self.generate_class_url(self.degree, term), timeout=5)
+            response = requests.get(self.generate_class_url(self.degree, term, year), timeout=5)
             if url_rank:
-                response = requests.get(url_rank, timeout=5)
-        except:
+                response = requests.get(url_rank, timeout=5) # rank not implement 
+        except Exception as e:
+            print(e)
             self.output_list = []
             self.output_list.append(("count", f"course code", "enrol_precentage", "enrol_number", "course_name", "has_on_campus"))
             self.output_list.append(("invalid url or error occur during search", "", "", "", "", ""))
             return
-
+        self.current_year = "2021"
+        self.year = year
         self.content = BeautifulSoup(response.content, "html.parser")
         self.output_list = []
         self.perc_condition = ["class=\""+ i + "\">" for i in ["cufull", "cu80", "cu50", "cu00"]]# see explain above
@@ -96,7 +98,7 @@ class Class_scrapter:
             if not is_first:
                 t = t[26:] #  get rid of duplicate of previous #TODO: be improved
 
-            if check_online:
+            if check_online and self.year == self.current_year:
                 #print(t)
                 self.generate_online_course(t, info_bag)
                 check_online = False
@@ -105,17 +107,19 @@ class Class_scrapter:
             lec_record = self.generate_lec_record(t, lec_record) if self.generate_lec_record(t, lec_record) else lec_record
             
             if f"href=\"#{self.degree}" not in t and f"name=\"{self.degree}" in t:
-                
+
+                if "center" in t:
+                    info_bag[C.LEC_NUM] = lec_record 
+                    lec_record = "0/0" # reset when meet new course code
+                    
                 try:
                     #print(t)
                     if info_bag[C.ENROL_NUM] and info_bag[C.ENROL_PRECENT]: # before shift to new course code, append bag
                         
-                        info_bag[C.LEC_NUM] = lec_record
                         self.output_list.append(info_bag)
                         stop_count = False # since the bag is updated before the new course introduced so stop count for the old one with on_campus course  here
                         info_bag = self.get_empty_bag()
-                        lec_record = "0/0"
-                        
+
                     info_bag[C.COURSE_CODE] = self.get_str_between(t, C.COURSE_CODE)[:-2]
                     info_bag[C.COURSE_NAME] = self.get_str_between(t, C.COURSE_NAME)
                     is_first = False
@@ -155,8 +159,11 @@ class Class_scrapter:
             except:
                 return 
 
-    def generate_class_url(self, course_code:str, term:str):
-       
+    def generate_class_url(self, course_code:str, term:str, year:str):
+        
+        if year != "2021":
+            
+            return "https://nss.cse.unsw.edu.au/sitar/classes" + f"{year}" + f"/{course_code}_{term}.html"
         return "http://classutil.unsw.edu.au/" + course_code + "_" + term + ".html"
 
     def get_list(self):
