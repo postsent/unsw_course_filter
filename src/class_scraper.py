@@ -111,7 +111,7 @@ class Class_scrapter:
                 if "center" in t:
                     info_bag[C.LEC_NUM] = lec_record 
                     lec_record = "0/0" # reset when meet new course code
-                    
+
                 try:
                     #print(t)
                     if info_bag[C.ENROL_NUM] and info_bag[C.ENROL_PRECENT]: # before shift to new course code, append bag
@@ -145,8 +145,9 @@ class Class_scrapter:
     def generate_lec_record(self, t, lec_record):
         """
         assume below list is disjoint condition, sum up all lec number regradless under or post grad
+        OTH and Lec is disjoint, but OTH not consider yet #TODO
         """
-        if any(i in t for i in ["LEC", "WEB", "THE", "PRJ", "OTH"]) and all(i not in t for i in self.postpone):
+        if any(i in t for i in ["LEC", "WEB", "THE", "PRJ"]) and all(i not in t for i in self.postpone):
                 
             try:
                 prev_enrol = int(lec_record[:lec_record.index("/")]) 
@@ -225,9 +226,11 @@ class Class_scrapter:
                     perc = int(i[C.ENROL_NUM][:i[C.ENROL_NUM].index("/")]) #TODO
                 
                 elif which == C.LEC_NUM:
-                 
-                    perc = int(i[C.LEC_NUM][:i[C.LEC_NUM].index("/")]) 
-                
+                    try:
+                        perc = int(i[C.LEC_NUM][:i[C.LEC_NUM].index("/")]) 
+                    except:
+                        perc = 0 # fix None 
+                    
                 if perc != None and perc > maxv:
                     maxv = perc
                     p = i

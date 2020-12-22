@@ -1,6 +1,6 @@
 # class_rank
 
-REMAINDER: result is for reference only. It is not complete and buggy
+REMAINDER: result is for reference only. More could be improved
 
 This is a class ranking filter on [classu](http://classutil.unsw.edu.au/COMP_T1.html)  
 Method used is inefficient and the UI is ...
