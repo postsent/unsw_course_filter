@@ -7,15 +7,52 @@
         <link rel="stylesheet"  href="/static/styles.css" />
     </head>
     <body>
+        
+        <!-- <p>
+            <label for="name">course code prefix</label>
+            <input name="text" class="text_field_course" size="10" value="{{degree}}"> <!--change the length of input fied
+        </p> -->
 
         <form id="url" method="POST" width="30">
+            
             <p>
-                <label for="name">course code prefix</label>
-                <input name="text" class="text_field_course" size="10" value="{{degree}}"> <!--change the length of input fied-->
+                <!--Make sure the form has the autocomplete function switched off:-->
+                <form autocomplete="off" action="/action_page.php">
+                    <!-- <label for="name">course code prefix</label> -->
+                    <div class="autocomplete">
+                        <input id="myInput" class="text_field_course" type="text" name="myCountry" placeholder="Course code e.g. ARTS">
+                    </div>
+                    
+                </form>
             </p>
+
+            <!-- autocomplete using js - https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_autocomplete -->
+            <!-- js files in flask - https://stackoverflow.com/questions/14711552/external-javascript-file-is-not-getting-added-when-running-on-flask -->
+            <!-- cargo cult -->
+            <script type="text/javascript"
+                src="{{ url_for('static', filename='myautocomplele.js') }}">
+            </script>
+            <script>
+                var auto_course_code = ["ACCT", "ACTL", "AERO", "ANAT", "ANZG", "ARCH", "ARTS", "ASIA", "ATSI", "AUST", "AVEN", "AVIA", 
+                                        "AVIF", "AVIG", "BABS", "BEES", "BEIL", "BENV", "BINF", "BIOC", "BIOM", "BIOS", "BIOT", "BLDG", 
+                                        "CDEV", "CEIC", "CHEM", "CHEN", "CLIM", "CODE", "COMD", "COMM", "COMP", "CONS", "CRIM", "CRTV", 
+                                        "CVEN", "DATA", "DESN", "DIPP", "DPBS", "DPGE", "DPST", "ECON", "EDST", "ELEC", "ENGG", "ENGL", 
+                                        "ENVS", "EXCH", "FINS", "FNDN", "FOOD", "GENC", "GENE", "GENL", "GENM", "GENS", "GENY", "GEOL", 
+                                        "GEOS", "GMAT", "GSBE", "GSOE", "HDAT", "HESC", "HIST", "HPSC", "HUML", "HUMS", "IDES", "IEST", 
+                                        "INFS", "INST", "INTA", "INTD", "JURD", "LAND", "LAWS", "LING", "MANF", "MARK", "MATH", "MATS", 
+                                        "MBAX", "MDCN", "MDIA", "MECH", "MFAC", "MFIN", "MGMT", "MICR", "MINE", "MMAN", "MMGT", "MNGT", 
+                                        "MNNG", "MODL", "MSCI", "MTRN", "MUPS", "MUSC", "NANO", "NCHR", "NEUR", "OBST", "OPTM", "PAED", 
+                                        "PATH", "PHAR", "PHCM", "PHIL", "PHOP", "PHSL", "PHTN", "PHYS", "PLAN", "PLTX", "POLS", "POLY", 
+                                        "PPEC", "PSCY", "PSYC", "PTRL", "REGZ", "REST", "RISK", "SCIF", "SENG", "SLSP", "SOCA", "SOCF", 
+                                        "SOCW", "SOLA", "SOMS", "SOSS", "SPRC", "SRAP", "STAM", "SURG", "SUSD", "SWCH", "TABL", "TELE", 
+                                        "UDES", "VISN", "WOMS", "YENG", "YMED", "ADAD", "DART", "DDES", "SAHT", "SART", "SDES", "SOMA", 
+                                        "YCAN", "ZBUS", "ZBUS", "ZEIT", "ZEIT", "ZGEN", "ZHSS", "ZHSS", "ZINT", "ZINT", "ZPEM", "ZPEM"];
+                autocomplete(document.getElementById("myInput"), auto_course_code);
+            </script>
+            
             <p>
                 <label for="name">Term  </label>
-                <select class="termForm" id="termDropdownSelector" type="text" name="termDropdown" placeholder="Select A term">
+                <select class="dropdown" id="termDropdownSelector" type="text" name="termDropdown" placeholder="Select A term">
                      <option disabled selected>{{term}}</option>
                      <option id="U1" value="U1">summer</option>
                      <option id="T1" value="T1">T1</option>
@@ -25,7 +62,7 @@
             </p>
             <p>
                 <label for="name">Enrol filter  </label>
-                <select class="percForm" id="percDropdownSelector" type="text" name="percDropdown" placeholder="Select A perc">
+                <select class="dropdown" id="percDropdownSelector" type="text" name="percDropdown" placeholder="Select A perc">
                      <option disabled selected>{{perc_num}}</option>
                      <option id="perc" value="perc">percentage</option>
                      <option id="num" value="num">number</option>
@@ -35,7 +72,7 @@
             </p>
             <p>
                 <label for="name">undergrad/postgrad  </label>
-                <select class="levelForm" id="levelDropdownSelector" type="text" name="levelDropdown" placeholder="Select A level">
+                <select class="dropdown" id="levelDropdownSelector" type="text" name="levelDropdown" placeholder="Select A level">
                      <option disabled selected>{{under_post}}</option>
                      <option id="undergrad" value="undergrad">undergrad</option>
                      <option id="postgrad" value="postgrad">postgrad</option>
