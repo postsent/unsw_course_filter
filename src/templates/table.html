@@ -15,15 +15,21 @@
 
         <!--Make sure the form has the autocomplete function switched off:-->
         <!-- url for https://stackoverflow.com/questions/11556958/sending-data-from-html-form-to-a-python-script-in-flask -->
-        <form autocomplete="off", action="{{ url_for('handle_degree')}}">
-        <!-- <label for="name">course code prefix</label> -->
-            <div class="autocomplete">
-                
-                <input name="degree" id="myInput" type="text" placeholder="Course code e.g. ARTS" >
-                <input type="submit" value="Add">
-
-            </div>
+        <div style="float: left; ">
+            <form autocomplete="off", action="{{ url_for('handle_degree')}}" width="50px">
+                <!-- <label for="name">course code prefix</label> -->
+                <div class="autocomplete" >
+                    <input name="degree" id="myInput" type="text" placeholder="Course code e.g. ARTS" >
+                    <input type="submit" value="Add">
+                </div>
+            </form>
+        </div>
+        <!-- <div style="float: right;"></div> -->
+        <form style="padding-left: 5px;" action="{{ url_for('handle_clear')}}">
+            <input type="submit" value="Clear" >              
         </form>
+        
+
         <div class="myspacing"></div>
         <!-- closeable list item - https://www.w3schools.com/howto/howto_js_close_list_items.asp -->
         <div class="myspacing">

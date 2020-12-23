@@ -1,6 +1,7 @@
 from class_scraper import Class_scrapter, C
 
 class Degrees_sorting():
+    
     def __init__(self, degree=[], term="T1", is_frontend=True, is_undergrad=True, sort_algo=C.ENROL_NUM, is_table=True, courses_done="", url_rank="", year="2021"):
         self.result = []
         total_enrol = 0
@@ -10,6 +11,7 @@ class Degrees_sorting():
         n_on_campus = 0
         courses_done = []
         course_on_campus = []
+
         for d in degree:
             c = Class_scrapter(d, term, True, is_undergrad, sort_algo, True, courses_done, "", year)
             data_list = c.get_list() 

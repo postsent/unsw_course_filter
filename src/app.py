@@ -76,12 +76,17 @@ def handle_close(): # close the degree button
     headings, data, courses_done, under_post, perc_num, degree, term, year = get_database()
 
     c = request.args.get('close') # handle no input and initial assignment of none
-    print(c)
-    print(degree)
+
     try:
         degree.remove(c)
     except:
         pass
+    set_database(headings, data, courses_done, under_post, perc_num, degree, term, year)
+    return render_template("table.html", headings=headings, data=data, term=term, courses_done=courses_done, under_post=under_post, perc_num=perc_num, year=year, degree=degree)
+
+@app.route('/handle_clear', methods=['GET']) 
+def handle_clear(): # close the degree button
+    degree = []
     set_database(headings, data, courses_done, under_post, perc_num, degree, term, year)
     return render_template("table.html", headings=headings, data=data, term=term, courses_done=courses_done, under_post=under_post, perc_num=perc_num, year=year, degree=degree)
 
