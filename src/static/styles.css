@@ -83,7 +83,6 @@ input[type=submit] {
     height: 20px;
 }
 
-
 /* https://stackoverflow.com/questions/4309950/how-to-align-input-forms-in-html */
 form  { display: table;      }
 p     { display: table-row;  }
@@ -102,67 +101,31 @@ label
 .dropdown
 {
     font: 20px Arial;
+    width: 200px;
 }
 
 .degree_btn {
   background-color: green !important; 
   margin-left: 2px !important; 
-  
+  margin-bottom: 2px !important; 
   /* spacing between tags - https://stackoverflow.com/questions/8184958/add-space-between-html-elements-only-using-css */
   /* !important - https://stackoverflow.com/questions/20954715/how-to-override-the-properties-of-a-css-class-using-another-css-class */
   color: #fff;
+  width: 70px !important; 
+  /* above set size of block */
+  
 }
 
+.degree_btn:hover {background: #bbb !important;} 
 
 .myspacing {
   margin-bottom: 10px !important;
 }
+/* span tag for add cross - https://stackoverflow.com/questions/20653207/display-span-over-input-with-htmlcss/20653311 */
 
-
-
-
-
-
-/* ///////////////////////////////////////////////////////////////////////////////////////////////////////// */
-/* closable list */
-/* ///////////////////////////////////////////////////////////////////////////////////////////////////////// */
-* {
-  box-sizing: border-box;
-}
-
-/* Style the list (remove margins and bullets, etc) */
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-/* Style the list items */
-ul li {
-  border: 1px solid #ddd;
-  margin-top: -1px; /* Prevent double borders */
-  background-color: #f6f6f6;
-  padding: 12px;
-  text-decoration: none;
-  font-size: 18px;
-  color: black;
-  display: block;
+/*style in tag in html page takes first priority*/
+.wrapper span {
   position: relative;
-}
-
-/* Add a light grey background color on hover */
-ul li:hover {
-  background-color: #eee;
-}
-
-/* Style the close button (span) */
-.close {
-  cursor: pointer;
-  position: absolute;
-  top: 20%;
-  right: -30%;
-  padding: 12px 16px;
-  transform: translate(0%, -50%);
-}
-
-.close:hover {background: #bbb;}
+  top:-14px;
+  
+} 

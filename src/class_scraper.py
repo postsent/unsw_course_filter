@@ -213,10 +213,11 @@ class Class_scrapter:
             
             for i in output_list:
                 perc = None   
-                
-                if "&gt;" in i[C.ENROL_PRECENT]: # e.g. > 100% , TODO add for others tag
-                    i[C.ENROL_PRECENT] = i[C.ENROL_PRECENT].replace("&gt;", "")[1:]
-            
+                try:
+                    if "&gt;" in i[C.ENROL_PRECENT]: # e.g. > 100% , TODO add for others tag
+                        i[C.ENROL_PRECENT] = i[C.ENROL_PRECENT].replace("&gt;", "")[1:]
+                except:
+                    print(111)
                 if which == C.ENROL_PRECENT:
                     perc = int(i[C.ENROL_PRECENT].replace("%", ""))
 
@@ -277,14 +278,10 @@ class Class_scrapter:
                     res.append((str(n + 1), "", "", "", "", "", "")) # TODO clean up
                 else:
                     res.append((str(n + 1), i[C.COURSE_CODE], i[C.ENROL_PRECENT], i[C.ENROL_NUM], i[C.LEC_NUM], i[C.COURSE_NAME], is_on_campus))
-            except:
-                print(111)
-            # except Exception as e:
-            #     print(e)
-            #     print(i)
-            #     print("line 282")
-            #     break
-                
+            except Exception as e:
+                print("line281")
+                print(e)
+            
         return res, total_enrol, total_enrol_size, total_lec, totla_lec_size, len(course_on_campus)
 
     def output_to_gui(self):
