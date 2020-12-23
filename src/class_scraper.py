@@ -54,8 +54,6 @@ class Class_scrapter:
         except Exception as e:
             print(e)
             self.output_list = []
-            self.output_list.append(("count", f"course code", "enrol_precentage", "enrol_number", "course_name", "has_on_campus"))
-            self.output_list.append(("invalid url or error occur during search", "", "", "", "", ""))
             return
         self.current_year = "2021"
         self.year = year
@@ -75,8 +73,8 @@ class Class_scrapter:
             self.courses_done = [i.strip() for i in self.courses_done]
 
         self.collect_data()
-        self.sort_based_percent(sort_algo)
-        self.convert_format()
+        #self.output_list = self.sort_based_percent(sort_algo, self.output_list)
+        #self.convert_format()
         #self.print_output()
         if not is_frontend:
             self.output_to_gui()
@@ -198,27 +196,27 @@ class Class_scrapter:
         self.output_list[-1][C.COURSE_NAME] += " - ONLINE"
         self.output_list.append(info_bag)
 
-    def sort_based_percent(self, which=C.ENROL_PRECENT):
+    def sort_based_percent(self, which=C.ENROL_PRECENT, output_list=[], course_on_campus=[]):
         """
         sort in ascending order based on percent / num / lec num
         """
         
         if which == C.ON_CAMPUS:
-            self.sort_based_on_campus()
-            return
+            return self.sort_based_on_campus(output_list, course_on_campus)
+            
 
         res = []
         is_end = True
-        while len(self.output_list) != 0:
+        while len(output_list) != 0:
             maxv = -1
             p = None
             
-            for i in self.output_list:
+            for i in output_list:
                 perc = None   
                 
                 if "&gt;" in i[C.ENROL_PRECENT]: # e.g. > 100% , TODO add for others tag
                     i[C.ENROL_PRECENT] = i[C.ENROL_PRECENT].replace("&gt;", "")[1:]
-                
+            
                 if which == C.ENROL_PRECENT:
                     perc = int(i[C.ENROL_PRECENT].replace("%", ""))
 
@@ -230,25 +228,26 @@ class Class_scrapter:
                         perc = int(i[C.LEC_NUM][:i[C.LEC_NUM].index("/")]) 
                     except:
                         perc = 0 # fix None 
-                    
+            
                 if perc != None and perc > maxv:
                     maxv = perc
                     p = i
+                
             if not p:
                 break
             res.append(p)
-            self.output_list.remove(p)
+            output_list.remove(p) # remove the max until nothing left
             
-        self.output_list = res
+        return res
 
-    def sort_based_on_campus(self):
+    def sort_based_on_campus(self, output_list, course_on_campus):
         res = []
-        for c in self.output_list:
-            if any(i in c[C.COURSE_CODE] for i in self.course_on_campus):
+        for c in output_list:
+            if any(i in c[C.COURSE_CODE] for i in course_on_campus):
                 res.append(c)
-        tmp = [i for i in self.output_list if i not in res]
+        tmp = [i for i in output_list if i not in res]
         res += tmp
-        self.output_list = res
+        return res
         
     def print_output(self):
         
@@ -256,35 +255,37 @@ class Class_scrapter:
         for i in self.output_list:
             print(i[C.COURSE_CODE], i[C.ENROL_PRECENT], i[C.ENROL_NUM], i[C.COURSE_NAME])
 
-    def convert_format(self):
+    def convert_format(self, output_list, course_on_campus, courses_done):
         """
         return  table like format in tuple
         """
         res = []
-        res.append(("Count", f"Course code ({self.term})", "Enrol precentage", "Enrol number", "Lec/Web/Prj/Thesis", "Course name", "On campus"))
         total_enrol = 0
         total_enrol_size = 0
         total_lec = 0
         totla_lec_size = 0
-        total_courses = 0
         
-        for n, i in enumerate(self.output_list):
+        for n, i in enumerate(output_list):
+            # try:
+            total_enrol_size += int(i[C.ENROL_NUM][i[C.ENROL_NUM].index("/") + 1:])
+            total_enrol += int(i[C.ENROL_NUM][:i[C.ENROL_NUM].index("/")])
+            totla_lec_size += int(i[C.LEC_NUM][i[C.LEC_NUM].index("/") + 1:])
+            total_lec += int(i[C.LEC_NUM][:i[C.LEC_NUM].index("/")])
+            is_on_campus = "True" if i[C.COURSE_CODE] in course_on_campus else ""
             try:
-                total_enrol_size += int(i[C.ENROL_NUM][i[C.ENROL_NUM].index("/") + 1:])
-                total_enrol += int(i[C.ENROL_NUM][:i[C.ENROL_NUM].index("/")])
-                totla_lec_size += int(i[C.LEC_NUM][i[C.LEC_NUM].index("/") + 1:])
-                total_lec += int(i[C.LEC_NUM][:i[C.LEC_NUM].index("/")])
-            except Exception as e:
-                print(e)
-            total_courses += 1
-            is_on_campus = "True" if i[C.COURSE_CODE] in self.course_on_campus else ""
-            if any(c in i[C.COURSE_CODE] for c in self.courses_done) and self.courses_done != [""]: # ignore course done
-                res.append((str(n + 1), "", "", "", "", "", "")) # TODO clean up
-            else:
-                res.append((str(n + 1), i[C.COURSE_CODE], i[C.ENROL_PRECENT], i[C.ENROL_NUM], i[C.LEC_NUM], i[C.COURSE_NAME], is_on_campus))
-
-        res.append(("Total", "", "", f"{total_enrol} / {total_enrol_size}", f"{total_lec} / {totla_lec_size}", "", str(len(self.course_on_campus)) + "  (in total)"))
-        self.output_list = res
+                if any(c in i[C.COURSE_CODE] for c in courses_done) and courses_done != [""]: # ignore course done
+                    res.append((str(n + 1), "", "", "", "", "", "")) # TODO clean up
+                else:
+                    res.append((str(n + 1), i[C.COURSE_CODE], i[C.ENROL_PRECENT], i[C.ENROL_NUM], i[C.LEC_NUM], i[C.COURSE_NAME], is_on_campus))
+            except:
+                print(111)
+            # except Exception as e:
+            #     print(e)
+            #     print(i)
+            #     print("line 282")
+            #     break
+                
+        return res, total_enrol, total_enrol_size, total_lec, totla_lec_size, len(course_on_campus)
 
     def output_to_gui(self):
         
@@ -326,7 +327,7 @@ class Class_scrapter:
                     result = re.search(f"{i}(.*){sub2}", s)
                     result = result.group(1)
                     return result
-                except Exception:
+                except:
                     pass
         
         result = re.search(f"{sub1}(.*){sub2}", s)
