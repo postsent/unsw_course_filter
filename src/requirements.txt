@@ -26,8 +26,6 @@ Flask-Mail==0.9.1
 future==0.18.2
 gunicorn==20.0.4
 idna==2.9
-ipykernel==5.3.4
-ipywidgets==7.5.1
 isort==4.3.21
 itsdangerous==1.1.0
 jedi==0.17.2
@@ -42,14 +40,10 @@ mistune==0.8.4
 more-itertools==8.2.0
 mypy==0.770
 mypy-extensions==0.4.3
-nbclient==0.5.1
-nbconvert==6.0.7
-nbformat==5.0.8
 nest-asyncio==1.4.2
 packaging==20.1
 pandocfilters==1.4.3
 parso==0.7.1
-pickleshare==0.7.5
 Pillow==7.1.1
 pluggy==0.13.1
 prometheus-client==0.8.0
@@ -85,3 +79,4 @@ webencodings==0.5.1
 Werkzeug==1.0.0
 wikiquote==0.1.14
 wrapt==1.11.2
+Flask-Session==0.3.2

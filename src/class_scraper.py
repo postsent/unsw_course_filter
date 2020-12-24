@@ -82,9 +82,7 @@ class Class_scrapter:
     def collect_data(self):
 
         is_first = True
-        is_one_record = True # get only the first percent record which is about enrolment, others are class %
         info_bag = self.get_empty_bag()
-        check_online = False
         
         stop_count = False # stop count on campus course when meet opposite level, e.g. CRS	CR01	1092		Open	16/88	18%  	(Course Enrolment, PGRD)
         lec_record = "0/0"
@@ -95,13 +93,6 @@ class Class_scrapter:
             
             if not is_first:
                 t = t[26:] #  get rid of duplicate of previous #TODO: be improved
-
-            if check_online and self.year == self.current_year:
-                #print(t)
-                self.generate_online_course(t, info_bag)
-                check_online = False
-                info_bag = self.get_empty_bag()
-                continue
 
             lec_record = self.generate_lec_record(t, lec_record, lec_bag) if self.generate_lec_record(t, lec_record, lec_bag) else lec_record
             
@@ -122,23 +113,35 @@ class Class_scrapter:
                     info_bag[C.COURSE_CODE] = self.get_str_between(t, C.COURSE_CODE)[:-2]
                     info_bag[C.COURSE_NAME] = self.get_str_between(t, C.COURSE_NAME)
                     is_first = False
-                    is_one_record = True
                     
                 except Exception as e:
                     pass
                     #print(e)
-            if any(i in t for i in self.perc_condition) and is_one_record and self.level in t:
+            if any(i in t for i in self.perc_condition) and self.level in t:
                 
                 info_bag[C.ENROL_PRECENT] = self.get_str_between(t, C.ENROL_PRECENT)
-                info_bag[C.ENROL_NUM] = self.get_str_between(t, C.ENROL_NUM)
-                is_one_record = False
-                
-                if "CR02" in t: # if two courses available, then first ususally is online version
-                    check_online = True
 
+                if not info_bag[C.ENROL_NUM]:
+                    info_bag[C.ENROL_NUM] = self.get_str_between(t, C.ENROL_NUM)
+                else:
+                    new_enrol = self.get_str_between(t, C.ENROL_NUM)
+                    info_bag[C.ENROL_NUM] = self.str_sum(new_enrol, info_bag[C.ENROL_NUM]) # sum of all coruse enrolment num
+                
+                if "CR02" in t: # if two courses available, then first ususally is online version                    
+                    info_bag[C.COURSE_NAME] += "- CR1/CR2" # a few courses in 2021 term2 has offering both online and offline
+                    
             if not self.opposite_level in t and f"href=\"#{self.degree}" not in t and not f"name=\"{self.degree}" in t and not "CRS" in t:  # refresh when meets new course code regardless within the right leve
                 self.generate_on_campus_course(t, info_bag[C.COURSE_CODE])
-
+    
+    def str_sum(self, a, b):
+        c_enrol = int(a[:a.index("/")]) 
+        c_total = int(a[a.index("/") + 1:]) 
+        prev_enrol = int(b[:b.index("/")]) 
+        prev_total = int(b[b.index("/") + 1:]) 
+        enrol = c_enrol  + prev_enrol
+        total = prev_total + c_total
+        return str(enrol) + "/" + str(total)
+        
     def is_duplicate_lec(self, lec_bag, t, cur_name, cur_enrol_stats):
         """if there is a web that is the sum of lec, then ignore the web, if there is one web same number as lec, ignore web
 
@@ -224,20 +227,7 @@ class Class_scrapter:
 
             if not c in self.course_on_campus and c:
                 self.course_on_campus.append(c) 
-                    
-
-    def generate_online_course(self, t:str, info_bag:list)->None:
-        """
-        a few courses in 2021 term2 has offering both online nad offline
-        """
-        info_bag[C.ENROL_PRECENT] = self.get_str_between(t, C.ENROL_PRECENT)
-        info_bag[C.ENROL_NUM] = self.get_str_between(t, C.ENROL_NUM)
-        #print(info_bag[C.ENROL_PRECENT], info_bag[C.ENROL_NUM])
-        info_bag[C.COURSE_CODE] = self.output_list[-1][C.COURSE_CODE]
-        info_bag[C.COURSE_NAME] = self.output_list[-1][C.COURSE_NAME]
-        self.output_list[-1][C.COURSE_NAME] += " - ONLINE"
-        self.output_list.append(info_bag)
-
+                
     def sort_based_percent(self, which=C.ENROL_PRECENT, output_list=[], course_on_campus=[]):
         """
         sort in ascending order based on percent / num / lec num
@@ -306,25 +296,27 @@ class Class_scrapter:
         total_enrol = 0
         total_enrol_size = 0
         total_lec = 0
-        totla_lec_size = 0
+        total_lec_size = 0
         
         for n, i in enumerate(output_list):
-            # try:
-            total_enrol_size += int(i[C.ENROL_NUM][i[C.ENROL_NUM].index("/") + 1:])
-            total_enrol += int(i[C.ENROL_NUM][:i[C.ENROL_NUM].index("/")])
-            totla_lec_size += int(i[C.LEC_NUM][i[C.LEC_NUM].index("/") + 1:])
-            total_lec += int(i[C.LEC_NUM][:i[C.LEC_NUM].index("/")])
-            is_on_campus = "True" if i[C.COURSE_CODE] in course_on_campus else ""
+            try:
+                total_enrol_size += int(i[C.ENROL_NUM][i[C.ENROL_NUM].index("/") + 1:])
+                total_enrol += int(i[C.ENROL_NUM][:i[C.ENROL_NUM].index("/")])
+                total_lec_size += int(i[C.LEC_NUM][i[C.LEC_NUM].index("/") + 1:])
+                total_lec += int(i[C.LEC_NUM][:i[C.LEC_NUM].index("/")])
+                is_on_campus = "True" if i[C.COURSE_CODE] in course_on_campus else ""
+            except:
+                print("convert_format function")
             try:
                 if any(c in i[C.COURSE_CODE] for c in courses_done) and courses_done != [""]: # ignore course done
                     res.append((str(n + 1), "", "", "", "", "", "")) # TODO clean up
                 else:
                     res.append((str(n + 1), i[C.COURSE_CODE], i[C.ENROL_PRECENT], i[C.ENROL_NUM], i[C.LEC_NUM], i[C.COURSE_NAME], is_on_campus))
             except Exception as e:
-                print("line281")
+                print("convert_format function")
                 print(e)
             
-        return res, total_enrol, total_enrol_size, total_lec, totla_lec_size, len(course_on_campus)
+        return res, total_enrol, total_enrol_size, total_lec, total_lec_size, len(course_on_campus)
 
     def output_to_gui(self):
         

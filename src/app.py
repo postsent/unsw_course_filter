@@ -1,51 +1,52 @@
 """
 https://www.youtube.com/watch?v=mCy52I4exTU&ab_channel=teclado
 
+flask session - https://stackoverflow.com/questions/32815451/are-global-variables-thread-safe-in-flask-how-do-i-share-data-between-requests
+
 perc, num, are fixed constant connected between front and back end
 
+
 """
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
+from flask_session import Session
 import os
 from class_scraper import Class_scrapter
 from handle_multiple_degree import Degrees_sorting # main 
 import atexit
 
 app = Flask(__name__)
+# Check Configuration section for more details
+SESSION_TYPE = 'filesystem'
+app.config.from_object(__name__) 
+Session(app)
 
-headings = []
-data = []
-degree = []
-term = "T1"
-under_post = "undergrad"
-perc_num = "num"
-courses_done = ""
-year = "2021"
+def init_database():
+    session["headings"] = []
+    session["data"] = []
+    session["degree"] = []
+    session["term"] = "T1"
+    session["under_post"] = "undergrad"
+    session["perc_num"] = "lec"
+    session["courses_done"] = ""
+    session["year"] = "2021"
 
 def get_database():
-    global headings
-    global data
-    global courses_done
-    global under_post
-    global perc_num
-    global degree
-    global term
-    global year
 
-    return headings, data, courses_done, under_post, perc_num, degree, term, year
+    return session["headings"], session["data"], session["courses_done"], session["under_post"], session["perc_num"], session["degree"], session["term"], session["year"]
 
 def set_database(_headings, _data, _courses_done, _under_post, _perc_num, _degree, _term, _year):
-    global headings
-    global data
-    global courses_done
-    global under_post
-    global perc_num
-    global degree
-    global term
-    global year
-    headings, data, courses_done, under_post, perc_num, degree, term, year = _headings, _data, _courses_done, _under_post, _perc_num, _degree, _term, _year
+    session["headings"] = _headings
+    session["data"] = _data
+    session["degree"] = _degree
+    session["term"] = _term
+    session["under_post"] = _under_post
+    session["perc_num"] = _perc_num
+    session["courses_done"] = _courses_done
+    session["year"] = _year
 
 @app.route("/") # default page
 def table():
+    init_database()
     headings, data, courses_done, under_post, perc_num, degree, term, year = get_database()
     
     return render_template("table.html", headings=headings, data=data, term=term, courses_done=courses_done, under_post=under_post, perc_num=perc_num, year=year)
@@ -86,6 +87,7 @@ def handle_close(): # close the degree button
 
 @app.route('/handle_clear', methods=['GET']) 
 def handle_clear(): # close the degree button
+    headings, data, courses_done, under_post, perc_num, degree, term, year = get_database()
     degree = []
     set_database(headings, data, courses_done, under_post, perc_num, degree, term, year)
     return render_template("table.html", headings=headings, data=data, term=term, courses_done=courses_done, under_post=under_post, perc_num=perc_num, year=year, degree=degree)
@@ -103,22 +105,22 @@ def handle_degree():
     return render_template("table.html", headings=headings, data=data, term=term, courses_done=courses_done, under_post=under_post, perc_num=perc_num, year=year, degree=degree)
 
 # https://stackoverflow.com/questions/3850261/doing-something-before-program-exit
-def exit_handler():
-    global headings
-    global data
-    global degree
-    global under_post
-    global perc_num
-    global courses_done
+# def exit_handler():
+#     global headings
+#     global data
+#     global degree
+#     global under_post
+#     global perc_num
+#     global courses_done
 
-    headings = []
-    data = []
-    degree = []
-    under_post = "under"
-    perc_num = "num"
-    courses_done = ""
+#     headings = []
+#     data = []
+#     degree = []
+#     under_post = "under"
+#     perc_num = "num"
+#     courses_done = ""
 
-atexit.register(exit_handler)
+# atexit.register(exit_handler)
 
 if __name__=="__main__":
     app.run(debug=1)

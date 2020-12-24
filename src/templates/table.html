@@ -143,10 +143,37 @@
         </form>
 
         <!-- is_undergrad is {{level}} https://stackoverflow.com/questions/50286820/printing-value-next-to-text-box-from-a-function-in-flask-html -->
-        <p></p>
-        Ignore Enrol number when there is Lec number,
-        Enrol number used when there is no Lec number (enrolment not yet opened),
-        Percentage used for actual enrolment percentage
+        <!-- Collapse - https://www.w3schools.com/howto/howto_js_collapsible.asp -->
+        <button type="button" class="collapsible">FYI</button>
+        <div class="FYI">
+        <p>
+            <div class="myspacing"></div>
+            Ignore Enrol number when there is Lec number <p></p>
+            Enrol number used when there is no Lec number  <p></p>
+            (enrolment not yet opened) <p></p>
+            Percentage used for actual enrolment percentage <p></p>
+            CR1/CR2 means two enrolments (on/offline)
+        </p>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+            
+            for (i = 0; i < coll.length; i++) {
+              coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight){
+                  content.style.maxHeight = null;
+                } else {
+                  content.style.maxHeight = content.scrollHeight + "px";
+                } 
+              });
+            }
+        </script>
+        </div>
+        
+        <div class="myspacing"></div>
+        <div class="myspacing"></div>
         <p></p>
         Result for reference only
         <hr>
