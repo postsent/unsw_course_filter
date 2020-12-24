@@ -2,7 +2,9 @@ from class_scraper import Class_scrapter, C
 
 class Degrees_sorting():
     
-    def __init__(self, degree=[], term="T1", is_frontend=True, is_undergrad=True, sort_algo=C.ENROL_NUM, is_table=True, courses_done="", url_rank="", year="2021", levels={}):
+    def __init__(self, degree=[], term="T1", is_frontend=True, is_undergrad=True, sort_algo=C.ENROL_NUM, 
+                    is_table=True, courses_done="", url_rank="", year="2021", levels={}):
+
         self.result = []
         total_enrol = 0
         total_enrol_size = 0
@@ -39,9 +41,16 @@ class Degrees_sorting():
         
         self.result = Class_scrapter().sort_based_percent(sort_algo, self.result, course_on_campus)
         
-        self.result = Class_scrapter().convert_format(self.result, course_on_campus, self.courses_done)[0]
+        self.result = Class_scrapter().convert_format(self.result, course_on_campus, self.courses_done, self.convert_levels_2_list(levels))[0]
         self.result.insert(0, ("Count", f"Course code ({term})", "Enrol precentage", "Enrol number", "Lec/Web/Prj/Thesis", "Course name", "On campus"))
         self.result.append(("Total", "", "", f"{total_enrol} / {total_enrol_size}", f"{total_lec} / {totla_lec_size}", "", str(n_on_campus) + "  (in total)"))
 
     def get_list(self):
         return self.result
+
+    def convert_levels_2_list(self, levels):
+        res = []
+        for k, v in levels.items():
+            if v:
+                res.append(k)
+        return res

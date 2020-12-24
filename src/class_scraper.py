@@ -88,7 +88,7 @@ class Class_scrapter:
         info_bag = self.get_empty_bag()
         lec_record = "0/0"
         lec_bag = []
-        
+
         for i, t in enumerate(self.tweet):
             
             t = str(t)
@@ -281,7 +281,7 @@ class Class_scrapter:
         for i in self.output_list:
             print(i[C.COURSE_CODE], i[C.ENROL_PRECENT], i[C.ENROL_NUM], i[C.COURSE_NAME])
 
-    def convert_format(self, output_list, course_on_campus, courses_done):
+    def convert_format(self, output_list, course_on_campus, courses_done, levels=[]):
         """
         return  table like format in tuple
         """
@@ -299,11 +299,15 @@ class Class_scrapter:
             total_lec += int(i[C.LEC_NUM][:i[C.LEC_NUM].index("/")])
             is_on_campus = "True" if i[C.COURSE_CODE] in course_on_campus else ""
            
-          
+            if not any(i[C.COURSE_CODE][4] == str(l) for l in levels): # ignore certain levels , e.g level 1 course
+                res.append((str(n + 1), "", "", "", "", "", ""))
+                continue
+
             if any(c in i[C.COURSE_CODE] for c in courses_done) and courses_done != [""]: # ignore course done
                 res.append((str(n + 1), "", "", "", "", "", "")) # TODO clean up
-            else:
-                res.append((str(n + 1), i[C.COURSE_CODE], i[C.ENROL_PRECENT], i[C.ENROL_NUM], i[C.LEC_NUM], i[C.COURSE_NAME], is_on_campus))
+                continue
+            
+            res.append((str(n + 1), i[C.COURSE_CODE], i[C.ENROL_PRECENT], i[C.ENROL_NUM], i[C.LEC_NUM], i[C.COURSE_NAME], is_on_campus))
             # except Exception as e:
             #     #print("convert_format function")
             #     # print(e)
