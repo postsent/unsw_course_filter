@@ -21,8 +21,8 @@ def is_duplicate_lec(lec_bag, t, cur_enrol, cur_total):
             return True
     return False
 
-lec_bag = [{"WEB":"1/1"}, {"LEC":"1/1"}] # {"LEC":"1/1"}, {"LEC":"1/1"}
+lec_bag = [{"LEC":"5/10"}, {"LEC":"4/10"}] # {"LEC":"1/1"}, {"LEC":"1/1"}
 t = "WEB ..."
-cur_enrol = "2"
-cur_total = "2"
+cur_enrol = "9"
+cur_total = "19"
 print(is_duplicate_lec(lec_bag, t, cur_enrol, cur_total))

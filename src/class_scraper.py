@@ -88,7 +88,7 @@ class Class_scrapter:
         
         stop_count = False # stop count on campus course when meet opposite level, e.g. CRS	CR01	1092		Open	16/88	18%  	(Course Enrolment, PGRD)
         lec_record = "0/0"
-
+        lec_bag = []
         for i, t in enumerate(self.tweet):
             
             t = str(t)
@@ -102,14 +102,15 @@ class Class_scrapter:
                 check_online = False
                 info_bag = self.get_empty_bag()
                 continue
-            lec_record = self.generate_lec_record(t, lec_record) if self.generate_lec_record(t, lec_record) else lec_record
+
+            lec_record = self.generate_lec_record(t, lec_record, lec_bag) if self.generate_lec_record(t, lec_record, lec_bag) else lec_record
             
             if f"href=\"#{self.degree}" not in t and f"name=\"{self.degree}" in t:
 
                 if "center" in t:
                     info_bag[C.LEC_NUM] = lec_record 
                     lec_record = "0/0" # reset when meet new course code
-
+                    lec_bag = []
                 try:
                     #print(t)
                     if info_bag[C.ENROL_NUM] and info_bag[C.ENROL_PRECENT]: # before shift to new course code, append bag
@@ -137,10 +138,42 @@ class Class_scrapter:
 
             if not self.opposite_level in t and f"href=\"#{self.degree}" not in t and not f"name=\"{self.degree}" in t and not "CRS" in t:  # refresh when meets new course code regardless within the right leve
                 self.generate_on_campus_course(t, info_bag[C.COURSE_CODE])
-            
-        print("courses on campus are: ", self.course_on_campus)
+
+    def is_duplicate_lec(self, lec_bag, t, cur_name, cur_enrol_stats):
+        """if there is a web that is the sum of lec, then ignore the web, if there is one web same number as lec, ignore web
+
+        Args:
+            lec_bag (list): contains records e.g {"LEC":"1/1"}
+            t (str): source page part
+            cur_name (str): LEC/WEB
+            cur_enrol_stats (str): e.g "1/1", number in this WEB / LEC
+
+        Returns:
+            Bool: if duplicate lec
+        """
         
-    def generate_lec_record(self, t, lec_record):
+        if ("LEC" in list(*zip(*lec_bag)) and cur_name == "WEB") or ("WEB" in list(*zip(*lec_bag)) and cur_name == "LEC"):
+            lec_sum = "0/0"
+            for lec in lec_bag:
+                for k, v in lec.items():
+                    if k == "LEC":
+                        c_enrol = int(v[:v.index("/")]) 
+                        c_total = int(v[v.index("/") + 1:]) 
+                        prev_enrol = int(lec_sum[:lec_sum.index("/")]) 
+                        prev_total = int(lec_sum[lec_sum.index("/") + 1:]) 
+                        lec_sum = str(prev_enrol + c_enrol) + "/" + str(c_total + prev_total)
+                    
+                    if k == "LEC" and cur_name == "WEB" and v == cur_enrol_stats:
+                        return  True # ignore the result
+                    if k == "WEB" and cur_name == "LEC" and v == cur_enrol_stats:
+                        return  True
+            if cur_name == "WEB" and lec_sum == cur_enrol_stats:
+                return True
+        if "107/300" in t:
+            print("here")
+        return False
+        
+    def generate_lec_record(self, t, lec_record, lec_bag):
         """
         assume below list is disjoint condition, sum up all lec number regradless under or post grad
         OTH and Lec is disjoint, but OTH not consider yet #TODO
@@ -154,7 +187,16 @@ class Class_scrapter:
                 cur = self.get_str_between(t, C.LEC_NUM)
                 cur_enrol = int(cur[:cur.index("/")]) 
                 cur_total = int(cur[cur.index("/") + 1:]) 
-                return str(prev_enrol + cur_enrol) + "/" + str(cur_total + prev_total)
+                res = str(prev_enrol + cur_enrol) + "/" + str(cur_total + prev_total)
+                
+                cur_name = {"LEC" in t:"LEC", "WEB" in t:"WEB"}.get(True, None) # lec/web
+                
+                if self.is_duplicate_lec(lec_bag, t, cur_name, cur):
+                    return
+                if cur_name and not {cur_name:cur} in lec_bag:
+                    lec_bag.append({cur_name:cur})
+                
+                return res
             except:
                 return 
 

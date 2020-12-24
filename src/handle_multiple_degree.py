@@ -29,7 +29,7 @@ class Degrees_sorting():
             totla_lec_size += _totla_lec_size
             n_on_campus += _n_on_campus
             
-
+        print("courses on campus are: ", course_on_campus)
         if not self.result:
             self.result.append(("count", f"course code", "enrol_precentage", "enrol_number", "course_name", "has_on_campus"))
             self.result.append(("No result or error during search", "", "", "", "", ""))
