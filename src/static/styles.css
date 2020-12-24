@@ -1,3 +1,4 @@
+/* checkboxes - https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_custom_checkbox */
 
 /* autocomplete */
 * 
@@ -18,8 +19,12 @@ input {
 }
 input[type=text] {
   background-color: #f1f1f1;
-
+  text-transform:uppercase !important;
   /* width: 100%; */
+}
+/* uppercase ignore placeholder field - https://stackoverflow.com/questions/25180140/make-input-value-uppercase-in-css-without-affecting-the-placeholder */
+::placeholder { /* Recent browsers */
+  text-transform: none;
 }
 input[type=submit] {
   background-color: DodgerBlue;
@@ -92,7 +97,7 @@ input { display: table-cell; }
 /* add spacing after label */
 label 
 {
-    padding-right: 20px;
+    padding-right: 5px;
 }
 .bottom {
     position: fixed;

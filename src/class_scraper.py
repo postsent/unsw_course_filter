@@ -64,13 +64,9 @@ class Class_scrapter:
         self.opposite_level = "UGRD" if not is_undergrad else "PGRD"
         self.term = term
         self.postpone = ["Canc", "Stop", "Tent"]
-        self.tweet = self.content.findAll(["a" ,"tr"])
+        self.tweet = self.content.findAll(self.findall_condition)
         self.is_table = is_table
         self.course_on_campus = []
-        self.courses_done = []
-        if courses_done:
-            self.courses_done = courses_done.split(",")
-            self.courses_done = [i.strip() for i in self.courses_done]
 
         self.collect_data()
         #self.output_list = self.sort_based_percent(sort_algo, self.output_list)
@@ -79,40 +75,40 @@ class Class_scrapter:
         if not is_frontend:
             self.output_to_gui()
 
+    # add condition on findall - https://stackoverflow.com/questions/36659904/python-beautiful-soup-or-condition-in-soup-find-all
+    def findall_condition(self, tag):
+        
+        if (tag.has_attr('name') and tag.name == "a") or tag.name == "tr":
+            return True
+        else:
+            return False
+
     def collect_data(self):
 
-        is_first = True
         info_bag = self.get_empty_bag()
-        
-        stop_count = False # stop count on campus course when meet opposite level, e.g. CRS	CR01	1092		Open	16/88	18%  	(Course Enrolment, PGRD)
         lec_record = "0/0"
         lec_bag = []
+        
         for i, t in enumerate(self.tweet):
             
             t = str(t)
-            
-            if not is_first:
-                t = t[26:] #  get rid of duplicate of previous #TODO: be improved
 
             lec_record = self.generate_lec_record(t, lec_record, lec_bag) if self.generate_lec_record(t, lec_record, lec_bag) else lec_record
             
-            if f"href=\"#{self.degree}" not in t and f"name=\"{self.degree}" in t:
+            if "<a name" in t: # meet course code
 
-                if "center" in t:
-                    info_bag[C.LEC_NUM] = lec_record 
-                    lec_record = "0/0" # reset when meet new course code
-                    lec_bag = []
+                info_bag[C.LEC_NUM] = lec_record 
+                lec_record = "0/0" # reset when meet new course code
+                lec_bag = []
                 try:
                     #print(t)
                     if info_bag[C.ENROL_NUM] and info_bag[C.ENROL_PRECENT]: # before shift to new course code, append bag
                         
                         self.output_list.append(info_bag)
-                        stop_count = False # since the bag is updated before the new course introduced so stop count for the old one with on_campus course  here
                         info_bag = self.get_empty_bag()
 
                     info_bag[C.COURSE_CODE] = self.get_str_between(t, C.COURSE_CODE)[:-2]
                     info_bag[C.COURSE_NAME] = self.get_str_between(t, C.COURSE_NAME)
-                    is_first = False
                     
                 except Exception as e:
                     pass
@@ -128,9 +124,9 @@ class Class_scrapter:
                     info_bag[C.ENROL_NUM] = self.str_sum(new_enrol, info_bag[C.ENROL_NUM]) # sum of all coruse enrolment num
                 
                 if "CR02" in t: # if two courses available, then first ususally is online version                    
-                    info_bag[C.COURSE_NAME] += "- CR1/CR2" # a few courses in 2021 term2 has offering both online and offline
+                    info_bag[C.COURSE_NAME] += " - CR1/CR2" # a few courses in 2021 term2 has offering both online and offline
                     
-            if not self.opposite_level in t and f"href=\"#{self.degree}" not in t and not f"name=\"{self.degree}" in t and not "CRS" in t:  # refresh when meets new course code regardless within the right leve
+            if not self.opposite_level in t and not "<a name" in t:  # refresh when meets new course code regardless within the right leve
                 self.generate_on_campus_course(t, info_bag[C.COURSE_CODE])
     
     def str_sum(self, a, b):
@@ -172,8 +168,6 @@ class Class_scrapter:
                         return  True
             if cur_name == "WEB" and lec_sum == cur_enrol_stats:
                 return True
-        if "107/300" in t:
-            print("here")
         return False
         
     def generate_lec_record(self, t, lec_record, lec_bag):
@@ -245,11 +239,10 @@ class Class_scrapter:
             
             for i in output_list:
                 perc = None   
-                try:
-                    if "&gt;" in i[C.ENROL_PRECENT]: # e.g. > 100% , TODO add for others tag
-                        i[C.ENROL_PRECENT] = i[C.ENROL_PRECENT].replace("&gt;", "")[1:]
-                except:
-                    print(111)
+               
+                if "&gt;" in i[C.ENROL_PRECENT]: # e.g. > 100% , TODO add for others tag
+                    i[C.ENROL_PRECENT] = i[C.ENROL_PRECENT].replace("&gt;", "")[1:]
+                
                 if which == C.ENROL_PRECENT:
                     perc = int(i[C.ENROL_PRECENT].replace("%", ""))
 
@@ -299,22 +292,23 @@ class Class_scrapter:
         total_lec_size = 0
         
         for n, i in enumerate(output_list):
-            try:
-                total_enrol_size += int(i[C.ENROL_NUM][i[C.ENROL_NUM].index("/") + 1:])
-                total_enrol += int(i[C.ENROL_NUM][:i[C.ENROL_NUM].index("/")])
-                total_lec_size += int(i[C.LEC_NUM][i[C.LEC_NUM].index("/") + 1:])
-                total_lec += int(i[C.LEC_NUM][:i[C.LEC_NUM].index("/")])
-                is_on_campus = "True" if i[C.COURSE_CODE] in course_on_campus else ""
-            except:
-                print("convert_format function")
-            try:
-                if any(c in i[C.COURSE_CODE] for c in courses_done) and courses_done != [""]: # ignore course done
-                    res.append((str(n + 1), "", "", "", "", "", "")) # TODO clean up
-                else:
-                    res.append((str(n + 1), i[C.COURSE_CODE], i[C.ENROL_PRECENT], i[C.ENROL_NUM], i[C.LEC_NUM], i[C.COURSE_NAME], is_on_campus))
-            except Exception as e:
-                print("convert_format function")
-                print(e)
+            
+            total_enrol_size += int(i[C.ENROL_NUM][i[C.ENROL_NUM].index("/") + 1:])
+            total_enrol += int(i[C.ENROL_NUM][:i[C.ENROL_NUM].index("/")])
+            total_lec_size += int(i[C.LEC_NUM][i[C.LEC_NUM].index("/") + 1:])
+            total_lec += int(i[C.LEC_NUM][:i[C.LEC_NUM].index("/")])
+            is_on_campus = "True" if i[C.COURSE_CODE] in course_on_campus else ""
+           
+          
+            if any(c in i[C.COURSE_CODE] for c in courses_done) and courses_done != [""]: # ignore course done
+                res.append((str(n + 1), "", "", "", "", "", "")) # TODO clean up
+            else:
+                res.append((str(n + 1), i[C.COURSE_CODE], i[C.ENROL_PRECENT], i[C.ENROL_NUM], i[C.LEC_NUM], i[C.COURSE_NAME], is_on_campus))
+            # except Exception as e:
+            #     #print("convert_format function")
+            #     # print(e)
+            #     pass
+                
             
         return res, total_enrol, total_enrol_size, total_lec, total_lec_size, len(course_on_campus)
 

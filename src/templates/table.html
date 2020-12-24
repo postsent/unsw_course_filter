@@ -83,7 +83,8 @@
             
         </script>
 
-        
+       
+        <div class="myspacing"></div>
         <form id="url" method="POST" width="30" action="{{ url_for('handle_search') }}">
             
             <p></p>
@@ -136,10 +137,31 @@
                 <label for="name">courses done </label>
                 <input type = "text" class="text_field_course_done" name = "courses_done" size="30" value="{{courses_done}}" placeholder="e.g 1511, 1521" />
                 <div class="myspacing"></div>
-                <input type="submit">
+            </p>
+            <p>
+                <label >level</label>
+                <label>
+                <!-- for loop in jinja-template-language - https://overiq.com/flask-101/basics-of-jinja-template-language/ -->
+                {% for k, v in levels.items() %}
+                    <label class="container " > {{k}}
+                    {% if v %}
+                    <input type="checkbox" checked="checked" name="level{{k}}" value="{{k}}">
+                    {% else %}
+                    <input type="checkbox" name="level{{k}}" value="{{k}}">
+                    {% endif %}
+                    
+                    <span class="checkmark" ></span>
+                    </label>
+                {% endfor %}
+                </label>
                 
             </p>
+          
+            
+
             <div class="myspacing"></div>
+            <input type="submit">
+            <div class="myspacing"></div> 
         </form>
 
         <!-- is_undergrad is {{level}} https://stackoverflow.com/questions/50286820/printing-value-next-to-text-box-from-a-function-in-flask-html -->
