@@ -139,7 +139,7 @@ class Class_scrapter:
             if not self.opposite_level in t and not "<a name" in t:  # refresh when meets new course code regardless within the right leve
                 self.generate_on_campus_course(t, info_bag[C.COURSE_CODE])
 
-        if info_bag[C.COURSE_CODE] and info_bag != self.output_list[-1]: # fix the last item that may not be appended
+        if self.output_list and info_bag[C.COURSE_CODE] and info_bag != self.output_list[-1]: # fix the last item that may not be appended
             info_bag[C.LEC_NUM] = lec_record 
             if self.year <= "2018":
                 if len(info_bag[C.COURSE_CODE]) >= 8:

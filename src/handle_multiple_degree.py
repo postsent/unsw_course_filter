@@ -45,9 +45,10 @@ class Degrees_sorting():
         self.result = Class_scrapter().sort_based_percent(sort_algo, self.result, course_on_campus)
         
         self.result = Class_scrapter().convert_format(self.result, course_on_campus, self.courses_done, self.convert_levels_2_list(levels))[0]
+        self.result = self.result[:100] # at most 100 result
         self.result.insert(0, ("Count", f"Course code ({term})", "Enrol precentage", "Enrol number", "Lec/Web/Prj/Thesis", "Course name", "On campus"))
         self.result.append(("Total", "", "", f"{total_enrol} / {total_enrol_size}", f"{total_lec} / {totla_lec_size}", "", str(n_on_campus) + "  (in total)"))
-        self.result = self.result[:100] # at most 100 result
+        
 
     def get_list(self):
         return self.result
