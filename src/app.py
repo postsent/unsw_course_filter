@@ -31,7 +31,7 @@ def init_database():
     session["perc_num"] = "lec"
     session["courses_done"] = ""
     session["year"] = "2021"
-    session["levels"] = {1:True,2:True,3:True, 4:True, 5:True, 6:True,9:True} # course level
+    session["levels"] = {1:True,2:True,3:True, 4:True, 5:True, 6:True, 7:True, 9:True} # course level
 
 def get_database():
 

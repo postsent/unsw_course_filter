@@ -253,7 +253,6 @@ class Class_scrapter:
         if which == C.ON_CAMPUS:
             return self.sort_based_on_campus(output_list, course_on_campus)
             
-
         res = []
         is_end = True
         while len(output_list) != 0:
