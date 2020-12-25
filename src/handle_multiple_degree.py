@@ -39,7 +39,7 @@ class Degrees_sorting():
         #print("courses on campus are: ", course_on_campus)
         if not self.result:
             self.result.append(("count", f"course code", "enrol_precentage", "enrol_number", "course_name", "has_on_campus"))
-            self.result.append(("No result or error during search", "", "", "", "", ""))
+            self.result.append(("No result or error during search, check if term is right", "", "", "", "", ""))
             return
         
         self.result = Class_scrapter().sort_based_percent(sort_algo, self.result, course_on_campus)

@@ -48,6 +48,8 @@ class Class_scrapter:
         
         try: # handle invalid url
             self.degree = degree.upper()
+            if term == "U1" and year <= "2018":
+                term = "X1"
             response = requests.get(self.generate_class_url(self.degree, term, year), timeout=5)
             if url_rank:
                 response = requests.get(url_rank, timeout=5) # rank not implement 
@@ -136,7 +138,18 @@ class Class_scrapter:
                     
             if not self.opposite_level in t and not "<a name" in t:  # refresh when meets new course code regardless within the right leve
                 self.generate_on_campus_course(t, info_bag[C.COURSE_CODE])
-    
+
+        if info_bag[C.COURSE_CODE] and info_bag != self.output_list[-1]: # fix the last item that may not be appended
+            info_bag[C.LEC_NUM] = lec_record 
+            if self.year <= "2018":
+                if len(info_bag[C.COURSE_CODE]) >= 8:
+                    info_bag[C.ENROL_NUM] = "0/0"
+                    info_bag[C.ENROL_PRECENT] = "0/0" # by default, no enrollent, too long ago
+                    self.output_list.append(info_bag)
+                    return
+            if (info_bag[C.ENROL_NUM] and info_bag[C.ENROL_PRECENT]):
+                self.output_list.append(info_bag)
+
     def str_sum(self, a, b):
         c_enrol = int(a[:a.index("/")]) 
         c_total = int(a[a.index("/") + 1:]) 
