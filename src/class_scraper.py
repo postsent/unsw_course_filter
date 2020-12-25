@@ -175,27 +175,29 @@ class Class_scrapter:
         assume below list is disjoint condition, sum up all lec number regradless under or post grad
         OTH and Lec is disjoint, but OTH not consider yet #TODO
         """
-        if any(i in t for i in ["LEC", "WEB", "THE", "PRJ"]) and all(i not in t for i in self.postpone):
-                
-            try:
-                prev_enrol = int(lec_record[:lec_record.index("/")]) 
-                prev_total = int(lec_record[lec_record.index("/") + 1:]) 
+        if not any(i in t for i in ["LEC", "WEB", "THE", "PRJ"]) and all(i not in t for i in self.postpone):
+            return
+        if any(i in t for i in ["TLB", "LAB", "SEM", "TUT"]): # e.g. TUT with WEB option / online
+            return
+        try:
+            prev_enrol = int(lec_record[:lec_record.index("/")]) 
+            prev_total = int(lec_record[lec_record.index("/") + 1:]) 
 
-                cur = self.get_str_between(t, C.LEC_NUM)
-                cur_enrol = int(cur[:cur.index("/")]) 
-                cur_total = int(cur[cur.index("/") + 1:]) 
-                res = str(prev_enrol + cur_enrol) + "/" + str(cur_total + prev_total)
-                
-                cur_name = {"LEC" in t:"LEC", "WEB" in t:"WEB"}.get(True, None) # lec/web
-                
-                if self.is_duplicate_lec(lec_bag, t, cur_name, cur):
-                    return
-                if cur_name and not {cur_name:cur} in lec_bag:
-                    lec_bag.append({cur_name:cur})
-                
-                return res
-            except:
-                return 
+            cur = self.get_str_between(t, C.LEC_NUM)
+            cur_enrol = int(cur[:cur.index("/")]) 
+            cur_total = int(cur[cur.index("/") + 1:]) 
+            res = str(prev_enrol + cur_enrol) + "/" + str(cur_total + prev_total)
+            
+            cur_name = {"LEC" in t:"LEC", "WEB" in t:"WEB"}.get(True, None) # lec/web
+            
+            if self.is_duplicate_lec(lec_bag, t, cur_name, cur):
+                return
+            if cur_name and not {cur_name:cur} in lec_bag:
+                lec_bag.append({cur_name:cur})
+            
+            return res
+        except:
+            return 
 
     def generate_class_url(self, course_code:str, term:str, year:str):
         
@@ -338,7 +340,7 @@ class Class_scrapter:
         
     def get_str_between(self, s, which):
         
-        prefix = [i + "</td><td>" for i in ["Open", "Open\*", "Stop", "Full"]]
+        prefix = [i + "</td><td>" for i in ["Open", "Open\*", "Stop", "Full", "Full\*"]]
         course_dict = {
             C.COURSE_CODE:["name=\"", "\"></a>"],
             C.COURSE_NAME:["<td class=\"cucourse\" colspan=\"6\" valign=\"center\">", "</td>"],

@@ -78,7 +78,9 @@
                                     "PPEC", "PSCY", "PSYC", "PTRL", "REGZ", "REST", "RISK", "SCIF", "SENG", "SLSP", "SOCA", "SOCF", 
                                     "SOCW", "SOLA", "SOMS", "SOSS", "SPRC", "SRAP", "STAM", "SURG", "SUSD", "SWCH", "TABL", "TELE", 
                                     "UDES", "VISN", "WOMS", "YENG", "YMED", "ADAD", "DART", "DDES", "SAHT", "SART", "SDES", "SOMA", 
-                                    "YCAN", "ZBUS", "ZBUS", "ZEIT", "ZEIT", "ZGEN", "ZHSS", "ZHSS", "ZINT", "ZINT", "ZPEM", "ZPEM"];
+                                    "YCAN", "ZBUS", "ZBUS", "ZEIT", "ZEIT", "ZGEN", "ZHSS", "ZHSS", "ZINT", "ZINT", "ZPEM", "ZPEM",
+                                    "A", "E", "EV", "M", "S", "B", "L"
+                                    ];
             autocomplete(document.getElementById("myInput"), auto_course_code);
             
         </script>
@@ -125,7 +127,7 @@
                 <div class="myspacing"></div>
             </p>
             <p>
-                <label for="name">undergrad/postgrad  </label>
+                <label for="name">Undergrad/Postgrad  </label>
                 <select class="dropdown" id="levelDropdownSelector" type="text" name="levelDropdown" placeholder="Select A level">
                      <option disabled selected>{{under_post}}</option>
                      <option id="undergrad" value="undergrad">undergrad</option>
@@ -134,12 +136,12 @@
                 <div class="myspacing"></div>
             </p>
             <p>
-                <label for="name">courses done </label>
+                <label for="name">Courses done </label>
                 <input type = "text" class="text_field_course_done" name = "courses_done" size="30" value="{{courses_done}}" placeholder="e.g 1511, 1521" />
                 <div class="myspacing"></div>
             </p>
             <p>
-                <label >level</label>
+                <label >Level</label>
                 <label>
                 <!-- for loop in jinja-template-language - https://overiq.com/flask-101/basics-of-jinja-template-language/ -->
                 {% for k, v in levels.items() %}
@@ -170,10 +172,17 @@
         <div class="FYI">
         <p>
             <div class="myspacing"></div>
+            Faculties: <p></p><div class="myspacing"></div>
+            A - Arts, B - Business, E-engineering, EV - build environment, <p></p>
+            L - Law,  M - Medicine, S - Science <p></p>
+            <div class="myspacing"></div>
             Ignore Enrol number when there is Lec number <p></p>
-            Enrol number used when there is no Lec number  <p></p>
+            <div class="myspacing"></div>
+            Enrol number used when there is no Lec number 
             (enrolment not yet opened) <p></p>
+            <div class="myspacing"></div>
             Percentage used for actual enrolment percentage <p></p>
+            <div class="myspacing"></div>
             CR1/CR2 means two enrolments (on/offline)
         </p>
         <script>
