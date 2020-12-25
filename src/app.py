@@ -31,7 +31,7 @@ def init_database():
     session["perc_num"] = "lec"
     session["courses_done"] = ""
     session["year"] = "2021"
-    session["levels"] = {1:True,2:True,3:True,4:True,6:True,9:True} # course level
+    session["levels"] = {1:True,2:True,3:True, 4:True, 5:True, 6:True,9:True} # course level
 
 def get_database():
 
@@ -66,9 +66,9 @@ def handle_search():
     under_post= request.form.get("levelDropdown") if request.form.get("levelDropdown") else under_post
     perc_num= request.form.get("percDropdown") if request.form.get("percDropdown") else perc_num
     courses_done = request.form.get('courses_done') if request.form.get("courses_done") or request.form.get("courses_done") == "" else courses_done
-    
+    prev_level = levels
     levels = {}
-    for i in [1,2,3,4,6,9]:
+    for i in [*prev_level]:
         l = True if request.form.get(f"level{i}") or request.form.get(f"level{i}") == "" else False
         levels[i] = l
 

@@ -89,26 +89,34 @@ class Class_scrapter:
         lec_record = "0/0"
         lec_bag = []
 
-        for i, t in enumerate(self.tweet):
-            
+        for t in self.tweet:
+            original = t.text
             t = str(t)
 
             lec_record = self.generate_lec_record(t, lec_record, lec_bag) if self.generate_lec_record(t, lec_record, lec_bag) else lec_record
             
-            if "<a name" in t: # meet course code
+            if "<a name" in t and self.degree in original: # meet course code
 
                 info_bag[C.LEC_NUM] = lec_record 
                 lec_record = "0/0" # reset when meet new course code
                 lec_bag = []
                 try:
                     #print(t)
-                    if info_bag[C.ENROL_NUM] and info_bag[C.ENROL_PRECENT]: # before shift to new course code, append bag
+                    if (info_bag[C.ENROL_NUM] and info_bag[C.ENROL_PRECENT]) : # before shift to new course code, append bag
                         
                         self.output_list.append(info_bag)
                         info_bag = self.get_empty_bag()
 
-                    info_bag[C.COURSE_CODE] = self.get_str_between(t, C.COURSE_CODE)[:-2]
-                    info_bag[C.COURSE_NAME] = self.get_str_between(t, C.COURSE_NAME)
+                    elif self.year <= "2018" and info_bag[C.COURSE_CODE] and len(info_bag[C.COURSE_CODE]) >= 8:
+                        info_bag[C.ENROL_NUM] = "0/0"
+                        info_bag[C.ENROL_PRECENT] = "0/0" # by default, no enrollent, too long ago
+                        self.output_list.append(info_bag)
+                        info_bag = self.get_empty_bag()
+
+                    info_bag[C.COURSE_CODE] = self.get_data_between(original, C.COURSE_CODE)                    
+                    info_bag[C.COURSE_NAME] = self.get_data_between(original, C.COURSE_NAME)
+                    # info_bag[C.COURSE_CODE] = self.get_str_between(t, C.COURSE_CODE)[:-2]
+                    # info_bag[C.COURSE_NAME] = self.get_str_between(t, C.COURSE_NAME)
                     
                 except Exception as e:
                     pass
@@ -337,7 +345,18 @@ class Class_scrapter:
             C.ENROL_NUM: None,
             C.LEC_NUM:None
         }
+
+    def get_data_between(self, s, which):
         
+        if which == C.COURSE_NAME:
+            idx = s.index("\n")
+            s = s[idx + 1:]
+            
+        elif which == C.COURSE_CODE:
+            idx = s.index("\n")
+            s = s[:idx]
+        return s
+
     def get_str_between(self, s, which):
         
         prefix = [i + "</td><td>" for i in ["Open", "Open\*", "Stop", "Full", "Full\*"]]
