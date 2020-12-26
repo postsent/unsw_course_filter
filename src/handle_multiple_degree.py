@@ -71,12 +71,13 @@ class Degrees_sorting():
             "B": self.business,
             "ALL":self.engineering + self.environment + self.arts + self.science +  self.medicine + self.law + self.business
         }
-        tmp = []
+        tmp = degree.copy()
         for d in degree:
             res = faculty_dict.get(d, None)
             if res:
                 tmp += res
-        return list(set(tmp)) # remove duplicate
+        tmp = list (set(tmp) - set([*faculty_dict]))
+        return tmp # remove duplicate
         
             
     def get_faculty_data(self):
