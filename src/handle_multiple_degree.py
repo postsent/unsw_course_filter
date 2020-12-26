@@ -53,11 +53,13 @@ class Degrees_sorting():
             self.result.append(("count", f"course code", "enrol_precentage", "enrol_number", "course_name", "has_on_campus"))
             self.result.append(("No result or error during search, check if term is right", "", "", "", "", ""))
             return
-        
+
+        self.result = self.filter_postgrad_semester(self.result, year, is_undergrad)
         self.result = Class_scrapter.sort_based_percent(sort_algo, self.result, self.course_on_campus)
         
         self.result = Class_scrapter.convert_format(self.result, self.course_on_campus, \
                                                 self.courses_done, self.convert_levels_2_list(levels))[0]
+        
         self.result = self.result[:100] # at most 100 result
         self.result.insert(0, ("Count", f"Course code ({term})", "Enrol precentage", "Enrol number", \
                                 "Lec/Web/Prj/Thesis", "Course name", "On campus"))
@@ -74,6 +76,30 @@ class Degrees_sorting():
             if t[C.COURSE_CODE]  == res[-1][C.COURSE_CODE]:
                 res[-1][C.ENROL_NUM] = Class_scrapter.str_sum(res[-1][C.ENROL_NUM], t[C.ENROL_NUM])
                 res[-1][C.LEC_NUM] = Class_scrapter.str_sum(res[-1][C.LEC_NUM], t[C.LEC_NUM])
+                continue
+            res.append(t)
+        return res
+
+    def filter_postgrad_semester(self, l, year, is_undergrad):
+        if not year <= "2018":
+            return l
+        
+        # if cur == prev , add sum, else , append
+        if not l:
+            return []
+        tmp = sorted(l, key=lambda k: k[C.COURSE_NAME]) 
+        res = []
+        res.append(tmp[0])
+        for t in tmp[1:]:
+            if t[C.COURSE_NAME] == res[-1][C.COURSE_NAME]: 
+                if is_undergrad:
+                    if t[C.COURSE_CODE] < res[-1][C.COURSE_CODE]: # e.g. comp9201 > comp3201 so postgrad
+                        res.pop()
+                        res.append(t)
+                else:
+                    if t[C.COURSE_CODE] > res[-1][C.COURSE_CODE]: 
+                        res.pop()
+                        res.append(t)
                 continue
             res.append(t)
         return res

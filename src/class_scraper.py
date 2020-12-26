@@ -251,7 +251,8 @@ class Class_scrapter:
         sort in ascending order based on percent / num / lec num
         sort list of dictionaries - https://stackoverflow.com/questions/72899/how-do-i-sort-a-list-of-dictionaries-by-a-value-of-the-dictionary
         """
-        
+        if not output_list:
+            return
         if which == C.ON_CAMPUS:
             return self.sort_based_on_campus(output_list, course_on_campus)
             
@@ -283,6 +284,8 @@ class Class_scrapter:
         """
         return  table like format in tuple
         """
+        if not output_list:
+            return
         res = []
         total_enrol = 0
         total_enrol_size = 0
