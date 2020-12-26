@@ -6,8 +6,7 @@ class Degrees_sorting():
                     is_table=True, courses_done="", url_rank="", year="2021", levels={}):
         
         self.get_faculty_data()
-        self.add_faculty(degree)
-
+        degree = self.add_faculty(degree)
         self.result = []
         total_enrol = 0
         total_enrol_size = 0
@@ -69,14 +68,16 @@ class Degrees_sorting():
             "S": self.science,
             "M": self.medicine,
             "L": self.law,
-            "B": self.business
+            "B": self.business,
+            "ALL":self.engineering + self.environment + self.arts + self.science +  self.medicine + self.law + self.business
         }
+        tmp = []
         for d in degree:
-            tmp = d.upper()
-            res = faculty_dict.get(tmp, None)
+            res = faculty_dict.get(d, None)
             if res:
-                degree += res
-                degree.remove(d)
+                tmp += res
+        return list(set(tmp)) # remove duplicate
+        
             
     def get_faculty_data(self):
 
@@ -100,7 +101,7 @@ class Degrees_sorting():
         "PHCM", "NEUR", "PDCS", "CMED", "MDCN", "HEAL"]
 
         self.law = ["HPSC", "LEGT", "GENC", "GENC", "TABL", "LAWS", "JURD", "GENL", 
-        "LEGT", "LAWS", "JURD", "ATAX", "LAWS"]
+        "LEGT", "JURD", "ATAX"]
 
         self.business = ["ACCT", "AECM", "COMM", "ECON", "FINS", "GBAT", "GENC", "GSOE", "IBUS", "IROB", "LEGT", 
         "MFIN", "MGMT", "MNGT", "REGZ", "STRE", "TABL", "XACC", "XBUS", "XFIN", "XINT", "XMKM", "XPRO", 
