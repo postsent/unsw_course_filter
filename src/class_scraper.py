@@ -131,7 +131,7 @@ class Class_scrapter:
                     info_bag[C.ENROL_NUM] = self.get_str_between(t, C.ENROL_NUM)
                 else:
                     new_enrol = self.get_str_between(t, C.ENROL_NUM)
-                    info_bag[C.ENROL_NUM] = self.str_sum(new_enrol, info_bag[C.ENROL_NUM]) # sum of all coruse enrolment num
+                    info_bag[C.ENROL_NUM] = Class_scrapter.str_sum(new_enrol, info_bag[C.ENROL_NUM]) # sum of all coruse enrolment num
                 
                 if "CR02" in t: # if two courses available, then first ususally is online version                    
                     info_bag[C.COURSE_NAME] += " - CR1/CR2" # a few courses in 2021 term2 has offering both online and offline
@@ -149,8 +149,9 @@ class Class_scrapter:
                     return
             if (info_bag[C.ENROL_NUM] and info_bag[C.ENROL_PRECENT]):
                 self.output_list.append(info_bag)
-
-    def str_sum(self, a, b):
+    @staticmethod
+    def str_sum(a, b):
+        
         c_enrol = int(a[:a.index("/")]) 
         c_total = int(a[a.index("/") + 1:]) 
         prev_enrol = int(b[:b.index("/")]) 
@@ -244,48 +245,23 @@ class Class_scrapter:
 
             if not c in self.course_on_campus and c:
                 self.course_on_campus.append(c) 
-                
-    def sort_based_percent(self, which=C.ENROL_PRECENT, output_list=[], course_on_campus=[]):
+    @staticmethod
+    def sort_based_percent(which=C.ENROL_PRECENT, output_list=[], course_on_campus=[]):
         """
         sort in ascending order based on percent / num / lec num
+        sort list of dictionaries - https://stackoverflow.com/questions/72899/how-do-i-sort-a-list-of-dictionaries-by-a-value-of-the-dictionary
         """
         
         if which == C.ON_CAMPUS:
             return self.sort_based_on_campus(output_list, course_on_campus)
             
-        res = []
-        is_end = True
-        while len(output_list) != 0:
-            maxv = -1
-            p = None
-            
-            for i in output_list:
-                perc = None   
-               
-                if "&gt;" in i[C.ENROL_PRECENT]: # e.g. > 100% , TODO add for others tag
-                    i[C.ENROL_PRECENT] = i[C.ENROL_PRECENT].replace("&gt;", "")[1:]
-                
-                if which == C.ENROL_PRECENT:
-                    perc = int(i[C.ENROL_PRECENT].replace("%", ""))
-
-                elif which == C.ENROL_NUM:
-                    perc = int(i[C.ENROL_NUM][:i[C.ENROL_NUM].index("/")]) #TODO
-                
-                elif which == C.LEC_NUM:
-                    try:
-                        perc = int(i[C.LEC_NUM][:i[C.LEC_NUM].index("/")]) 
-                    except:
-                        perc = 0 # fix None 
-            
-                if perc != None and perc > maxv:
-                    maxv = perc
-                    p = i
-                
-            if not p:
-                break
-            res.append(p)
-            output_list.remove(p) # remove the max until nothing left
-            
+        sort_dict = {
+            C.ENROL_PRECENT:lambda k: int(k[C.ENROL_PRECENT].replace("%", "")),
+            C.ENROL_NUM:lambda k: int(k[C.ENROL_NUM][:k[C.ENROL_NUM].index("/")]),
+            C.LEC_NUM:lambda k: int(k[C.LEC_NUM][:k[C.LEC_NUM].index("/")])
+        }
+        res = sorted(output_list, key=sort_dict[which], reverse=True) 
+  
         return res
 
     def sort_based_on_campus(self, output_list, course_on_campus):
@@ -302,8 +278,8 @@ class Class_scrapter:
         print("\nBelow is the list in descending order of popularity in courses enrolled:\n")
         for i in self.output_list:
             print(i[C.COURSE_CODE], i[C.ENROL_PRECENT], i[C.ENROL_NUM], i[C.COURSE_NAME])
-
-    def convert_format(self, output_list, course_on_campus, courses_done, levels=[]):
+    @staticmethod
+    def convert_format(output_list, course_on_campus, courses_done, levels=[]):
         """
         return  table like format in tuple
         """
@@ -314,7 +290,7 @@ class Class_scrapter:
         total_lec_size = 0
         
         for n, i in enumerate(output_list):
-            
+
             total_enrol_size += int(i[C.ENROL_NUM][i[C.ENROL_NUM].index("/") + 1:])
             total_enrol += int(i[C.ENROL_NUM][:i[C.ENROL_NUM].index("/")])
             total_lec_size += int(i[C.LEC_NUM][i[C.LEC_NUM].index("/") + 1:])
@@ -398,6 +374,8 @@ class Class_scrapter:
         
         if "&amp" in result:
             result = result.replace("&amp;", "&") # normalise
+        if "&gt;" in result: # e.g. >100%  
+            result = result.replace("&gt;", "")[1:]
         return result
 
 if __name__=="__main__":
