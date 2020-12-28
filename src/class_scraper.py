@@ -42,8 +42,9 @@ class C(str, Enum):
 def main():
     Class_scrapter()
 
-class Class_scrapter:
 
+class Class_scrapter:
+    
     def __init__(self, degree="COMP", term="T1", is_frontend=True, is_undergrad=True, sort_algo=C.ENROL_NUM, is_table=True, courses_done="", url_rank="", year="2021"):
         
         try: # handle invalid url
@@ -79,11 +80,17 @@ class Class_scrapter:
 
     # add condition on findall - https://stackoverflow.com/questions/36659904/python-beautiful-soup-or-condition-in-soup-find-all
     def findall_condition(self, tag):
+        #print(tag.attrs)
         
-        if (tag.has_attr('name') and tag.name == "a") or tag.name == "tr":
+        # if (tag.has_attr('name') and tag.name == "a"):
+        #     print(tag.text)
+        #     return True
+        if tag.name == "tr": 
+            # and \
+            # any(i in t for i in ["LEC", "WEB", "THE", "PRJ", "TLB", "LAB", "SEM", "TUT"]):   
             return True
-        else:
-            return False
+        
+        return False
 
     def collect_data(self):
 
@@ -92,13 +99,14 @@ class Class_scrapter:
         lec_bag = []
 
         for t in self.tweet:
-            original = t.text
-            t = str(t)
-
-            lec_record = self.generate_lec_record(t, lec_record, lec_bag) if self.generate_lec_record(t, lec_record, lec_bag) else lec_record
+            texts = t.text
+            t = str(t).strip()
+            # if "COMP6080" in t:
+            #     print(texts)  
+            lec_record = self.generate_lec_record(texts, lec_record, lec_bag) if self.generate_lec_record(texts, lec_record, lec_bag) else lec_record
             
-            if "<a name" in t and self.degree in original: # meet course code
-
+            if "<a name" in t and self.degree in texts: # meet course code
+                print(texts)
                 info_bag[C.LEC_NUM] = lec_record 
                 lec_record = "0/0" # reset when meet new course code
                 lec_bag = []
@@ -115,22 +123,23 @@ class Class_scrapter:
                         self.output_list.append(info_bag)
                         info_bag = self.get_empty_bag()
 
-                    info_bag[C.COURSE_CODE] = self.get_data_between(original, C.COURSE_CODE)                    
-                    info_bag[C.COURSE_NAME] = self.get_data_between(original, C.COURSE_NAME)
+                    info_bag[C.COURSE_CODE] = self.get_data_between(texts, C.COURSE_CODE)                    
+                    info_bag[C.COURSE_NAME] = self.get_data_between(texts, C.COURSE_NAME)
                     # info_bag[C.COURSE_CODE] = self.get_str_between(t, C.COURSE_CODE)[:-2]
                     # info_bag[C.COURSE_NAME] = self.get_str_between(t, C.COURSE_NAME)
                     
                 except Exception as e:
                     pass
                     #print(e)
-            if any(i in t for i in self.perc_condition) and self.level in t:
+            
+            if "CRS" == texts[1:4]and self.level in t: # any(i in t for i in self.perc_condition)
+                #print(texts.split()[2])
+                info_bag[C.ENROL_PRECENT] = self.get_data_between(texts, C.ENROL_PRECENT)
                 
-                info_bag[C.ENROL_PRECENT] = self.get_str_between(t, C.ENROL_PRECENT)
-
                 if not info_bag[C.ENROL_NUM]:
-                    info_bag[C.ENROL_NUM] = self.get_str_between(t, C.ENROL_NUM)
+                    info_bag[C.ENROL_NUM] = self.get_data_between(texts, C.ENROL_NUM)#get_data_between(texts, C.ENROL_NUM)
                 else:
-                    new_enrol = self.get_str_between(t, C.ENROL_NUM)
+                    new_enrol = self.get_data_between(texts, C.ENROL_NUM)#get_data_between(texts, C.ENROL_NUM)
                     info_bag[C.ENROL_NUM] = Class_scrapter.str_sum(new_enrol, info_bag[C.ENROL_NUM]) # sum of all coruse enrolment num
                 
                 if "CR02" in t: # if two courses available, then first ususally is online version                    
@@ -160,7 +169,7 @@ class Class_scrapter:
         total = prev_total + c_total
         return str(enrol) + "/" + str(total)
         
-    def is_duplicate_lec(self, lec_bag, t, cur_name, cur_enrol_stats):
+    def is_duplicate_lec(self, lec_bag, cur_name, cur_enrol_stats):
         """if there is a web that is the sum of lec, then ignore the web, if there is one web same number as lec, ignore web
 
         Args:
@@ -192,33 +201,38 @@ class Class_scrapter:
                 return True
         return False
         
-    def generate_lec_record(self, t, lec_record, lec_bag):
+    def generate_lec_record(self, t, lec_record, lec_bag, tmp=""):
         """
         assume below list is disjoint condition, sum up all lec number regradless under or post grad
         OTH and Lec is disjoint, but OTH not consider yet #TODO
         """
+        
         if not any(i in t for i in ["LEC", "WEB", "THE", "PRJ"]) and all(i not in t for i in self.postpone):
             return
-        if any(i in t for i in ["TLB", "LAB", "SEM", "TUT"]): # e.g. TUT with WEB option / online
-            return
+        # if any(i in t[1:4] for i in ["TLB", "LAB", "SEM", "TUT", "CRS"]): # e.g. TUT with WEB option / online
+        #     return
         try:
             prev_enrol = int(lec_record[:lec_record.index("/")]) 
             prev_total = int(lec_record[lec_record.index("/") + 1:]) 
 
-            cur = self.get_str_between(t, C.LEC_NUM)
+            cur = self.get_data_between(t, C.LEC_NUM)
             cur_enrol = int(cur[:cur.index("/")]) 
             cur_total = int(cur[cur.index("/") + 1:]) 
             res = str(prev_enrol + cur_enrol) + "/" + str(cur_total + prev_total)
             
             cur_name = {"LEC" in t:"LEC", "WEB" in t:"WEB"}.get(True, None) # lec/web
             
-            if self.is_duplicate_lec(lec_bag, t, cur_name, cur):
+            if self.is_duplicate_lec(lec_bag, cur_name, cur):
                 return
             if cur_name and not {cur_name:cur} in lec_bag:
                 lec_bag.append({cur_name:cur})
             
             return res
-        except:
+        except Exception as e:
+            # if "LEC" in tmp and "6080" in t:
+            #     print(cur)
+            #     print("22222222222222222222222222222222222222")
+            # print(e)
             return 
 
     def generate_class_url(self, course_code:str, term:str, year:str):
@@ -336,6 +350,33 @@ class Class_scrapter:
             C.ENROL_NUM: None,
             C.LEC_NUM:None
         }
+    def find_idxs(self, s, ch):
+        return [i for i, ltr in enumerate(s) if ltr == ch]
+
+    def substr_digit(self, s, forward=True):
+        sub = ""
+        if forward:
+            
+            for l in s[::-1]:
+                if not l.isdigit(): break
+                sub += l
+            sub = sub[::-1]
+        else:
+            for l in s:
+                if not l.isdigit(): break
+                sub += l
+        return sub
+
+    def get_substr_by_letter(self, s, ch):
+        ch_list = self.find_idxs(s, ch)
+        res = ""
+        for idx in ch_list:
+            forward_str = self.substr_digit(s[:idx], True)
+            backward_str = self.substr_digit(s[idx + 1:], False)
+            if forward_str and backward_str:
+                res = (forward_str + "/" + backward_str)
+        return res
+        
 
     def get_data_between(self, s, which):
         
@@ -346,11 +387,17 @@ class Class_scrapter:
         elif which == C.COURSE_CODE:
             idx = s.index("\n")
             s = s[:idx]
+        elif which == C.ENROL_PRECENT:
+            s = s.split()[2]
+        elif which == C.ENROL_NUM or C.LEC_NUM:
+            # e.g. "CRSCR01 2094Open32/91 35%" -> "2094Open32/91" -> "*19/23nepO4902" -> ""19/23"
+            # LECA10164RelOpen57/100 57%   Mon 18-20# (w1-5,7,9-10, Online); Thu 18-20# (w1-5,7-10, Online) Comb/w  COMP6080-UGRD
+            s = self.get_substr_by_letter(s, "/")
         return s
 
     def get_str_between(self, s, which):
         
-        prefix = [i + "</td><td>" for i in ["Open", "Open\*", "Stop", "Full", "Full\*"]]
+        prefix = [i + "</td><td>" for i in ["Open", "Open\*", "Stop", "Full", "Closed", "Full\*"]]
         course_dict = {
             C.COURSE_CODE:["name=\"", "\"></a>"],
             C.COURSE_NAME:["<td class=\"cucourse\" colspan=\"6\" valign=\"center\">", "</td>"],

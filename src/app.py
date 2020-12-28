@@ -22,6 +22,9 @@ Session(app)
 # The limits of what you can store in a cookie are relatively low and depend on the browser, but typically is 4kb.
 # https://stackoverflow.com/questions/43435217/how-to-set-sessions-limit-in-flask
 
+#
+
+#
 def init_database():
     session["headings"] = []
     session["data"] = []
@@ -138,4 +141,16 @@ def handle_degree():
 # atexit.register(exit_handler)
 
 if __name__=="__main__":
+    # import cProfile
+    # import pstats
+    # import io
+    # pr = cProfile.Profile()
+    # pr.enable()
     app.run(debug=1)
+
+    # pr.disable()
+    # s = io.StringIO()
+    # ps = pstats.Stats(pr, stream=s).sort_stats("cumtime")
+    # ps.print_stats()
+    # with open("time.txt", "w+") as f:
+    #     f.write(s.getvalue())
