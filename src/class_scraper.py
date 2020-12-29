@@ -1,5 +1,6 @@
 """
 given the order of course listed is in ascending order
+places add assumption for booting the speed
 """
 
 """
@@ -25,7 +26,8 @@ from bs4 import BeautifulSoup
 import requests
 import re
 from enum import Enum
-
+import cchardet # https://thehftguy.com/2020/07/28/making-beautifulsoup-parsing-10-times-faster/#comments
+import lxml
 #from tkinter import Tk
 
 # from gui_table import Table
@@ -45,29 +47,30 @@ def main():
 
 class Class_scrapter:
     
-    def __init__(self, degree="COMP", term="T1", is_frontend=True, is_undergrad=True, sort_algo=C.ENROL_NUM, is_table=True, courses_done="", url_rank="", year="2021"):
+    def __init__(self, degree="COMP", term="T1", is_frontend=True, 
+                is_undergrad=True, sort_algo=C.ENROL_NUM, is_table=True, courses_done="", url_rank="", year="2021", requests_session=None):
         
         try: # handle invalid url
             self.degree = degree.upper()
             if term == "U1" and year <= "2018":
                 term = "X1"
-            response = requests.get(self.generate_class_url(self.degree, term, year), timeout=5)
+            response = requests_session.get(self.generate_class_url(self.degree, term, year), timeout=5)
             if url_rank:
-                response = requests.get(url_rank, timeout=5) # rank not implement 
+                response = requests_session.get(url_rank, timeout=5) # rank not implement 
         except Exception as e:
             print(e)
             self.output_list = []
             return
         self.current_year = "2021"
-        self.year = year
-        self.content = BeautifulSoup(response.content, "html.parser")
+        self.year = year # "html.parser"
+        self.content = BeautifulSoup(response.text, "lxml") # text may faster than content - https://stackoverflow.com/questions/25539330/speeding-up-beautifulsoup
         self.output_list = []
         self.perc_condition = ["class=\""+ i + "\">" for i in ["cufull", "cu80", "cu50", "cu00"]]# see explain above
         self.level = "(Course Enrolment, UGRD)" if is_undergrad else "(Course Enrolment, PGRD)"
         self.opposite_level = "UGRD" if not is_undergrad else "PGRD"
         self.term = term
         self.postpone = ["Canc", "Stop", "Tent"]
-        self.tweet = self.content.findAll(self.findall_condition)
+        self.tweet = self.content.findAll(["tr"]) #self.findall_condition
         self.is_table = is_table
         self.course_on_campus = []
 
@@ -97,16 +100,17 @@ class Class_scrapter:
         info_bag = self.get_empty_bag()
         lec_record = "0/0"
         lec_bag = []
-
+        
         for t in self.tweet:
-            texts = t.text
-            t = str(t).strip()
+
+            texts = t.text            
             # if "COMP6080" in t:
             #     print(texts)  
-            lec_record = self.generate_lec_record(texts, lec_record, lec_bag) if self.generate_lec_record(texts, lec_record, lec_bag) else lec_record
+            lec_tmp = self.generate_lec_record(texts, lec_record, lec_bag)
+            lec_record = lec_tmp if lec_tmp else lec_record
             
-            if "<a name" in t and self.degree in texts: # meet course code
-                print(texts)
+            if self.degree in texts[:10]: # meet course code, assumption - COMP9021  Principles of Programming
+                
                 info_bag[C.LEC_NUM] = lec_record 
                 lec_record = "0/0" # reset when meet new course code
                 lec_bag = []
@@ -132,7 +136,7 @@ class Class_scrapter:
                     pass
                     #print(e)
             
-            if "CRS" == texts[1:4]and self.level in t: # any(i in t for i in self.perc_condition)
+            if "CRS" == texts[1:4]and self.level in texts: # any(i in t for i in self.perc_condition)
                 #print(texts.split()[2])
                 info_bag[C.ENROL_PRECENT] = self.get_data_between(texts, C.ENROL_PRECENT)
                 
@@ -142,11 +146,11 @@ class Class_scrapter:
                     new_enrol = self.get_data_between(texts, C.ENROL_NUM)#get_data_between(texts, C.ENROL_NUM)
                     info_bag[C.ENROL_NUM] = Class_scrapter.str_sum(new_enrol, info_bag[C.ENROL_NUM]) # sum of all coruse enrolment num
                 
-                if "CR02" in t: # if two courses available, then first ususally is online version                    
+                if "CR02" in texts: # if two courses available, then first ususally is online version                    
                     info_bag[C.COURSE_NAME] += " - CR1/CR2" # a few courses in 2021 term2 has offering both online and offline
                     
-            if not self.opposite_level in t and not "<a name" in t:  # refresh when meets new course code regardless within the right leve
-                self.generate_on_campus_course(t, info_bag[C.COURSE_CODE])
+            if not self.opposite_level in texts:  # refresh when meets new course code regardless within the right leve
+                self.generate_on_campus_course(texts, info_bag[C.COURSE_CODE])
 
         if self.output_list and info_bag[C.COURSE_CODE] and info_bag != self.output_list[-1]: # fix the last item that may not be appended
             info_bag[C.LEC_NUM] = lec_record 
@@ -201,16 +205,15 @@ class Class_scrapter:
                 return True
         return False
         
-    def generate_lec_record(self, t, lec_record, lec_bag, tmp=""):
+    def generate_lec_record(self, t, lec_record, lec_bag):
         """
         assume below list is disjoint condition, sum up all lec number regradless under or post grad
         OTH and Lec is disjoint, but OTH not consider yet #TODO
         """
         
-        if not any(i in t for i in ["LEC", "WEB", "THE", "PRJ"]) and all(i not in t for i in self.postpone):
+        if not any(i in t[1:4] for i in ["LEC", "WEB", "THE", "PRJ"]) or any(i in t for i in self.postpone): #  
             return
-        # if any(i in t[1:4] for i in ["TLB", "LAB", "SEM", "TUT", "CRS"]): # e.g. TUT with WEB option / online
-        #     return
+
         try:
             prev_enrol = int(lec_record[:lec_record.index("/")]) 
             prev_total = int(lec_record[lec_record.index("/") + 1:]) 
@@ -268,7 +271,7 @@ class Class_scrapter:
         if not output_list:
             return
         if which == C.ON_CAMPUS:
-            return self.sort_based_on_campus(output_list, course_on_campus)
+            return Class_scrapter.sort_based_on_campus(output_list, course_on_campus)
             
         sort_dict = {
             C.ENROL_PRECENT:lambda k: int(k[C.ENROL_PRECENT].replace("%", "")),
@@ -278,8 +281,8 @@ class Class_scrapter:
         res = sorted(output_list, key=sort_dict[which], reverse=True) 
   
         return res
-
-    def sort_based_on_campus(self, output_list, course_on_campus):
+    @staticmethod
+    def sort_based_on_campus(output_list, course_on_campus):
         res = []
         for c in output_list:
             if any(i in c[C.COURSE_CODE] for i in course_on_campus):

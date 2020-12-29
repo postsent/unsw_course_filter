@@ -80,3 +80,4 @@ Werkzeug==1.0.0
 wikiquote==0.1.14
 wrapt==1.11.2
 Flask-Session==0.3.2
+cchardet==2.1.7

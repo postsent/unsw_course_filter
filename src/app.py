@@ -146,7 +146,10 @@ if __name__=="__main__":
     # import io
     # pr = cProfile.Profile()
     # pr.enable()
+    import time
+    start_time = time.time()
     app.run(debug=1)
+    print("--- %s seconds ---" % (time.time() - start_time))
 
     # pr.disable()
     # s = io.StringIO()

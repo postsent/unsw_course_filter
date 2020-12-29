@@ -1,4 +1,5 @@
 from class_scraper import Class_scrapter, C
+import requests
 
 class Degrees_sorting():
     
@@ -14,7 +15,7 @@ class Degrees_sorting():
         self.total_lec_size = 0
         self.n_on_campus = 0
         self.courses_done = []
-
+        self.requests_session = requests.Session() # with this, 3x faster!!!
         if courses_done: # convert str to list
             self.courses_done = courses_done.split(",")
             self.courses_done = [i.strip() for i in self.courses_done]
@@ -107,7 +108,7 @@ class Degrees_sorting():
     # for each degree, get sum of total lec size etc and course resul
     def search_by_degrees(self, degree, term, is_undergrad, sort_algo, courses_done, year):
         for d in degree:
-            c = Class_scrapter(d, term, True, is_undergrad, sort_algo, True, courses_done, "", year)
+            c = Class_scrapter(d, term, True, is_undergrad, sort_algo, True, courses_done, "", year, self.requests_session)
             data_list = c.get_list() 
             self.course_on_campus += c.course_on_campus
             
