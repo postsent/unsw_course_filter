@@ -22,6 +22,11 @@ not included
 status of "cancel" and "closed" , "cuwarn"
 (Course Enrolment, RSCH)
 """
+"""
+heroku free tier - limits,up to 256 threads/process
+https://devcenter.heroku.com/articles/limits
+"""
+
 from bs4 import BeautifulSoup
 import requests
 import re
@@ -62,8 +67,9 @@ class Class_scrapter:
             self.output_list = []
             return
         self.current_year = "2021"
-        self.year = year # "html.parser"
-        self.content = BeautifulSoup(response.text, "lxml") # text may faster than content - https://stackoverflow.com/questions/25539330/speeding-up-beautifulsoup
+        self.year = year # 
+        #  text may faster than content - https://stackoverflow.com/questions/25539330/speeding-up-beautifulsoup, https://www.crummy.com/software/BeautifulSoup/bs4/doc/
+        self.content = BeautifulSoup(response.text, "lxml") # 
         self.output_list = []
         self.perc_condition = ["class=\""+ i + "\">" for i in ["cufull", "cu80", "cu50", "cu00"]]# see explain above
         self.level = "(Course Enrolment, UGRD)" if is_undergrad else "(Course Enrolment, PGRD)"
@@ -392,10 +398,19 @@ class Class_scrapter:
             s = s[:idx]
         elif which == C.ENROL_PRECENT:
             s = s.split()[2]
+            if ">" in s: # e.g. >100%  
+                s = s.replace(">", "")
+            if s == "N/A":
+                s = "-1%"
         elif which == C.ENROL_NUM or C.LEC_NUM:
             # e.g. "CRSCR01 2094Open32/91 35%" -> "2094Open32/91" -> "*19/23nepO4902" -> ""19/23"
             # LECA10164RelOpen57/100 57%   Mon 18-20# (w1-5,7,9-10, Online); Thu 18-20# (w1-5,7-10, Online) Comb/w  COMP6080-UGRD
+            
             s = self.get_substr_by_letter(s, "/")
+            if s == "N/A":
+                s = "0/0"
+        
+        
         return s
 
     def get_str_between(self, s, which):

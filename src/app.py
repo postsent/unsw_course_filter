@@ -22,9 +22,6 @@ Session(app)
 # The limits of what you can store in a cookie are relatively low and depend on the browser, but typically is 4kb.
 # https://stackoverflow.com/questions/43435217/how-to-set-sessions-limit-in-flask
 
-#
-
-#
 def init_database():
     session["headings"] = []
     session["data"] = []
@@ -34,7 +31,11 @@ def init_database():
     session["perc_num"] = "lec"
     session["courses_done"] = ""
     session["year"] = "2021"
-    session["levels"] = {1:True,2:True,3:True, 4:True, 5:True, 6:True, 7:True, 9:True} # course level
+    session["levels"] = {0:True, 1:True,2:True,3:True, 4:True, 5:True, 6:True, 7:True, 8:True, 9:True} # course level
+    session["data_list"] = []
+    session["is_search_changed"] = True # TODO - is_search_changed - degree, year, term, under_post changes, send new request, degree is in separate submit form
+    
+    # 0 - GENM0709  
 
 def get_database():
 
@@ -64,6 +65,9 @@ def table():
 def handle_search():
 
     headings, data, courses_done, under_post, perc_num, degree, term, year, levels = get_database()
+    old_data = {}
+    old_data["term"], old_data["year"], old_data["under_post"] = term, year, under_post
+    
     term= request.form.get("termDropdown") if request.form.get("termDropdown") else term
     year= request.form.get("yearDropdown") if request.form.get("yearDropdown") else year
     under_post= request.form.get("levelDropdown") if request.form.get("levelDropdown") else under_post
@@ -74,18 +78,23 @@ def handle_search():
     for i in [*prev_level]:
         l = True if request.form.get(f"level{i}") or request.form.get(f"level{i}") == "" else False
         levels[i] = l
+    # change if need to send new request
+    if not (old_data["term"] == term and old_data["year"] == year and old_data["under_post"] == under_post):    
+        session["is_search_changed"] = True
 
     if degree:
-        c = Degrees_sorting(degree, term, True, (True if "under" in under_post else False), perc_num, True, courses_done, "", year, levels)
+        c = Degrees_sorting(degree, term, True, (True if "under" in under_post else False), 
+                            perc_num, True, courses_done, "", year, levels, session["is_search_changed"], session["data_list"])
         data_list = c.get_list()
         headings= data_list[0]
         data = data_list[1:]
+        if session["is_search_changed"]:
+            session["data_list"] = data_list # only when data input change
+        session["is_search_changed"] = False # refresh
 
     set_database(headings, data, courses_done, under_post, perc_num, degree, term, year, levels)
     return render_template('table.html', under_post=under_post, headings=headings, data=data, term=term, \
                             perc_num=perc_num, courses_done=courses_done, year=year, degree=degree, levels=levels) 
-
-
 
 @app.route('/handle_close', methods=['GET']) 
 def handle_close(): # close the degree button
@@ -95,6 +104,7 @@ def handle_close(): # close the degree button
 
     try:
         degree.remove(c)
+        session["is_search_changed"] = True
     except:
         pass
     set_database(headings, data, courses_done, under_post, perc_num, degree, term, year, levels)
@@ -116,7 +126,8 @@ def handle_degree():
     d = request.args.get('degree').upper() # handle no input and initial assignment of none
     if d and not d in degree:
         degree.append(d)
-        
+        session["is_search_changed"] = True
+    
     set_database(headings, data, courses_done, under_post, perc_num, degree, term, year, levels)
     
     return render_template("table.html", headings=headings, data=data, term=term, courses_done=courses_done, \

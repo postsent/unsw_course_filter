@@ -1,0 +1,1000 @@
+1	youtube.com	18,023,153	
+100
+2	apple.com	4,538,778	
+100
+3	www.google.com	12,215,350	
+100
+4	cloudflare.com	5,239,728	
+99
+5	microsoft.com	4,590,115	
+99
+6	play.google.com	2,381,406	
+99
+7	support.google.com	4,635,164	
+99
+8	www.blogger.com	25,634,485	
+99
+9	mozilla.org	1,918,525	
+98
+10	adobe.com	2,807,006	
+98
+11	maps.google.com	4,367,847	
+98
+12	docs.google.com	2,277,575	
+98
+13	wordpress.org	10,091,719	
+98
+14	linkedin.com	9,098,219	
+98
+15	en.wikipedia.org	5,414,117	
+98
+16	drive.google.com	1,797,864	
+97
+17	sites.google.com	1,728,116	
+97
+18	youtu.be	3,892,700	
+97
+19	plus.google.com	11,718,405	
+97
+20	googleusercontent.com	2,173,644	
+97
+21	vimeo.com	3,072,998	
+97
+22	accounts.google.com	2,532,247	
+97
+23	europa.eu	1,665,209	
+97
+24	es.wikipedia.org	773,620	
+96
+25	cnn.com	1,208,959	
+96
+26	istockphoto.com	3,122,770	
+96
+27	vk.com	1,611,222	
+96
+28	bp.blogspot.com	16,067,519	
+96
+29	bbc.co.uk	1,400,946	
+96
+30	amazon.com	4,003,717	
+96
+31	uol.com.br	563,707	
+96
+32	facebook.com	46,098,848	
+96
+33	github.com	2,026,014	
+96
+34	line.me	631,737	
+96
+35	reuters.com	720,156	
+95
+36	theguardian.com	1,188,798	
+95
+37	myspace.com	1,244,106	
+95
+38	mail.ru	474,233	
+95
+39	opera.com	741,837	
+95
+40	feedburner.com	1,695,528	
+95
+41	live.com	730,294	
+95
+42	policies.google.com	1,128,858	
+95
+43	w3.org	1,047,901	
+95
+44	mail.google.com	438,349	
+95
+45	medium.com	1,139,669	
+95
+46	news.google.com	690,645	
+95
+47	dropbox.com	925,337	
+95
+48	nytimes.com	1,671,702	
+95
+49	t.me	578,925	
+95
+50	jimdofree.com	1,692,218	
+95
+51	google.co.jp	625,043	
+95
+52	paypal.com	900,080	
+95
+53	creativecommons.org	1,564,445	
+95
+54	developers.google.com	891,799	
+95
+55	forbes.com	1,132,775	
+95
+56	fr.wikipedia.org	531,439	
+95
+57	pt.wikipedia.org	355,888	
+95
+58	gstatic.com	583,015	
+95
+59	news.yahoo.com	583,057	
+95
+60	nih.gov	1,044,516	
+95
+61	msn.com	976,059	
+95
+62	wikimedia.org	1,366,242	
+95
+63	imdb.com	1,219,985	
+95
+64	dailymotion.com	1,060,038	
+95
+65	google.es	415,240	
+95
+66	hugedomains.com	4,928,948	
+95
+67	google.de	1,072,891	
+95
+68	globo.com	379,610	
+95
+69	bbc.com	657,783	
+95
+70	google.com.br	264,258	
+95
+71	www.yahoo.com	922,378	
+95
+72	issuu.com	842,113	
+95
+73	whatsapp.com	1,981,714	
+95
+74	washingtonpost.com	862,573	
+95
+75	slideshare.net	874,328	
+95
+76	get.google.com	753,183	
+95
+77	4shared.com	506,055	
+94
+78	huffingtonpost.com	863,414	
+94
+79	goo.gl	4,167,082	
+94
+80	businessinsider.com	569,618	
+94
+81	files.wordpress.com	1,981,504	
+94
+82	hatena.ne.jp	1,393,836	
+94
+83	android.com	258,144	
+94
+84	www.gov.uk	482,945	
+94
+85	google.it	405,174	
+94
+86	abcnews.go.com	467,614	
+94
+87	amazon.co.uk	625,014	
+94
+88	ig.com.br	130,146	
+94
+89	dailymail.co.uk	768,900	
+94
+90	telegram.me	273,635	
+94
+91	fandom.com	430,709	
+94
+92	lefigaro.fr	185,967	
+94
+93	mediafire.com	761,934	
+94
+94	themeforest.net	503,773	
+94
+95	foxnews.com	449,290	
+94
+96	cdc.gov	652,547	
+94
+97	usatoday.com	634,114	
+94
+98	scribd.com	649,273	
+94
+99	wsj.com	793,603	
+94
+100	search.google.com	1,034,464	
+94
+101	un.org	423,350	
+94
+102	it.wikipedia.org	279,518	
+94
+103	fb.com	360,321	
+94
+104	google.ru	176,923	
+94
+105	tinyurl.com	1,251,126	
+94
+106	independent.co.uk	513,140	
+94
+107	google.fr	381,480	
+94
+108	dan.com	1,842,137	
+94
+109	picasaweb.google.com	606,817	
+94
+110	ft.com	348,547	
+94
+111	myaccount.google.com	264,226	
+94
+112	namecheap.com	1,020,527	
+94
+113	office.com	349,629	
+94
+114	aliexpress.com	440,883	
+94
+115	bit.ly	4,075,360	
+94
+116	twitter.com	48,559,396	
+94
+117	plesk.com	704,833	
+94
+118	books.google.com	341,740	
+94
+119	terra.com.br	184,761	
+94
+120	abril.com.br	222,999	
+94
+121	archive.org	882,522	
+94
+122	steampowered.com	215,950	
+94
+123	latimes.com	571,947	
+94
+124	pinterest.com	7,348,709	
+94
+125	webmd.com	545,474	
+94
+126	draft.blogger.com	9,985,674	
+94
+127	id.wikipedia.org	410,601	
+94
+128	de.wikipedia.org	585,309	
+94
+129	who.int	2,013,653	
+94
+130	youronlinechoices.com	503,292	
+94
+131	photos.google.com	227,723	
+94
+132	mirror.co.uk	254,444	
+94
+133	rakuten.co.jp	580,126	
+94
+134	marketingplatform.google.com	750,206	
+94
+135	cpanel.net	1,300,916	
+94
+136	gravatar.com	1,666,633	
+94
+137	amazon.co.jp	769,553	
+94
+138	elpais.com	322,114	
+94
+139	cpanel.com	1,215,392	
+94
+140	networkadvertising.org	690,674	
+94
+141	telegraph.co.uk	763,179	
+94
+142	tools.google.com	1,465,141	
+94
+143	buydomains.com	1,122,041	
+94
+144	aol.com	651,439	
+94
+145	www.wix.com	902,223	
+94
+146	samsung.com	300,526	
+94
+147	cnet.com	549,164	
+94
+148	nasa.gov	545,655	
+94
+149	aboutads.info	479,233	
+94
+150	amazon.de	489,201	
+94
+151	translate.google.com	271,103	
+94
+152	time.com	606,619	
+94
+153	google.co.uk	535,977	
+94
+154	ebay.com	866,344	
+94
+155	thesun.co.uk	252,138	
+94
+156	ok.ru	330,215	
+94
+157	harvard.edu	581,916	
+94
+158	bloomberg.com	673,431	
+94
+159	wired.com	529,520	
+94
+160	bing.com	888,372	
+94
+161	booking.com	351,449	
+94
+162	change.org	399,940	
+94
+163	wikia.com	454,908	
+94
+164	nginx.org	562,838	
+93
+165	scoop.it	332,854	
+93
+166	afternic.com	1,562,063	
+93
+167	npr.org	593,010	
+93
+168	yahoo.co.jp	614,479	
+93
+169	addthis.com	691,825	
+93
+170	britannica.com	267,649	
+93
+171	kickstarter.com	400,106	
+93
+172	buzzfeed.com	442,000	
+93
+173	techcrunch.com	386,236	
+93
+174	hm.com	152,550	
+93
+175	guardian.co.uk	515,911	
+93
+176	ria.ru	154,266	
+93
+177	akamaihd.net	410,077	
+93
+178	secureserver.net	986,519	
+93
+179	hp.com	383,139	
+93
+180	gnu.org	551,088	
+93
+181	ietf.org	337,539	
+93
+182	amazon.es	147,831	
+93
+183	oup.com	309,823	
+93
+184	whitehouse.gov	309,805	
+93
+185	columbia.edu	272,048	
+93
+186	stackoverflow.com	284,008	
+93
+187	wp.com	910,938	
+93
+188	cbsnews.com	421,991	
+93
+189	ibm.com	433,638	
+93
+190	enable-javascript.com	1,261,621	
+93
+191	depositfiles.com	138,652	
+93
+192	google.nl	220,737	
+93
+193	lemonde.fr	221,864	
+93
+194	m.wikipedia.org	226,472	
+93
+195	bandcamp.com	505,093	
+93
+196	my.yahoo.com	1,139,443	
+93
+197	yelp.com	819,778	
+93
+198	search.yahoo.com	421,633	
+93
+199	amazon.fr	217,973	
+93
+200	imageshack.us	779,689	
+93
+201	walmart.com	265,593	
+93
+202	newsweek.com	242,256	
+93
+203	ovh.net	647,110	
+93
+204	ign.com	230,310	
+93
+205	abc.net.au	320,712	
+93
+206	economist.com	300,324	
+93
+207	discord.gg	179,807	
+93
+208	naver.jp	128,069	
+93
+209	www.weebly.com	337,155	
+93
+210	urbandictionary.com	204,002	
+93
+211	hollywoodreporter.com	211,960	
+93
+212	biglobe.ne.jp	222,153	
+93
+213	bloglovin.com	445,308	
+93
+214	netvibes.com	1,156,645	
+93
+215	trustpilot.com	334,698	
+93
+216	umich.edu	285,985	
+93
+217	chicagotribune.com	294,099	
+93
+218	berkeley.edu	387,148	
+93
+219	ipv4.google.com	352,242	
+93
+220	ja.wikipedia.org	324,215	
+93
+221	express.co.uk	200,884	
+93
+222	e-recht24.de	437,656	
+93
+223	instructables.com	272,352	
+93
+224	forms.gle	364,047	
+93
+225	yale.edu	272,721	
+93
+226	detik.com	352,675	
+93
+227	privacyshield.gov	405,228	
+93
+228	nokia.com	155,837	
+93
+229	groups.google.com	297,659	
+93
+230	ggpht.com	571,427	
+93
+231	ovh.com	433,346	
+93
+232	bt.com	168,710	
+93
+233	nicovideo.jp	137,224	
+93
+234	news.com.au	256,331	
+93
+235	disqus.com	913,140	
+93
+236	pixabay.com	296,194	
+93
+237	loc.gov	367,609	
+93
+238	digg.com	824,170	
+93
+239	php.net	620,979	
+93
+240	yandex.ru	921,487	
+93
+241	dw.com	218,881	
+93
+242	playstation.com	180,692	
+93
+243	000webhost.com	263,760	
+93
+244	unesco.org	252,919	
+93
+245	storage.googleapis.com	529,398	
+93
+246	netflix.com	242,564	
+93
+247	addtoany.com	715,985	
+93
+248	code.google.com	315,138	
+93
+249	bitly.com	355,035	
+93
+250	picasa.google.com	247,115	
+93
+251	ted.com	475,502	
+93
+252	list-manage.com	656,286	
+93
+253	google.com.tw	129,893	
+93
+254	pbs.org	418,114	
+93
+255	sciencemag.org	261,045	
+93
+256	usnews.com	320,169	
+93
+257	mega.nz	150,762	
+93
+258	alibaba.com	363,060	
+93
+259	deezer.com	126,302	
+93
+260	soundcloud.com	1,559,261	
+93
+261	google.pl	194,650	
+93
+262	quora.com	304,461	
+93
+263	psychologytoday.com	269,465	
+93
+264	gizmodo.com	335,922	
+93
+265	blackberry.com	133,000	
+93
+266	rt.com	227,850	
+93
+267	nbcnews.com	409,123	
+93
+268	over-blog-kiwi.com	178,476	
+93
+269	researchgate.net	320,539	
+93
+270	instagram.com	21,250,058	
+93
+271	weibo.com	1,466,581	
+93
+272	nypost.com	281,588	
+93
+273	pl.wikipedia.org	127,167	
+93
+274	mozilla.com	195,610	
+93
+275	goo.ne.jp	295,472	
+93
+276	noaa.gov	280,283	
+93
+277	skype.com	366,933	
+93
+278	welt.de	156,835	
+93
+279	bp2.blogger.com	521,277	
+93
+280	apache.org	869,302	
+93
+281	nature.com	437,662	
+93
+282	disney.com	209,380	
+93
+283	smh.com.au	259,417	
+93
+284	cnbc.com	393,390	
+93
+285	nydailynews.com	298,171	
+93
+286	eventbrite.com	531,635	
+93
+287	wikihow.com	345,296	
+93
+288	godaddy.com	2,384,272	
+93
+289	stanford.edu	505,781	
+93
+290	rambler.ru	228,322	
+93
+291	google.co.in	240,169	
+93
+292	shutterstock.com	251,046	
+93
+293	ox.ac.uk	217,179	
+93
+294	twitch.tv	300,238	
+93
+295	gmail.com	179,485	
+93
+296	princeton.edu	275,464	
+93
+297	thetimes.co.uk	295,449	
+93
+298	abc.es	155,474	
+93
+299	ytimg.com	252,765	
+93
+300	nvidia.com	144,378	
+93
+301	sendspace.com	149,156	
+93
+302	sapo.pt	204,106	
+93
+303	academia.edu	283,822	
+93
+304	vice.com	303,137	
+93
+305	channel4.com	141,504	
+93
+306	www.wikipedia.org	515,347	
+93
+307	ovh.co.uk	502,543	
+93
+308	surveymonkey.com	383,819	
+93
+309	sfgate.com	314,515	
+93
+310	gofundme.com	270,250	
+93
+311	target.com	224,573	
+93
+312	cornell.edu	366,519	
+93
+313	asus.com	137,083	
+93
+314	adssettings.google.com	291,062	
+93
+315	washington.edu	304,025	
+93
+316	newyorker.com	315,862	
+93
+317	wiley.com	433,750	
+93
+318	theglobeandmail.com	216,540	
+93
+319	wa.me	501,721	
+93
+320	tripadvisor.com	446,858	
+93
+321	indiatimes.com	331,637	
+93
+322	greenpeace.org	153,784	
+93
+323	oracle.com	518,370	
+93
+324	metro.co.uk	173,077	
+93
+325	nginx.com	476,925	
+93
+326	cbc.ca	344,583	
+93
+327	spotify.com	1,122,402	
+93
+328	huffpost.com	412,132	
+93
+329	nationalgeographic.com	526,202	
+93
+330	spiegel.de	262,048	
+93
+331	mashable.com	340,994	
+93
+332	engadget.com	395,176	
+93
+333	standard.co.uk	142,797	
+93
+334	espn.com	302,635	
+93
+335	nikkei.com	189,812	
+93
+336	theverge.com	301,626	
+93
+337	allaboutcookies.org	337,256	
+93
+338	doubleclick.net	644,135	
+93
+339	cambridge.org	221,985	
+93
+340	ea.com	157,037	
+93
+341	xbox.com	143,651	
+93
+342	about.com	662,547	
+93
+343	ikea.com	260,543	
+93
+344	dell.com	206,041	
+93
+345	box.com	230,607	
+93
+346	icann.org	447,706	
+93
+347	sciencedirect.com	420,427	
+93
+348	ziddu.com	166,462	
+93
+349	sedo.com	2,636,551	
+93
+350	naver.com	428,637	
+93
+351	rapidshare.com	279,034	
+93
+352	google.co.id	140,278	
+93
+353	sciencedaily.com	285,594	
+93
+354	photobucket.com	1,569,977	
+93
+355	finance.yahoo.com	367,605	
+93
+356	sputniknews.com	134,805	
+93
+357	elmundo.es	190,428	
+93
+358	variety.com	197,110	
+93
+359	shopify.com	1,315,794	
+93
+360	zendesk.com	448,861	
+93
+361	mysql.com	386,816	
+93
+362	ru.wikipedia.org	350,364	
+93
+363	googleblog.com	211,970	
+93
+364	www.over-blog.com	772,781	
+93
+365	yadi.sk	174,156	
+93
+366	t.co	1,682,751	
+93
+367	theatlantic.com	420,505	
+93
+368	mit.edu	562,259	
+93
+369	google.ca	294,370	
+93
+370	worldbank.org	200,968	
+93
+371	goodreads.com	671,203	
+93
+372	zdnet.com	238,159	
+92
+373	brandbucket.com	330,412	
+92
+374	so-net.ne.jp	171,956	
+92
+375	corriere.it	140,628	
+92
+376	xinhuanet.com	603,808	
+92
+377	sina.com.cn	1,077,772	
+92
+378	axs.com	220,931	
+92
+379	m.me	169,595	
+92
+380	bp1.blogger.com	520,982	
+92
+381	airbnb.com	165,708	
+92
+382	ebay.co.uk	200,132	
+92
+383	orange.fr	168,180	
+92
+384	e-monsite.com	137,302	
+92
+385	oecd.org	159,101	
+92
+386	doi.org	320,002	
+92
+387	utexas.edu	228,652	
+92
+388	consumerreports.org	146,257	
+92
+389	statista.com	183,074	
+92
+390	zeit.de	125,916	
+92
+391	megaupload.com	241,911	
+92
+392	thefreedictionary.com	190,163	
+92
+393	politico.com	205,567	
+92
+394	giphy.com	318,967	
+92
+395	slate.com	303,501	
+92
+396	discovery.com	218,202	
+92
+397	20minutos.es	120,293	
+92
+398	thestar.com	181,296	
+92
+399	techradar.com	126,822	
+92
+400	merriam-webster.com	231,655	
+92
+401	ameblo.jp	729,424	
+92
+402	fortune.com	210,223	
+92
+403	ca.gov	374,247	
+92
+404	dreniq.com	327,795	
+92
+405	pcmag.com	186,312	
+92
+406	cmu.edu	200,405	
+92
+407	www.livejournal.com	3,063,136	
+92
+408	rollingstone.com	239,436	
+92
+409	inc.com	204,490	
+92
+410	www.canalblog.com	393,541	
+92
+411	thehill.com	169,711	
+92
+412	amazon.it	124,561	
+92
+413	a8.net	420,965	
+92
+414	offset.com	844,157	
+92
+415	debian.org	325,124	
+92
+416	lycos.com	673,576	
+92
+417	irs.gov	245,535	
+92
+418	snapchat.com	156,532	
+92
+419	teamviewer.com	147,351	
+92
+420	weforum.org	148,592	
+92
+421	epa.gov	280,823	
+92
+422	qq.com	4,192,164	
+92
+423	house.gov	226,857	
+92
+424	disney.go.com	163,073	
+92
+425	archives.gov	210,691	
+92
+426	springer.com	343,005	
+92
+427	mail.yahoo.com	170,629	
+92
+428	public-api.wordpress.com	172,942	
+92
+429	prezi.com	214,970	
+92
+430	adweek.com	162,623	
+92
+431	cbslocal.com	265,755	
+92
+432	intel.com	219,527	
+92
+433	steamcommunity.com	178,777	
+92
+434	behance.net	671,747	
+92
+435	about.me	278,263	
+92
+436	searchenginejournal.com	265,962	
+92
+437	woocommerce.com	178,128	
+92
+438	ndtv.com	149,066	
+92
+439	udemy.com	147,773	
+92
+440	marketwatch.com	279,425	
+92
+441	storage.canalblog.com	278,126	
+92
+442	vox.com	383,849	
+92
+443	fastcompany.com	251,545	
+92
+444	csmonitor.com	166,596	
+92
+445	usgs.gov	192,691	
+92
+446	iubenda.com	186,294	
+92
+447	coursera.org	135,449	
+92
+448	amazon.ca	176,358	
+92
+449	eff.org	135,690	
+92
+450	home.neustar	486,895	
+92
+451	stuff.co.nz	134,927	
+92
+452	dribbble.com	397,767	
+92
+453	asahi.com	159,982	
+92
+454	wiktionary.org	240,770	
+92
+455	fifa.com	140,003	
+92
+456	amazon.in	135,602	
+92
+457	businesswire.com	227,503	
+92
+458	autodesk.com	126,466	
+92
+459	rottentomatoes.com	193,489	
+92
+460	viagens.com.br	126,799	
+92
+461	mystrikingly.com	266,878	
+92
+462	prnewswire.com	301,538	
+92
+463	sakura.ne.jp	360,786	
+92
+464	interia.pl	150,884	
+92
+465	histats.com	450,460	
+92
+466	thedailybeast.com	201,273	
+92
+467	sky.com	182,369	
+92
+468	xing.com	403,529	
+92
+469	narod.ru	267,304	
+92
+470	daum.net	156,778	
+92
+471	outlook.com	195,988	
+92
+472	feedproxy.google.com	753,457	
+92
+473	ibtimes.com	155,371	
+92
+474	tabelog.com	139,138	
+92
+475	answers.com	214,099	
+92
+476	gutenberg.org	154,528	
+92
+477	pexels.com	144,734	
+92
+478	espn.go.com	222,923	
+92
+479	ubuntu.com	179,994	
+92
+480	answers.yahoo.com	186,573	
+92
+481	parallels.com	574,654	
+92
+482	scientificamerican.com	244,593	
+92
+483	psu.edu	265,591	
+92
+484	indiegogo.com	215,933	
+92
+485	medicalnewstoday.com	172,140	
+92
+486	entrepreneur.com	216,292	
+92
+487	mhlw.go.jp	137,907	
+92
+488	cia.gov	133,528	
+92
+489	pastebin.com	167,411	
+92
+490	alexa.com	289,350	
+92
+491	marriott.com	323,184	
+92
+492	sports.yahoo.com	175,378	
+92
+493	arstechnica.com	208,764	
+92
+494	investopedia.com	203,566	
+92
+495	elsevier.com	224,473	
+92
+496	jstor.org	152,070	
+92
+497	illinois.edu	184,997	
+92
+498	newscientist.com	189,450	
+92
+499	tes.com	398,766	
+92
+500	cisco.com	203,866	
+92

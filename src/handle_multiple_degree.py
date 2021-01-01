@@ -1,25 +1,38 @@
 from class_scraper import Class_scrapter, C
 import requests
+from threading import Thread, Lock 
+import sys
 
 class Degrees_sorting():
     
     def __init__(self, degree=[], term="T1", is_frontend=True, is_undergrad=True, sort_algo=C.LEC_NUM, 
-                    is_table=True, courses_done="", url_rank="", year="2021", levels={}):
-        
+                    is_table=True, courses_done="", url_rank="", year="2021", levels={}, is_degree_changed=True, data_list=[]):
+        levels = self.convert_levels_2_list(levels)
+        self.courses_done = []
+        if courses_done: # convert str to list
+            self.courses_done = courses_done.split(",")
+            self.courses_done = [i.strip() for i in self.courses_done]
+
+        if not is_degree_changed and data_list: # reuse data when no change in input
+            self.result = self.sort_by_for_degree_unchanged(sort_algo, data_list, levels, self.courses_done)
+            return
+
         self.get_faculty_data()
         degree = self.add_faculty(degree)
+        #degree = degree[:10] # cap at max 10
         self.result = []
         self.total_enrol = 0
         self.total_enrol_size = 0
         self.total_lec = 0
         self.total_lec_size = 0
         self.n_on_campus = 0
-        self.courses_done = []
+        
         self.requests_session = requests.Session() # with this, 3x faster!!!
-        if courses_done: # convert str to list
-            self.courses_done = courses_done.split(",")
-            self.courses_done = [i.strip() for i in self.courses_done]
+        
+        
         self.course_on_campus = []
+        self.threads = []
+        self.lock = Lock() # https://www.bogotobogo.com/python/Multithread/python_multithreading_Synchronization_Lock_Objects_Acquire_Release.php
 
         if term == "All_Term":
             all_terms = ["U1", "T1", "T2", "T3"] if year > "2018" else ["X1", "S1", "S2"]
@@ -32,7 +45,7 @@ class Degrees_sorting():
                 prev_n_on_campus = self.n_on_campus
                 prev_result = self.result
                 self.result = []
-                self.search_by_degrees(degree, t, is_undergrad, sort_algo, courses_done, year)
+                self.search_by_degrees(degree, t, is_undergrad, sort_algo, self.courses_done, year)
 
                 self.total_enrol = self.total_enrol + prev_total_enrol
                 self.total_enrol_size = self.total_enrol_size + prev_total_enrol_size
@@ -47,8 +60,8 @@ class Degrees_sorting():
             self.result = self.sort_by_key(self.result)
             
         else:
-            self.search_by_degrees(degree, term, is_undergrad, sort_algo, courses_done, year)
-
+            self.search_by_degrees(degree, term, is_undergrad, sort_algo, self.courses_done, year)
+        
         #print("courses on campus are: ", course_on_campus)
         if not self.result:
             self.result.append(("count", f"course code", "enrol_precentage", "enrol_number", "course_name", "has_on_campus"))
@@ -59,13 +72,47 @@ class Degrees_sorting():
         self.result = Class_scrapter.sort_based_percent(sort_algo, self.result, self.course_on_campus)
         
         self.result = Class_scrapter.convert_format(self.result, self.course_on_campus, \
-                                                self.courses_done, self.convert_levels_2_list(levels))[0]
+                                                self.courses_done, levels)[0]
         
-        self.result = self.result[:100] # at most 100 result
+        self.result = self.result[:200] # at most 100 result
         self.result.insert(0, ("Count", f"Course code ({term})", "Enrol precentage", "Enrol number", \
                                 "Lec/Web/Prj/Thesis", "Course name", "On campus"))
         self.result.append(("Total", "", "", f"{self.total_enrol} / {self.total_enrol_size}", \
                             f"{self.total_lec} / {self.total_lec_size}", "", str(self.n_on_campus) + "  (in total)"))
+    
+    def sort_by_for_degree_unchanged(self, which, data_list, levels, courses_done):
+        # sort the already formatted data based on column
+        if not data_list:
+            return
+        heading = data_list[0]
+        summary = data_list[-1]
+        data_list = data_list[1:-1]   
+        
+        sort_dict = {
+            C.ON_CAMPUS: lambda k:k[6], 
+            C.ENROL_PRECENT:lambda k: int(k[2].replace("%", "")),
+            C.ENROL_NUM:lambda k: int(k[3][:k[3].index("/")]),
+            C.LEC_NUM:lambda k: int(k[4][:k[4].index("/")])
+        }
+        res = sorted(data_list, key=sort_dict[which], reverse=True) 
+        final_res = []
+        for n, r in enumerate(res):
+            if not any(r[1][4] == str(l) for l in levels): # ignore certain levels , e.g level 1 course
+                final_res.append((str(n + 1), "", "", "", "", "", ""))
+                continue
+
+            if courses_done != [""] and any(c in r[1] for c in courses_done): # ignore course done
+                final_res.append((str(n + 1), "", "", "", "", "", "")) # TODO clean up
+                continue
+            tmp = list(r)
+            tmp[0] = n + 1
+            tmp = tuple(tmp)
+            final_res.append(tmp)
+
+        final_res.insert(0, heading)
+        final_res.append(summary)
+        return final_res
+
     def sort_by_key(self, l):
         # if cur == prev , add sum, else , append
         if not l:
@@ -107,21 +154,34 @@ class Degrees_sorting():
 
     # for each degree, get sum of total lec size etc and course resul
     def search_by_degrees(self, degree, term, is_undergrad, sort_algo, courses_done, year):
+        self.threads = []
         for d in degree:
-            c = Class_scrapter(d, term, True, is_undergrad, sort_algo, True, courses_done, "", year, self.requests_session)
-            data_list = c.get_list() 
-            self.course_on_campus += c.course_on_campus
-            
-            self.result += data_list
-            if not data_list:
-                continue
-            tmp = c.convert_format(data_list, c.course_on_campus, [])
-            _total_enrol, _total_enrol_size, _total_lec, _total_lec_size, _n_on_campus = tmp[1:]
-            self.total_enrol += _total_enrol
-            self.total_enrol_size += _total_enrol_size
-            self.total_lec += _total_lec
-            self.total_lec_size += _total_lec_size
-            self.n_on_campus += _n_on_campus
+            # t = Thread(target=self.run_scrapter, args=(d, term, is_undergrad, sort_algo, courses_done, year))
+            # t.daemon = True
+            # self.threads.append(t)
+            self.run_scrapter(d, term, is_undergrad, sort_algo, courses_done, year)
+        # for t in self.threads:
+        #     t.start()
+        # for t in self.threads:
+        #     t.join()
+    def run_scrapter(self, d, term, is_undergrad, sort_algo, courses_done, year):
+        
+        c = Class_scrapter(d, term, True, is_undergrad, sort_algo, True, courses_done, "", year, self.requests_session)
+        data_list = c.get_list() 
+        if not data_list:
+            return
+        self.course_on_campus += c.course_on_campus
+        self.lock.acquire()
+        self.result += data_list
+        self.lock.release()
+        tmp = c.convert_format(data_list, c.course_on_campus, [])
+        _total_enrol, _total_enrol_size, _total_lec, _total_lec_size, _n_on_campus = tmp[1:]
+        self.total_enrol += _total_enrol
+        self.total_enrol_size += _total_enrol_size
+        self.total_lec += _total_lec
+        self.total_lec_size += _total_lec_size
+        self.n_on_campus += _n_on_campus
+        #sys.exit(1) # stop thread after use - https://stackoverflow.com/questions/4541190/how-to-close-a-thread-from-within
 
     def get_list(self):
         return self.result
