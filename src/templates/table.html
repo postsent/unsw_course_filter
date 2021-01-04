@@ -1,5 +1,19 @@
+ <!-- Refresh Page and Keep Scroll Position - https://stackoverflow.com/questions/17642872/refresh-page-and-keep-scroll-position -->
+<!-- https://stackoverflow.com/questions/49856445/how-to-refresh-code-without-losing-scroll-position -->
+<script>
+    window.addEventListener('scroll',function() {
+    //When scroll change, you save it on localStorage.
+    localStorage.setItem('scrollPosition',window.scrollY);
+    },false);
+    window.addEventListener('load',function() {
+    if(localStorage.getItem('scrollPosition') !== null)
+    window.scrollTo(0, localStorage.getItem('scrollPosition'));
+    },false);
+</script>
 <!DOCTYPE html>
+
 <html lang="en">
+    
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,6 +21,7 @@
         <link rel="stylesheet"  href="/static/styles.css" />
     </head>
     <body>
+       
         
         <!-- <p>
             <label for="name">course code prefix</label>
@@ -202,9 +217,9 @@
             on campus does not work for all terms option
             <div class="myspacing"></div>
             
-
         </p>
         </div>
+
         <div class="myspacing"></div>
         <button type="button" class="collapsible">Log</button>
             <div class="FYI">
@@ -216,7 +231,71 @@
                 <div class="myspacing"></div>
                 >100 % -> 100%
                 <div class="myspacing"></div>
+                This is a free tier hosted on heroku so there is a cpu runtime limit
+                and the algorithm is inefficient (no multithread)
+                <div class="myspacing"></div>
+            </div>
+
+        <div class="myspacing"></div>
+        <button type="button" class="collapsible">Popular Course Code</button>
+        <div class="FYI">
+        <p>
+            <div class="myspacing"></div>
+            ECON - Economics <p></p>
+            MGMT - Organisation and Management - Commerce & Economics <p></p>
+            ACCT - Accounting <p></p>
+            MATH - Mathematics <p></p>
+            COMP - Computer Science <p></p>
+            PSYC - Psychology <p></p>
+            FINS - Finance <p></p>
+            ENGG - Engineering interdisciplinary <p></p>
+            PHYS - Physics <p></p>
+            SOSS - Social Sciences <p></p>
+            GENS - Science General Education <p></p>
+            BABS - Biotechnology & Biomolecular Sciences <p></p>
+            LAWS - Law <p></p>
+            GENC - Business General Education <p></p>
+            CHEM - Chemistry <p></p>
+            ARTS - Arts <p></p>
+            ELEC - Electrical Engineering <p></p>
+            TABL - Taxation and Business Law <p></p>
+            COMM - Commerce <p></p>
+            CVEN - Civil and Environmental Engineering <p></p>
+            MMAN - Mechanical & Manufacturing Engineering <p></p>
+            PHSL - Physiology <p></p>
+            BIOC - Biochemistry <p></p>
+            BENV - Built Environment <p></p>
+            MICR - Microbiology <p></p>
+            MDIA - Media <p></p>
+            CRIM - Criminology <p></p>
+            ATSI - Nura Gili (Indigenous Programs) <p></p>
+            SCIF - Faculty of Science <p></p>
+            MECH - Mechanical Engineering <p></p>
+            REGZ - Registrar's Division <p></p>
+            EDST - Education <p></p>
+            PHAR - Pharmacology <p></p>
+            HUMS - Arts Administration <p></p>
+            MTRN - Mechatronic Engineering <p></p>
+            
+            <div class="myspacing"></div>
+            
+        </p>
         </div>
+        
+        <div class="myspacing">
+            <div class="myspacing"></div>
+            
+            <form action="{{ url_for('handle_old_data')}}"> 
+                <div style='display: inline;'>Preivous year all term (undergrad): </div>
+                {% for y in [2020, 2019, 2018, 2017, 2016] %}
+                    <div class="wrapper" style='display: inline;' >
+                        
+                        <input type="submit" class="degree_btn" name="year" value="{{y}}" >
+                    </div>
+                {% endfor %}
+            </form>
+        </div>
+        
         <div class="myspacing"></div>
         <script>
             var coll = document.getElementsByClassName("collapsible");
@@ -238,8 +317,9 @@
         
         <div class="myspacing"></div>
         <div class="myspacing"></div>
+        <div class="myspacing"></div>
         <p></p>
-        Result for reference only
+        Result for reference only (data derived from http://classutil.unsw.edu.au/ )
         <hr>
         
         <p></p>

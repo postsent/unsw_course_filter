@@ -222,7 +222,7 @@ class Degrees_sorting():
 
         self.arts = ["ARTS", "ASIA", "AUST", "COFA", "COMD", "DANC", "EDST", "ENGL", "EURO", "EXPA", "FILM", "GEND", 
         "GENT", "GLST", "HUMS", "IRSH", "ITAL", "JWST", "MDCM", "MDIA", "MEFT", "MUSC", "SAHT", "SART", 
-        "SDES", "SLST", "SOMA", "SPRC", "THST", "WOMS"]
+        "SDES", "SLST", "SOMA", "SPRC", "SOSS", "THST", "WOMS"]
 
         self.environment = ["ARCH", "BENV", "BLDG", "GEOH", "GSBE", "IDES", "INTA", "LAND", "MUPS", "PLAN", "SUSD", "UDES"]
 

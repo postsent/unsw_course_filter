@@ -1,0 +1,202 @@
+Count	Course_code(2020_All_Term)	Enrol_precentage	Enrol_number	Lec/Web/Prj/Thesis	Course_name
+1	ECON1101  	0%	0/484	3094/4713	Microeconomics 1	
+2	MGMT1001  	0%	0/333	2348/3272	Managing Organisations&People	
+3	ACCT1501  	0%	1/195	2222/2709	Accounting & Financial Mgt 1A	
+4	MATH1231  	0%	0/534	2074/2825	Mathematics 1B	
+5	MATH1131  	0%	1/387	2066/2962	Mathematics 1A	
+6	COMP1511  	0%	0/244	1905/2123	Programming Fundamentals	
+7	PSYC1001  	0%	0/306	1899/3271	Psychology 1A	
+8	FINS1613  	0%	0/291	1840/2656	Business Finance	
+9	ACCT1511  	0%	1/176	1555/1893	Accounting & Financial Mgt 1B	
+10	MATH1081  	0%	0/468	1493/2140	Discrete Mathematics	
+11	ECON1203  	0%	0/282	1443/1809	Business & Economic Statistics	
+12	COMP2521  	0%	0/281	1426/1674	Data Structures and Algorithms	
+13	COMP1521  	0%	0/111	1394/1484	Computer Systems Fundamentals	
+14	FINS1612  	0%	0/585	1379/1950	Capital Markets & Institution	
+15	ECON1102  	0%	0/231	1314/1537	Macroeconomics 1	
+16	FINS2624  	0%	0/223	1220/1812	Portfolio Mgmt	
+17	MATH1041  	0%	0/171	1212/1570	Stats for Life & Soc Sciences	
+18	FINS3616  	0%	0/389	1211/1792	International Business Finance	
+19	ENGG1000  	0%	0/1054	1191/2242	Engineering Design	
+20	COMP1531  	0%	0/115	1160/1270	Software Eng Fundamentals	
+21	COMP9444  	0%	0/59	1078/1211	Neural Networks, Deep Learning	
+22	PHYS1160  	0%	1/1465	1073/1620	Introduction to Astronomy	
+23	ENGG4999  	0%	1/11268	1061/21498	Industrial Training	
+24	GENS1111  	0%	1/612	1011/1600	Big Fat Myths	
+25	BABS1201  	0%	0/251	982/1318	Molecules, Cells and Genes	
+26	MATH2089  	0%	0/319	979/1352	Numerical Methods & Statistics	
+27	COMP3311  	0%	0/88	971/1053	Database Systems	
+28	FINS3630  	0%	0/707	937/1265	Bank Financial Management	
+29	MGMT1101  	0%	0/132	935/1060	Global Business Environment	
+30	COMP2511  	0%	0/101	906/1000	O-O Design & Programming	
+31	LAWS1150  	0%	0/13	874/903	Principles of Private Law	
+32	GENC3004  	0%	0/446	866/1300	Personal Finance - CR1/CR2	
+33	CHEM1011  	0%	0/115	865/1060	Chemistry 1A	
+34	FINS2643  	0%	1/505	857/1596	Wealth Management	
+35	ARTS2093  	0%	0/78	844/1499	Social Media	
+36	MATH2018  	0%	0/1123	833/2698	Engineering Mathematics 2D	
+37	LAWS2351  	0%	0/6	832/840	Court Process, Evidence, Proof	
+38	PHYS1121  	0%	0/461	831/1360	Physics 1A	
+39	ENGG2500  	0%	0/105	823/1066	Fluid Mechanics for Engineers	
+40	ENGG1811  	0%	0/307	788/1216	Computing for Engineers	
+41	ENGG1300  	0%	0/237	781/1012	Engineering Mechanics	
+42	COMP9417  	0%	0/76	755/1020	Machine Learning & Data Mining	
+43	COMP3121  	0%	0/123	748/840	Algorithms & Programming Tech - CR1/CR2	
+44	ELEC1111  	0%	0/156	740/1122	Elec & Telecomm Eng	
+45	LAWS1052  	0%	0/65	739/1444	Introducing Law & Justice	
+46	LAWS1061  	0%	0/22	738/785	Torts	
+47	ENGG2400  	0%	0/101	729/866	Mechanics of Solids	
+48	PSYC1022  	0%	0/230	714/930	Psychology of Addiction	
+49	LAWS2385  	-1%	0/13	706/771	Equity and Trusts	
+50	LAWS1160  	0%	0/59	704/1587	Administrative Law	
+51	COMP9517  	0%	0/22	703/820	Computer Vision	
+52	LAWS2383  	0%	0/45	694/779	Land Law	
+53	TABL1710  	0%	0/117	692/809	Business and the Law	
+54	LAWS1022  	0%	0/29	690/750	Criminal Laws	
+55	COMP3331  	0%	0/214	680/886	Computer Networks&Applications	
+56	PSYC1011  	0%	0/841	677/11077	Psychology 1B	
+57	ECON2101  	0%	0/133	670/789	Microeconomics 2	
+58	LAWS1075  	0%	0/47	666/1400	Contracts	
+59	LAWS1021  	0%	0/27	663/1356	Crime and the Criminal Process	
+60	COMM1000  	0%	1/570	636/1340	Creating Social Change	
+61	LAWS1230  	0%	0/16	634/1592	Lawyers, Ethics and Justice	
+62	LAWS2270  	0%	0/75	626/767	Law in the Global Context	
+63	ACCT2522  	0%	0/158	613/1123	Management Accounting 1	
+64	ECON1202  	0%	0/174	613/853	Quantitative Analysis	
+65	LAWS1091  	0%	0/66	606/1364	Business Associations	
+66	ECON2206  	0%	0/59	597/650	Introductory Econometrics	
+67	LAWS2371  	0%	0/48	587/1348	Resolving Civil Disputes	
+68	ACCT2542  	0%	0/166	568/721	Corporate Financial Reporting	
+69	PSYC1023  	0%	0/149	559/686	Abnormal Psychology	
+70	MATH1141  	0%	0/275	552/850	Higher Mathematics 1A	
+71	ARTS1090  	0%	0/164	542/700	Media, Culture & Everyday Life	
+72	CVEN3202  	0%	0/49	539/588	Soil Mechanics	
+73	FINS3648  	0%	0/70	534/625	Banking, Finance & Technology - CR1/CR2	
+74	ARTS2091  	0%	0/20	532/10279	Mobile Cultures	
+75	MMAN3200  	0%	0/45	527/574	Linear Systems and Control	
+76	BABS1111  	0%	0/340	520/850	Big Fat Myths	
+77	CVEN3304  	0%	0/90	519/652	Concrete Structures	
+78	CHEM1021  	0%	0/125	515/736	Chemistry 1B	
+79	COMP3900  	0%	0/96	515/640	Computer Science Project	
+80	COMP4920  	0%	0/69	506/575	Management and Ethics	
+81	CVEN2002  	0%	0/15	489/549	Engineering Computations	
+82	CVEN3303  	0%	0/182	481/683	Steel Structures	
+83	COMP3411  	0%	0/82	480/555	Artificial Intelligence	
+84	CVEN3101  	0%	0/92	474/566	Engineering Operations	
+85	ELEC2141  	0%	0/124	473/580	Digital Circuit Design	
+86	COMP6714  	0%	0/5	466/491	Info Retrieval and Web Search	
+87	LAWS2150  	0%	0/76	466/1339	Federal Constitutional Law	
+88	MMAN3000  	0%	0/50	460/510	Prof Eng and Comm	
+89	PSYC2101  	0%	0/20	460/480	Assess Person Psychopathology	
+90	MMAN2130  	0%	0/56	455/505	Design and Manufacturing	
+91	CVEN3501  	0%	0/225	453/620	Water Resources Engineering	
+92	PHSL2101  	0%	0/15	449/460	Physiology 1A	
+93	LAWS1141  	0%	0/16	443/490	Principles of Public Law	
+94	MATH1031  	0%	0/196	437/747	Mathematics for Life Sciences	
+95	PSYC2071  	0%	0/14	436/450	Perception and Cognition	
+96	CVEN4051  	0%	0/204	434/631	Thesis B	
+97	COMP2041  	0%	0/63	429/481	Software Construction	
+98	CVEN3502  	0%	0/62	420/480	Water & Wastewater Engineering	
+99	PSYC2061  	0%	0/79	420/507	Social and Developmental Psych	
+100	BIOC2201  	0%	0/61	417/478	Principles of Mol. Biol (Adv)	
+101	COMP3231  	0%	0/93	417/510	Operating Systems	
+102	CVEN4050  	0%	0/197	410/585	Thesis A	
+103	MMAN2300  	0%	0/35	403/430	Engineering Mechanics 2	
+104	MGMT3721  	0%	0/60	402/463	Negotiation Skills	
+105	PSYC2081  	0%	0/160	394/550	Learning & Physiological Psych	
+106	PSYC1111  	0%	0/106	389/495	Measuring Mind and Behaviour	
+107	BENV1010  	0%	0/203	388/522	Communication in the BE	
+108	MATH1241  	0%	0/134	388/522	Higher Mathematics 1B	
+109	ARTS1091  	0%	0/118	382/500	Media, Society, Politics	
+110	CVEN2101  	0%	0/59	382/441	Engineering Construction	
+111	MICR2011  	0%	0/69	380/448	Microbiology 1	
+112	MDIA2005  	0%	0/45	372/469	Advertising	
+113	ECON2102  	0%	0/59	371/455	Macroeconomics 2	
+114	FINS3650  	0%	1/134	371/505	International Banking	
+115	PSYC2001  	0%	0/114	368/472	Research Methods 2	
+116	CRIM1010  	0%	0/71	365/402	Criminology: An Introduction	
+117	ATSI1011  	0%	0/92	364/450	Indigenous Australia	
+118	BIOC2101  	0%	0/26	360/400	Principles of Biochem (Adv)	
+119	SCIF1004  	0%	0/350	359/700	Science and the Cinema	
+120	CVEN2303  	0%	0/105	358/400	Structural Analysis+ Modelling	
+121	MECH9325  	0%	0/7	356/386	Fundamentals Acoustics & Noise	
+122	PSYC3001  	0%	0/37	352/380	Research Methods 3	
+123	PSYC1024  	0%	0/305	351/650	Anxiety, Mood and Stress	
+124	MDIA2006  	0%	0/62	350/470	Communication Strategies	
+125	REGZ9000  	0%	0/322	350/660	Uni Orientation& Study Skills1	
+126	COMP6771  	0%	0/54	348/433	Advanced C++ Programming	
+127	MATH3411  	0%	0/4	348/352	Information, Codes and Ciphers	
+128	PHSL2201  	0%	0/29	341/370	Physiology 1B	
+129	TABL2741  	0%	0/82	334/412	Business Entities	
+130	TABL2751  	0%	0/43	329/367	Business Taxation	
+131	COMP9318  	0%	0/11	328/456	Data Warehousing & Data Mining - CR1/CR2	
+132	COMP9313  	0%	0/17	327/377	Big Data Management	
+133	MATH2019  	0%	0/45	327/369	Engineering Mathematics 2E	
+134	MDIA1002  	0%	0/71	325/394	Media & Communication Contexts	
+135	ARTS1810  	0%	0/24	321/350	Foundations of Pols and IR	
+136	CRIM1011  	0%	0/21	321/334	Intro to Criminal Justice	
+137	MMAN2700  	0%	0/49	319/362	Thermodynamics	
+138	EDST1101  	0%	0/5	315/320	Educational Psychology	
+139	CVEN3203  	0%	0/261	314/530	Applied Geotechnics	
+140	ARTS1092  	0%	0/32	313/341	Working with Data	
+141	FINS3641  	0%	0/253	310/592	Security Analysis & Valuation	
+142	FINS3625  	0%	0/579	309/866	Applied Corporate Finance	
+143	ARTS2871  	0%	0/32	308/340	Power and Powerlessness	
+144	COMP3141  	0%	0/49	308/350	Software Sys Des&Implementat'n	
+145	PSYC1029  	0%  0/272	308/575	Psychobio of Sex Love & Attrac	
+146	ECON1401  	0%	0/90	304/427	Economic Perspectives	
+147	GENS4015  	0%	0/62	304/350	Brave New World	
+148	MATH2069  	0%	0/110	299/485	Mathematics 2A	
+149	MMAN4410  	0%	0/83	298/644	Finite Element Methods	
+150	MATH2801  	0%	0/57	297/350	Theory of Statistics	
+151	ECON3208  	0%	0/38	294/322	Applied Econometric Methods	
+152	ELEC3104  	0%	0/113	292/360	Digital Signal Processing	
+153	CVEN3031  	0%	0/23	291/310	Engineering Practice	
+154	ARTS1660  	0%	0/112	286/403	Introductory Korean A	
+155	COMP9321  	0%	0/17	284/345	Data Services Engineering - CR1/CR2	
+156	MATH2501  	0%	0/22	283/300	Linear Algebra	
+157	ARTS2457  	0%	0/25	282/300	China Imagined and Perceived	
+158	CVEN9405  	0%	0/5	282/300	Urban Transport Planning Prac	
+159	CVEN4402  	0%	0/19	280/310	Transport Systems Part 1	
+160	SOSS1000  	0%	0/39	279/375	Policy and Society	
+161	MATH1151  	0%	0/156	276/430	Maths - Actuarial & Finance 1A	
+162	MDIA1003  	0%	0/4	275/280	PR & Advertising Foundations	
+163	PHAR2011  	0%	0/7	273/280	Introductory Pharmacology and	
+164	MDIA3003  	0%	0/24	271/325	Professional Portfolio	
+165	ARTS3092  	0%	0/18	269/351	Media in Asia-Pacific	
+166	PSYC3011  	0%	0/82	268/350	Psychological Applications	
+167	ARTS1811  	0%	0/10	267/277	Issues in Gov and Global Pols	
+168	MATH2011  	0%	1/78	267/343	Several Variable Calculus	
+169	CRIM3000  	0%	0/120	265/10274	Criminology in Practice	
+170	BENV1015  	0%	0/26	263/286	History of Design Thinking	
+171	COMP6441  	0%	0/57	263/390	Security Engineering	
+172	ELEC4632  	0%	0/47	262/360	Computer Control Systems	
+173	FINS3626  	0%	0/42	261/400	Int'l Corporate Governance	
+174	COMP9315  	0%	0/25	259/370	Database Systems Implementat'n	
+175	ECON3107  	0%	0/49	259/431	Economics of Finance	
+176	HUMS1006  	0%	0/67	258/2194	Presentation Skills	
+177	MATH1251  	0%	0/44	257/300	Maths - Actuarial & Finance 1B	
+178	MECH4100  	0%	0/8	256/270	Mechanical Design 2	
+179	PHYS1131  	0%	0/239	255/480	Higher Physics 1A	
+180	MECH4620  	0%	0/69	253/371	Computational Fluid Dynamics	
+181	MECH3610  	0%	0/21	252/270	Advanced Thermofluids	
+182	ARTS1870  	0%	0/23	251/300	Rethinking the Social	
+183	MMAN4010  	0%	0/90	251/340	Thesis A	
+184	FINS3623  	0%	0/330	246/600	Venture Capital	
+185	ARTS1360  	0%	0/42	244/280	Truth and Human Existence	
+186	MTRN2500  	0%	0/21	244/265	Comp for MTRN	
+187	ARTS1753  	0%	0/10	243/253	Culture, Experience and Change	
+188	SOSS1001  	0%	0/3	241/244	Social Research and Society	
+189	LAWS2820  	0%	0/18	240/272	Law and Social Theory	
+190	COMP3511  	0%	0/58	238/295	Human Computer Interaction	
+191	ELEC2134  	0%	0/98	236/430	Circuits and Signals	
+192	ARTS2095  	0%	0/103	235/338	Digital Tech and the Self	
+193	FINS2622  	0%	0/61	234/292	Asia-Pacific Capital Markets	
+194	MGMT2102  	0%	0/21	232/252	Managing Across Cultures	
+195	ARTS1361  	0%	0/53	228/277	Mind, Ethics, and Freedom	
+196	COMP6080  	-1%	0/0	227/227	Web Front-end Programming	
+197	ELEC4617  	-1%	0/0	227/233	Power System Protection	
+198	MDIA3000  	0%	0/10	226/9999	Discourse and Promotion	
+199	ARTS3091  	0%	0/76	225/312	Advanced Media Issues	
+200	MDIA3005  	0%	0/12	225/280	Social Innovation & Engagement	
+Total		None None	115/321247	481558/1110708		

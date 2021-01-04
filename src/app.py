@@ -13,6 +13,7 @@ import os
 from class_scraper import Class_scrapter
 from handle_multiple_degree import Degrees_sorting # main 
 import atexit
+from get_old_data import Old_data
 
 app = Flask(__name__)
 # Check Configuration section for more details
@@ -133,6 +134,15 @@ def handle_degree():
     return render_template("table.html", headings=headings, data=data, term=term, courses_done=courses_done, \
                             under_post=under_post, perc_num=perc_num, year=year, degree=degree, levels=levels)
 
+@app.route('/handle_old_data', methods=['GET']) # handle multiple degree input, add to list
+def handle_old_data():
+    headings, data, courses_done, under_post, perc_num, degree, term, year, levels = get_database()
+    year = request.args.get('year') # handle no input and initial assignment of none
+    res = Old_data(year).get_result()
+    headings = res[0]
+    data = res[1:]
+    return render_template("table.html", headings=headings, data=data, term=term, courses_done=courses_done, \
+                            under_post=under_post, perc_num=perc_num, year=year, degree=degree, levels=levels)
 # https://stackoverflow.com/questions/3850261/doing-something-before-program-exit
 # def exit_handler():
 #     global headings
@@ -157,10 +167,10 @@ if __name__=="__main__":
     # import io
     # pr = cProfile.Profile()
     # pr.enable()
-    import time
-    start_time = time.time()
+    # import time
+    # start_time = time.time()
     app.run(debug=1)
-    print("--- %s seconds ---" % (time.time() - start_time))
+    # print("--- %s seconds ---" % (time.time() - start_time))
 
     # pr.disable()
     # s = io.StringIO()

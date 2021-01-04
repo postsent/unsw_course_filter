@@ -1,0 +1,202 @@
+Count	Course_code(2018_All_Term)	Enrol_precentage	Enrol_number	Lec/Web/Prj/Thesis	Course_name	
+1	ECON1101  	0/0	0/0	3762/4040	Microeconomics 1 (U1C)	
+2	ACCT1501  	0/0	0/0	2651/2960	Accounting & Financial Mgt 1A	
+3	MATH1131  	0/0	0/0	2601/3031	Mathematics 1A	
+4	FINS1613  	0/0	0/0	2407/3100	Business Finance	
+5	MATH1231  	0/0	0/0	2327/2610	Mathematics 1B (U1)	
+6	ECON1102  	0/0	0/0	1908/2041	Macroeconomics 1 (U1C)	
+7	ECON1203  	0/0	0/0	1856/2055	Business & Economic Statistics (U1C)	
+8	FINS1612  	0/0	0/0	1714/2045	Capital Markets & Institution (U1C)	
+9	COMP1511  	0/0	0/0	1655/1918	Introduction to Programming	
+10	FINS2624  	0/0	0/0	1655/1905	Portfolio Mgmt	
+11	ACCT1511  	0/0	0/0	1626/2011	Accounting & Financial Mgt 1B (U1C)	
+12	PHYS1121  	0/0	0/0	1546/1926	Physics 1A	
+13	PHYS1160  	0/0	0/0	1436/1700	Introduction to Astronomy (U1)	
+14	FINS3616  	0/0	0/0	1346/1585	International Business Finance (U1C)	
+15	MATH1081  	0/0	0/0	1206/1340	Discrete Mathematics	
+16	FINS3630  	0/0	0/0	1182/1270	Bank Financial Management (U1C)	
+17	COMP1521  	0/0	0/0	1164/1606	Computer Systems Fundamentals	
+18	MATH1041  	0/0	0/0	1145/1338	Stats for Life & Soc Sciences	
+19	MATH2019  	0/0	0/0	1079/1294	Engineering Mathematics 2E	
+20	ENGG1811  	0/0	0/0	1077/1360	Computing for Engineers	
+21	COMP2521  	0/0	0/0	1044/1310	Data Structures and Algorithms (U1)	
+22	MGMT1101  	0/0	0/0	1024/1100	Global Business Environment	
+23	ELEC1111  	0/0	0/0	1009/1744	Elec & Telecomm Eng (U1)	
+24	ACCT2522  	0/0	0/0	971/994	Management Accounting 1	
+25	MGMT5050  	0/0	0/0	932/962	Prof Skills & Ethics	
+26	CHEM1011  	0/0	0/0	908/1050	Chemistry A	
+27	COMP9021  	0/0	0/0	887/1060	Principles of Programming	
+28	MMAN2400  	0/0	0/0	850/898	Mechanics of Solids 1	
+29	ACCT2542  	0/0	0/0	847/985	Corporate Financial Reporting (U1C)	
+30	MGMT1001  	0/0	0/0	822/900	Managing Organisations&People	
+31	GSOE9010  	0/0	0/0	805/820	Eng PG Coursework Res Skills	
+32	FINS5514  	0/0	0/0	803/902	Capital Budgeting&Fin Decision	
+33	COMP1531  	0/0	0/0	787/1586	Software Eng Fundamentals	
+34	FINS2643  	0/0	0/0	778/920	Wealth Management (U1C)	
+35	COMP2511  	0/0	0/0	772/1040	O-O Design & Programming	
+36	COMP9020  	0/0	0/0	769/845	Foundations of Comp. Science	
+37	ECON2101  	0/0	0/0	768/858	Microeconomics 2 (U1C)	
+38	FINS5530  	0/0	0/0	766/869	Financial Institution Mgmt (U1C)	
+39	GENC3004  	0/0	0/0	762/800	Personal Finance	
+40	ACCT3708  	0/0	0/0	760/822	Auditing & Assurance Services	
+41	FINS5513  	0/0	0/0	727/951	Investments & Portfolio Sel. (U1C)	
+42	CVEN3304  	0/0	0/0	723/763	Concrete Structures	
+43	ARTS1090  	0/0	0/0	720/850	Media, Culture & Everyday Life	
+44	ECON1202  	0/0	0/0	717/772	Quantitative Analysis (U1C)	
+45	ACCT5930  	0/0	0/0	699/834	Financial Accounting	
+46	ACCT5931  	0/0	0/0	694/778	Strategic Management Accountin (U1C)	
+47	FINS3625  	0/0	0/0	683/853	Applied Corporate Finance	
+48	FINS5542  	0/0	0/0	673/840	Applied Funds Management	
+49	GSOE9820  	0/0	0/0	672/700	Project Management	
+50	ECON5103  	0/0	0/0	667/852	Business Economics	
+51	ACCT5943  	0/0	0/0	656/694	Advanced Financial Reporting (U1C)	
+52	CVEN3303  	0/0	0/0	642/775	Steel Structures	
+53	TABL2741  	0/0	0/0	634/796	Business Entities (U1C)	
+54	FINS5516  	0/0	0/0	593/723	Int'l Corporate Finance (U1C)	
+55	COMP9444  	0/0	0/0	593/628	Neural Networks, Deep Learning	
+56	FINS3635  	0/0	0/0	588/614	Options, Futures&Risk Mgmt	
+57	CVEN3101  	0/0	0/0	580/600	Engineering Operations	
+58	FINS5512  	0/0	0/0	580/751	Financial Markets&Institutions	
+59	ARTS1091  	0/0	0/0	578/750	Media, Society, Politics	
+60	MATH1141  	0/0	0/0	562/616	Higher Mathematics 1A	
+61	CVEN3202  	0/0	0/0	560/582	Soil Mechanics	
+62	ACCT5996  	0/0	0/0	550/960	Management Accounting and Busi	
+63	CVEN2303  	0/0	0/0	549/580	Structural Analysis+ Modelling	
+64	CVEN2101  	0/0	0/0	548/585	Engineering Construction	
+65	MGMT3721  	0/0	0/0	539/562	Negotiation Skills	
+66	TABL5551  	0/0	0/0	534/651	Taxation Law (U1C)	
+67	TABL1710  	0/0	0/0	533/640	Business and the Law	
+68	CVEN2002  	0/0	0/0	528/546	Engineering Computations	
+69	MMAN1300  	0/0	0/0	528/557	Engineering Mechanics	
+70	COMP9024  	0/0	0/0	526/775	Data Structures & Algorithms (U1)	
+71	ECON2102  	0/0	0/0	523/561	Macroeconomics 2	
+72	CRIM1010  	0/0	0/0	519/600	Criminology: An Introduction	
+73	REGZ9024  	0/0	0/0	516/90	Professional Practicum (U1)	
+74	CVEN2301  	0/0	0/0	514/600	Mechanics of Solids CE	
+75	SAHT1101  	0/0	0/0	508/570	Creative Practices: Contexts	
+76	CVEN3502  	0/0	0/0	505/532	Water & Wastewater Engineering	
+77	CVEN3203  	0/0	0/0	504/552	Applied Geotechnics	
+78	SAHT1102  	0/0	0/0	497/544	Creative Practices: Methods	
+79	CHEM1021  	0/0	0/0	496/559	Chemistry B (U1)	
+80	CVEN3501  	0/0	0/0	495/497	Water Resources Engineering	
+81	CVEN9701  	0/0	0/0	492/497	Eng Economics & Financial Mngt	
+82	FINS5568  	0/0	0/0	478/489	Capstone Portfolio Mgmt Proces	
+83	PHYS1131  	0/0	0/0	478/837	Higher Physics 1A	
+84	ECON2206  	0/0	0/0	476/525	Introductory Econometrics	
+85	CVEN1300  	0/0	0/0	473/650	Engineering Mechanics for CE (U1)	
+86	MMAN3200  	0/0	0/0	472/493	Linear Systems and Control	
+87	COMP9417  	0/0	0/0	467/504	Machine Learning & Data Mining	
+88	CHEM1031  	0/0	0/0	465/600	Higher Chemistry A	
+89	ACCT5908  	0/0	0/0	462/656	Auditing and Assurance Ser. (U1C)	
+90	MMAN2100  	0/0	0/0	457/470	Engineering Design 2	
+91	MMAN2300  	0/0	0/0	454/528	Engineering Mechanics 2	
+92	CVEN2501  	0/0	0/0	454/610	Principles of Water Eng'g (U1)	
+93	ARTS1630  	0/0	0/0	437/462	Introductory Japanese A	
+94	MMAN2130  	0/0	0/0	436/465	Design and Manufacturing	
+95	ACCT5919  	0/0	0/0	434/442	Business Risk Management	
+96	MATH1031  	0/0	0/0	433/469	Mathematics for Life Sciences	
+97	ENGG1000  	0/0	0/0	429/600	Engineering Design	
+98	FINS5511  	0/0	0/0	428/548	Corporate Finance	
+99	ARTS2093  	0/0	0/0	426/490	Social Media	
+100	COMP3331  	0/0	0/0	424/480	Computer Networks&Applications	
+101	MMAN3000  	0/0	0/0	423/459	Prof Eng and Comm	
+102	MDIA1002  	0/0	0/0	411/500	Media & Communication Contexts	
+103	ELEC2141  	0/0	0/0	401/412	Digital Circuit Design	
+104	PSYC2061  	0/0	0/0	399/468	Social and Developmental Psych	
+105	CVEN3031  	0/0	0/0	389/449	Engineering Practice	
+106	MDIA3003  	0/0	0/0	384/369	Professional Portfolio	
+107	CVEN9710  	0/0	0/0	383/472	Management of Risk	
+108	CVEN4402  	0/0	0/0	377/410	Transport Systems Part 1	
+109	TABL5512  	0/0	0/0	374/622	Legal Foundations for Acct	
+110	MMAN2700  	0/0	0/0	370/370	Thermodynamics	
+111	MMAN2600  	0/0	0/0	369/390	Fluid Mechanics	
+112	CVEN9625  	0/0	0/0	369/380	Fundamentals of Water Eng	
+113	FINS5510  	0/0	0/0	369/578	Per. Fin. Plan. & Mgmt (U1C)	
+114	ARTS1810  	0/0	0/0	368/400	Foundations of Pols and IR	
+115	ENGG1400  	0/0	0/0	363/470	Eng Infrastructure Systems	
+116	ELEC9716  	0/0	0/0	360/525	Electrical Safety (U1)	
+117	GSOE9810  	0/0	0/0	359/375	Quality in Engineering	
+118	GENS4015  	0/0	0/0	358/388	Brave New World	
+119	MECH4100  	0/0	0/0	358/361	Mechanical Design 2	
+120	TABL5541  	0/0	0/0	355/420	Corporations and Bus Assoc Law	
+121	COMP9318  	0/0	0/0	353/370	Data Warehousing & Data Mining	
+122	MATH1151  	0/0	0/0	353/430	Maths - Actuarial & Finance 1A	
+123	PHYS1111  	0/0	0/0	352/411	Fundamentals of Physics	
+124	SRAP1000  	0/0	0/0	351/369	Policy and Society	
+125	COMP3121  	0/0	0/0	347/360	Algorithms & Programming Tech	
+126	COMP2041  	0/0	0/0	347/460	Software Construction	
+127	ACCT5942  	0/0	0/0	345/394	Corporate Accounting & Regulat	
+128	ECON1401  	0/0	0/0	344/425	Economic Perspectives	
+129	ELEC9713  	0/0	0/0	344/347	Industrial and Commercial Powe	
+130	CVEN4104  	0/0	0/0	344/348	Sustainability in Construction	
+131	GSOE9210  	0/0	0/0	343/347	Engineering Decisions	
+132	PHYS1231  	0/0	0/0	342/399	Higher Physics 1B (U1)	
+133	MATS1101  	0/0	0/0	339/525	Engineering Materials and Chem	
+134	MICR2011  	0/0	0/0	339/360	Microbiology 1	
+135	MATH2089  	0/0	0/0	337/460	Numerical Methods & Statistics	
+136	MMAN4410  	0/0	0/0	336/385	Finite Element Methods	
+137	COMP1911  	0/0	0/0	334/438	Computing 1A	
+138	MECH9761  	0/0	0/0	331/350	Automobile Engine Technology	
+139	ARTS3091  	0/0	0/0	329/400	Advanced Media Issues	
+140	EDST1101  	0/0	0/0	329/350	Educational Psychology	
+141	BIOC2201  	0/0	0/0	329/358	Principles of Mol. Biol (Adv)	
+142	COMP3311  	0/0	0/0	322/346	Database Systems	
+143	ELEC2134  	0/0	0/0	321/380	Circuits and Signals (U1)	
+144	MATS0100  	0/0	0/0	319/390	F/T Research Thesis Materials	
+145	ARTS1660  	0/0	0/0	319/325	Introductory Korean A	
+146	ACCT5907  	0/0	0/0	318/370	Int'l Fin Statement Analysis	
+147	CRIM1011  	0/0	0/0	318/400	Intro to Criminal Justice	
+148	SCIF1131  	0/0	0/0	318/400	Skills for Science	
+149	PHYS1110  	0/0	0/0	316/450	Everyday Physics (U1)	
+150	FINS3623  	0/0	0/0	314/340	Venture Capital	
+151	ZINT2100  	0/0	0/0	312/328	Intro to Cyber-Security	
+152	COMP9321  	0/0	0/0	311/332	Data Services Engineering	
+153	ELEC4614  	0/0	0/0	311/367	Power Electronics (U1)	
+154	SRAP1001  	0/0	0/0	311/408	Social Research and Society	
+155	ELEC4617  	0/0	0/0	309/266	Power System Protection	
+156	MDIA3005  	0/0	0/0	307/350	Social Innovation & Engagement	
+157	ELEC9714  	0/0	0/0	305/347	Electricity Industry Planning	
+158	COMM5005  	0/0	0/0	305/466	Quant Methods for Business	
+159	GENL1022  	0/0	0/0	305/335	Women and Religion (U1)	
+160	FINS5535  	0/0	0/0	304/367	Derivatives & Risk Mgt. Techs.	
+161	MDIA3008  	0/0	0/0	303/330	Crisis Communication	
+162	MDIA2006  	0/0	0/0	300/375	Communication Strategies	
+163	MDIA3000  	0/0	0/0	298/360	Discourse and Promotion	
+164	BIOC2101  	0/0	0/0	298/330	Principles of Biochem (Adv)	
+165	MDIA1003  	0/0	0/0	297/400	PR & Advertising Foundations	
+166	ELEC9902  	0/0	0/0	295/2500	(F/T)Research Thesis Elect Eng	
+167	EDST1104  	0/0	0/0	295/350	Social Perspectives in Edu	
+168	MATH1251  	0/0	0/0	294/380	Maths - Actuarial & Finance 1B	
+169	CVEN4301  	0/0	0/0	292/319	Advanced Concrete Structures	
+170	ECON3208  	0/0	0/0	292/322	Applied Econometric Methods	
+171	COMP3411  	0/0	0/0	291/326	Artificial Intelligence	
+172	ECON3107  	0/0	0/0	291/303	Economics of Finance	
+173	MDIA2005  	0/0	0/0	290/360	Advertising	
+174	PHCM9498  	0/0	0/0	290/343	Epidemiology and Statistics:PH	
+175	ARTS2091  	0/0	0/0	290/310	Mobile Cultures	
+176	FINS5517  	0/0	0/0	289/327	Applied Portfolio Mgt. & Model	
+177	MECH4620  	0/0	0/0	289/360	Computational Fluid Dynamics	
+178	COMP3231  	0/0	0/0	289/305	Operating Systems	
+179	ARTS1811  	0/0	0/0	286/400	Issues in Gov and Global Pols	
+180	MGMT2102  	0/0	0/0	284/300	Managing Across Cultures	
+181	COMM1000  	0/0	0/0	283/400	Creating Social Change (U1C)	
+182	FINS3626  	0/0	0/0	283/288	Int'l Corporate Governance	
+183	COMP4920  	0/0	0/0	282/288	Management and Ethics	
+184	GENM0707  	0/0	0/0	282/360	Nutrition and Health (U1B)	
+185	CHEM9003  	0/0	0/0	279/300	Research Thesis Chemistry F/T	
+186	ELEC4632  	0/0	0/0	277/266	Computer Control Systems	
+187	SOMS9001  	0/0	0/0	275/300	SoMS PhD Thesis Full-time	
+188	PHCM9012  	0/0	0/0	274/350	Health Promotion & Social Pers	
+189	COMP9900  	0/0	0/0	274/295	Info Tech Project	
+190	EDST1108  	0/0	0/0	272/310	Indigenous Perspectives	
+191	COMP6714  	0/0	0/0	271/330	Info Retrieval and Web Search	
+192	CVEN9702  	0/0	0/0	271/300	Project Planning and Control	
+193	COMP9313  	0/0	0/0	270/313	Big Data Management	
+194	ELEC3114  	0/0	0/0	270/265	Control Systems	
+195	ARTS1060  	0/0	0/0	266/330	Introduction to Film Studies	
+196	MNGT6251  	0/0	0/0	266/331	Marketing Management (MG1)	
+197	ELEC4611  	0/0	0/0	265/253	Power System Equipment	
+198	CEIC5001  	0/0	0/0	264/350	F/T Res Thesis CE & IC	
+199	ACCT5910  	0/0	0/0	263/330	Business Analysis & Valuation	
+200	GSOE9400  	0/0	0/0	262/310	Engineering Pgrad Research	
+Total	None None		0/0	396862/585122	
